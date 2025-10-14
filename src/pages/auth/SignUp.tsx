@@ -49,16 +49,16 @@ const SignUp = () => {
     console.log("form submitted ");
   };
   return (
-    <main className="bg-[#F3F4F6] min-h-svh flex  justify-center items-center px-4">
+    <main className="bg-[#F5F6FA] min-h-svh flex  justify-center items-center px-4">
       <section className="grid grid-cols-2 w-full h-screen bg-white shadow-5xl overflow-hidden max-w-4xl items-start mt-3 ">
         {/* left form side */}
         <article className="flex flex-col justify-center px-6 py-10 ">
           <header className="text-center mb-8">
-            <h2 className="text-gray-900 text-2xl font-semibold capitalize">
+            <h2 className="text-[#2F4858] text-2xl font-semibold capitalize">
               create your account
             </h2>
             <p className="text-gray-500 text-sm mt-1">
-              Set up your new hotel management system
+              Manage your hotel with ease and elegance
             </p>
           </header>
           {/* <form action=""></form> */}
@@ -66,14 +66,14 @@ const SignUp = () => {
             <form
               action=""
               onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-4"
+              className="space-y-4 text-[#6B7280] capitalize"
             >
               <FormField
                 name="name"
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>name</FormLabel>
+                    <FormLabel >name</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -119,7 +119,7 @@ const SignUp = () => {
                       </FormItem>
                     )}
                   /> */}
-              <Button className="w-full">Sign up</Button>
+              <Button className="w-full bg-[#E3B23C] hover:bg-[#d4a62e]">Sign up</Button>
             </form>
           </Form>
 
@@ -136,7 +136,7 @@ const SignUp = () => {
                 <button
                   key={icon.name}
                   //   onClick={() => handleSocialLogin(icon.name)}
-                  className="p-2 border w-full flex justify-center items-center rounded-md hover:bg-gray-100 transition"
+                  className="p-2 border w-full flex justify-center items-center rounded-md  hover:bg-gray-100 transition"
                 >
                   <img
                     src={icon.icon}
@@ -146,7 +146,7 @@ const SignUp = () => {
                 </button>
               ))}
             </div>
-            <p className="text-sm pt-3 text-center text-gray-500">Already have an account? <span>SignIn</span></p> 
+            <p className="text-sm pt-3 text-center text-[#6B7280]">Already have an account? <span className="text-[#E3B23C] underline">SignIn</span></p> 
           </article>
         </article>
         <section className="relative  ">
