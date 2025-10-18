@@ -6,6 +6,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -13,117 +21,166 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { icons } from "@/constant/icon";
+import { genderRole, useSignUpMutation } from "@/api/data/auth.api";
+import  { formSchema } from "@/components/common/validation";
+import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
+import { usePopUpContext } from "@/context/PopUpContext";
+import OtpDialog from "@/components/Dialog/auth/OtpDialog";
+import AuthLayout from "./AuthLayout";
 
-const formSchema = z
-  .object({
-    name: z.string().max(13),
-    email: z.email("invalid email"),
-    phoneNumber: z
-      .string()
-      .min(11, { message: "phone number must be 11 characters" }),
 
-    password: z
-      .string()
-      .min(5, { message: "password must be atleast 5 characters" }),
-    confirmPassword: z.string(),
-    gender: z.enum(["FEMALE", "MALE", "OTHER"], {
-      message: "Gender is required",
-    }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "password do not match",
-    path: ["confirmPassword"],
-  });
 const SignUp = () => {
+  const navigate =useNavigate()
+  const {openDialog} =usePopUpContext()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       phoneNumber: "",
-      gender: "FEMALE",
+      gender: genderRole.FEMALE,
       password: "",
       confirmPassword: "",
     },
   });
-  const onSubmit = () => {
-    console.log("form submitted ");
+  // call the api function 
+  const [signUp,{isLoading}] =useSignUpMutation()
+  const onSubmit = async (values:z.infer<typeof formSchema>) => {
+    try {
+      const res =await signUp(values).unwrap()
+      toast.success(res.message)
+      // directly open otpDialog
+      // openDialog(<OtpDialog/>)
+      navigate("/verify-otp")
+      
+    } catch (error:any) {
+      toast.error(error?.data.message)
+     console.log(error)
+    }
   };
+  const handleGoogleLogin = () => {
+  window.location.href = "http://localhost:3000/auth/google/login";
+};
   return (
-    <main className="bg-[#F5F6FA] min-h-svh flex  justify-center items-center px-4">
-      <section className="grid grid-cols-2 w-full h-screen bg-white shadow-5xl overflow-hidden max-w-4xl items-start mt-3 ">
-        {/* left form side */}
-        <article className="flex flex-col justify-center px-6 py-10 ">
-          <header className="text-center mb-8">
-            <h2 className="text-[#2F4858] text-2xl font-semibold capitalize">
-              create your account
-            </h2>
-            <p className="text-gray-500 text-sm mt-1">
-              Manage your hotel with ease and elegance
-            </p>
-          </header>
-          {/* <form action=""></form> */}
+    <AuthLayout 
+    title="create your account"
+    description=" Manage your hotel with ease and elegance"
+    
+    
+    >
+      <div>
           <Form {...form}>
             <form
               action=""
               onSubmit={form.handleSubmit(onSubmit)}
               className="space-y-4 text-[#6B7280] capitalize"
             >
-              <FormField
-                name="name"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel >name</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                name="email"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>email</FormLabel>
-                    <FormControl>
-                      <Input type="email" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
+              <div className="flex justify-between gap-1 items-center">
+                <FormField
+                  name="name"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>name</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+      
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  name="email"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>email</FormLabel>
+                      <FormControl>
+                        <Input type="email" {...field} />
+                      </FormControl>
+                       <FormMessage/>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="flex justify-between gap-1 items-center">
+                <FormField
+                  name="phoneNumber"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>phoneNumber</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage/>
+      
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                name="password"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>password</FormLabel>
-                    <FormControl>
-                      <Input type="password" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-
-              {/* <FormField
-                    name="confirmPassword"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>confirmPassword</FormLabel>
+                <FormField
+                  name="gender"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Gender</FormLabel>
+                      <Select value={field.value} onValueChange={field.onChange}>
                         <FormControl>
-                          <Input type="password" {...field} />
+                          <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="gender" />
+                          </SelectTrigger>
                         </FormControl>
-                      </FormItem>
-                    )}
-                  /> */}
-              <Button className="w-full bg-[#E3B23C] hover:bg-[#d4a62e]">Sign up</Button>
+                        <SelectContent>
+                          <SelectItem value="FEMALE">FEMALE</SelectItem>
+                          <SelectItem value="MALE">MALE</SelectItem>
+                          <SelectItem value="OTHER">OTHER</SelectItem>
+                        </SelectContent>
+                      </Select>
+      
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="flex justify-between items-center">
+                <FormField
+                  name="password"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>password</FormLabel>
+                      <FormControl>
+                        <Input type="password" {...field} />
+                      </FormControl>
+    
+                       <FormMessage/>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  name="confirmPassword"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>confirmPassword</FormLabel>
+                      <FormControl>
+                        <Input type="password" {...field} />
+                      </FormControl>
+                                   
+                       <FormMessage/>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <Button className="w-full bg-[#E3B23C] hover:bg-[#d4a62e]">
+                Sign up
+              </Button>
             </form>
           </Form>
-
-          {/* social login */}
+            {/* social login */}
           <article className="pt-6">
             <div className="flex justify-center items-center mb-4 gap-2 ">
               <hr className="flex-grow border-gray-500" />
@@ -135,7 +192,7 @@ const SignUp = () => {
               {icons.map((icon) => (
                 <button
                   key={icon.name}
-                  //   onClick={() => handleSocialLogin(icon.name)}
+                    onClick={handleGoogleLogin}
                   className="p-2 border w-full flex justify-center items-center rounded-md  hover:bg-gray-100 transition"
                 >
                   <img
@@ -146,27 +203,14 @@ const SignUp = () => {
                 </button>
               ))}
             </div>
-            <p className="text-sm pt-3 text-center text-[#6B7280]">Already have an account? <span className="text-[#E3B23C] underline">SignIn</span></p> 
-          </article>
-        </article>
-        <section className="relative  ">
-          <img
-            src="./hotel2.jpg"
-            alt="image"
-            className="object-cover w-full h-full max-h-[550px] rounded-r-md "
-          />
-          <div className="absolute bottom-5 left-4 right-4 text-white ">
-            <h2 className="text-2xl font-semibold capitalize p-1">
-              Elevate your guest experience
-            </h2>
-            <p className="text-base">
-              join a community of foward-thinking hoteliers who are redefining
-              hospitality with our intuitive and powerful management platform{" "}
+            <p className="text-sm pt-3 text-center text-[#6B7280]">
+              Already have an account?{" "}
+              <Link  to="/login" className="text-[#E3B23C] underline">SignIn</Link>
             </p>
-          </div>
-        </section>
-      </section>
-    </main>
+          </article>
+      </div>
+    </AuthLayout>
+  
   );
 };
 
