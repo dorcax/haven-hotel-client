@@ -28,6 +28,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { usePopUpContext } from "@/context/PopUpContext";
 import OtpDialog from "@/components/Dialog/auth/OtpDialog";
 import AuthLayout from "./AuthLayout";
+import Loader from "@/components/common/Loader";
 
 
 const SignUp = () => {
@@ -175,8 +176,8 @@ const SignUp = () => {
                   )}
                 />
               </div>
-              <Button className="w-full bg-[#E3B23C] hover:bg-[#d4a62e]">
-                Sign up
+              <Button disabled={isLoading} className="w-full bg-[#E3B23C] hover:bg-[#d4a62e]">
+               {isLoading ?<Loader/> :"Sign up"}
               </Button>
             </form>
           </Form>
@@ -205,7 +206,7 @@ const SignUp = () => {
             </div>
             <p className="text-sm pt-3 text-center text-[#6B7280]">
               Already have an account?{" "}
-              <Link  to="/login" className="text-[#E3B23C] underline">SignIn</Link>
+              <Link  to="/login" className="text-[#E3B23C] text-sm underline">SignIn</Link>
             </p>
           </article>
       </div>

@@ -8,6 +8,6 @@ export type AuthState = {
   token: string;
   role?: Role;
   success?: boolean;
-  hostelId?: string;
+  hotelId?: string;
   isVerified?: boolean;
 };

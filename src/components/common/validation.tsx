@@ -27,3 +27,8 @@ export const formSchema = z
   export const verifySchema =z.object({
     code:z.string().min(1,{message:"otp-code is required"}).length(6,{message:"otp must be 6 digit "})
   })
+
+  export const loginSchema =z.object({
+   email: z.email() ,
+   password:z.string()
+  })

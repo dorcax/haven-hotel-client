@@ -1,3 +1,4 @@
+import type { AuthState } from "../api.type";
 import { api } from "./base";
 
 export  enum genderRole{
@@ -12,6 +13,10 @@ type SignInput ={
     gender:genderRole,
     password:string
 
+}
+type LoginInput ={
+    password:string 
+    email:String
 }
 type verifyOtpInput ={
     code:string
@@ -38,6 +43,16 @@ export const authApi  =api.injectEndpoints({
             body
         }),
         invalidatesTags:["user"]
+     }),
+     login:mutation<AuthState,LoginInput>({
+        query:(body)=>({
+            url:"/auth/login",
+            method:"POST",
+            body
+
+        }),
+        invalidatesTags:["user"]
+
      })
      
     })
@@ -45,4 +60,4 @@ export const authApi  =api.injectEndpoints({
 })
 
 
-export const {useSignUpMutation,useVerifyOtpMutation} =authApi
+export const {useSignUpMutation,useVerifyOtpMutation,useLoginMutation} =authApi

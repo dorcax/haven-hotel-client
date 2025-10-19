@@ -10,30 +10,37 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { useSignUpMutation } from "@/api/data/auth.api";
-import { formSchema } from "@/components/common/validation";
+import { useLoginMutation } from "@/api/data/auth.api";
+import Loader from "@/components/common/Loader";
+import { loginSchema } from "@/components/common/validation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { icons } from "@/constant/icon";
+import UseAuthComplete from "@/hooks/UseAuthComplete";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import AuthLayout from "./AuthLayout";
 
 const Login = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
   // call the api function
-  const [signUp, { isLoading }] = useSignUpMutation();
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const [login, { isLoading }] = useLoginMutation();
+  const authComplete =UseAuthComplete()
+  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
-      const res = await signUp(values).unwrap();
-      console.log("res", res);
-      // return res
+      const res = await authComplete(login(values).unwrap());
+        toast.success("user login successfully")
+      return res
+      
+    
+      
     } catch (error) {
       console.log(error);
     }
@@ -84,11 +91,11 @@ const Login = () => {
                   <Input type="checkbox" className="size-3 cursor-pointer" />
                   <span className="text-sm">remember me</span>
                 </label>
-                <Link to="#" className="text-sm">Forgot password</Link>
+                <Link to="/forgot-password" className="text-sm">Forgot password</Link>
               </article>
 
-              <Button className="w-full bg-[#E3B23C] hover:bg-[#d4a62e]">
-                Sign in
+              <Button disabled={isLoading} className="w-full bg-[#E3B23C] capitalize hover:bg-[#d4a62e]">
+               {isLoading ?<Loader/>:"log in"}
               </Button>
             </form>
           </Form>
