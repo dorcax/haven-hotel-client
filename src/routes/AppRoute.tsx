@@ -1,52 +1,57 @@
 import { AppLayout } from '@/components/layout/AppLayout'
+import { colums, data } from '@/constant/roomdata'
 import ForgotPassword from '@/pages/auth/ForgotPassword'
 import Login from '@/pages/auth/Login'
 import PasswordVerification from '@/pages/auth/PasswordVerification'
 import ResetPassword from '@/pages/auth/ResetPassword'
 import SignUp from '@/pages/auth/SignUp'
 import DashboardApp from '@/pages/dashboard/DashboardApp'
+import RoomList from '@/pages/dashboard/room/RoomList'
 // import Dashboard from '@/pages/dashboard/Dashboard'
 // import Dashboard from '@/pages/dashboard/'
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
 
 
-const router =createBrowserRouter([
+const router = createBrowserRouter([
   {
-  index:true,
-  element:<SignUp/>
-  },
-  {
-    path:"/login",
-    element:<Login/>
-  },
-   {
-    path:"/verify-otp",
-    element:<PasswordVerification/>
+    index: true,
+    element: <SignUp />
   },
   {
-    path:"/forgot-password",
-    element:<ForgotPassword/>
+    path: "/login",
+    element: <Login />
   },
+  {
+    path: "/verify-otp",
+    element: <PasswordVerification />
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />
+  },
+  {
+    path: "/dashboard",
+    element: <AppLayout />,
+    children: [{
+      index: true,
+      element: <DashboardApp />
+
+    },
     {
-    path:"/reset-password",
-    element:<ResetPassword/>
+      path: "room",
+      element: <RoomList columns={colums} data={data} />
+    }
+    ],
   },
-  {
-    path:"/dashboard",
-    element:<AppLayout/>,
-    children:[{
-      index:true,
-      element:<DashboardApp/>
-
-    }]
-  }
-
-
 ])
 const AppRoute = () => {
   return (
-   <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   )
 }
 

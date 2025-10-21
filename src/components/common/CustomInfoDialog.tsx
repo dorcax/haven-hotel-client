@@ -34,11 +34,11 @@ const{isDialogOpen,openDialog,closeDialog} =usePopUpContext()
       </DialogTrigger>
       <DialogContent className={cn("sm:max-w-md",className)}>
         <DialogHeader>
-            <div className="flex justify-center">
+           {imgUrl &&  <div className="flex justify-center">
                 <img src={imgUrl} alt="hotel-image" width={70}/>
-            </div>
-          <DialogTitle className="text-center capitalize text-xl font-semibold text-[#2F4858]">{title}</DialogTitle>
-          <DialogDescription className="text-sm text-center">
+            </div>}
+          <DialogTitle className=" capitalize text-xl font-semibold text-[#2F4858]">{title}</DialogTitle>
+          <DialogDescription className="text-sm ">
            {description}
           </DialogDescription>
         </DialogHeader>

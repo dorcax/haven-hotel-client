@@ -6,7 +6,7 @@ export  function AppLayout() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main>
+      <main className="w-full px-6 bg-[#F5F6FA] ">
         <SidebarTrigger />
         <Outlet />
       </main>
