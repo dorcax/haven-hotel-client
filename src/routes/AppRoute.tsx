@@ -1,3 +1,4 @@
+import Upload from '@/components/fileupload/Upload'
 import { AppLayout } from '@/components/layout/AppLayout'
 import { colums, data } from '@/constant/roomdata'
 import ForgotPassword from '@/pages/auth/ForgotPassword'
@@ -10,6 +11,8 @@ import RoomList from '@/pages/dashboard/room/RoomList'
 // import Dashboard from '@/pages/dashboard/Dashboard'
 // import Dashboard from '@/pages/dashboard/'
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import ProtectedRoute from './ProtectedRoute'
+import AddHotel from '@/components/Dialog/hotel/AddHotel'
 
 
 
@@ -35,17 +38,28 @@ const router = createBrowserRouter([
     element: <ResetPassword />
   },
   {
+    path: "/file",
+    element: <Upload />
+  },
+  {
+    path:"/addhotel",
+    element:<AddHotel/>
+  },
+  {
     path: "/dashboard",
-    element: <AppLayout />,
+    element: <ProtectedRoute />,
     children: [{
-      index: true,
-      element: <DashboardApp />
+      element: <AppLayout />,
+      children: [{
+        index: true,
+        element: <DashboardApp />
+      }, {
+        path: "room",
+        element: <RoomList columns={colums} data={data} />
+      }]
 
     },
-    {
-      path: "room",
-      element: <RoomList columns={colums} data={data} />
-    }
+
     ],
   },
 ])

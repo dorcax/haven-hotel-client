@@ -53,11 +53,17 @@ export const authApi  =api.injectEndpoints({
         }),
         invalidatesTags:["user"]
 
+     }),
+     authUser:query<AuthState,void>({
+       query: () => "auth",
+       providesTags:["user"]
+
      })
+     
      
     })
     
 })
 
 
-export const {useSignUpMutation,useVerifyOtpMutation,useLoginMutation} =authApi
+export const {useSignUpMutation,useVerifyOtpMutation,useLoginMutation,useAuthUserQuery} =authApi

@@ -26,7 +26,7 @@ const AddRoom = () => {
   return (
     <CustomInfoDialog
       title="create room"
-      description="Add a new room to the hotel system"
+      description="Add a new r loading={true}oom to the hotel system"
       className="w-full md:max-w-4xl max-h-[500px] overflow-y-auto overflow [&::-webkit-scrollbar]:hidden  [-ms-overflow-style-none] [scrollbar-width:none]"
       loading={true}
     >

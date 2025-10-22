@@ -28,7 +28,7 @@ export const useAuthState = () => {
   const auth = useAppSelector((state) => state.auth);
   const result = useMemo(() => {
     const isLoggedIn = !!auth.token;
-    const clear = dispatch(clearAuth);
+    const clear = ()=>dispatch(clearAuth());
     const set = (auth: AuthState) => dispatch(setAuth(auth));
     return { auth, clear, set, isLoggedIn };
   }, [auth, dispatch]);
