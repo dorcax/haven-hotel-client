@@ -36,7 +36,10 @@ const Login = () => {
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
       const res = await authComplete(login(values).unwrap());
+      console.log("res",res)
+      localStorage.setItem("token",res.token)
         toast.success("user login successfully")
+
       return res
       
     

@@ -1,3 +1,4 @@
+import DropZoneImage from "@/components/common/DropZoneImage"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -7,24 +8,33 @@ import { useForm } from "react-hook-form"
 
 const AddHotel = () => {
     const form = useForm()
+    
     return (
-        <section className='bg-[#F5F6FA] flex justify-center items-center min-h-screen w-full '>
-            <div className="grid grid-cols-2 gap-6 w-full max-w-4xl  bg-white shadow-5xl rounded-xl px-4 py-6 overflow-y-auto overflow [&::-webkit-scrollbar]:hidden  [-ms-overflow-style-none] [scrollbar-width:none] h-[500px]">
-                {/* the right hand  */}
-                <article>
-                    <h2 className="capitalize text-base text-gray-900 pb-4">hotel image</h2>
-                    <div className="border  border-dashed border-[#E3B23C] h-[300px] flex flex-col justify-center items-center rounded-2xl">
-                        <img src="./hotel1.jpg" alt="default-image" className="object-cover w-[180px] h-[180px] rounded-xl" />
-                        <p className="text-[#E3B23C] text-sm py-2">Click or drag to upload new image</p>
-                        <Button className="bg-[#E3B23C] capitalize text-sm hover:bg-[#E3B23C]">upload image</Button>
-                    </div>
-                </article>
-                {/* the second hand */}
-                <article>
-                    <h2 className="capitalize text-base text-gray-900 pb-4">hotel details</h2>
-                    <Form {...form}>
-                        <form className="space-y-4">
-                            <div className="flex flex-col md:flex-row gap-2">
+        <section className='bg-[#F5F6FA] flex justify-center items-center min-h-screen w-full  '>
+                 <Form {...form}>
+                        <form className=" grid grid-cols-2 gap-6 w-full max-w-5xl max-h-[90vh]  bg-white shadow-5xl rounded-xl px-4 py-6 overflow-y-auto overflow [&::-webkit-scrollbar]:hidden  [-ms-overflow-style-none] [scrollbar-width:none]">
+                          {/* the hotel image  */}
+                          <FormField
+                          name="attachments" 
+                          control={form.control}
+                          render={({field})=>(
+                            <FormItem>
+                             <FormLabel className="capitalize text-base text-gray-900">hotel image</FormLabel>
+                             <FormControl>
+                                <DropZoneImage maxCount={4} maxSize={6}/>
+                             </FormControl>
+                            </FormItem>
+                          )}
+                          
+                          
+                          />
+                          
+                          
+                          
+                            {/* the hotel details */}
+                          <div className="space-y-4">
+                             <h2 className="capitalize text-base text-gray-900 ">hotel details</h2>
+                              <div className="flex flex-col md:flex-row gap-2">
                                
                                  <FormField
                                     control={form.control}
@@ -136,11 +146,10 @@ const AddHotel = () => {
                                 create hotel
                             </Button>
 
+                          </div>
 
                         </form>
                     </Form>
-                </article>
-            </div>
         </section>
     )
 }

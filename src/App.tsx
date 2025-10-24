@@ -4,6 +4,7 @@ import { persistor, store } from "./api/data/store";
 import AppRoute from "./routes/AppRoute";
 import { ToastContainer } from "react-toastify";
 import { PopupProvider } from "./context/PopUpContext";
+import UploaderProvider from "./context/UploaderContext";
 // import { Button } from './components/ui/button'
 
 export const App = () => {
@@ -14,7 +15,10 @@ export const App = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <PopupProvider>
-          <AppRoute />
+          <UploaderProvider>
+            <AppRoute />
+          </UploaderProvider>
+
         </PopupProvider>
         <ToastContainer />
       </PersistGate>

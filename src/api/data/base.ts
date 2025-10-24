@@ -6,7 +6,7 @@ const tagTypes =[
     "room"
 ] as const
 const envUrl =import.meta.env.VITE_API_URL
-const defaultUrl ="http://localhost:3000" 
+const defaultUrl =import.meta.env.BASE_URL
 // backend development url
 
 export const baseUrl =(envUrl || defaultUrl).replace(/\blocalhost\b/,window.location.hostname)

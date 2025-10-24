@@ -56,6 +56,9 @@ const router = createBrowserRouter([
       }, {
         path: "room",
         element: <RoomList columns={colums} data={data} />
+      },{
+        path:"addhotel",
+        element:<AddHotel/>
       }]
 
     },
