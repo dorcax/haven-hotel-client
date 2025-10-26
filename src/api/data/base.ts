@@ -15,7 +15,8 @@ export const api =createApi({
     tagTypes,
     endpoints:()=>({}),
     baseQuery:fetchBaseQuery({
-        baseUrl,
+        // baseUrl,
+        baseUrl:"http://localhost:3000",
         prepareHeaders(headers,{getState}){
             const state =getState() as RootState
             const token =state.auth.token 

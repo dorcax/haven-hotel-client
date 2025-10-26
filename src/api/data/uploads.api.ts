@@ -2,6 +2,7 @@ import axios from "axios";
 import { api } from "./base";
 
 type UploadProps = {
+    id:string,
   file: File;
 //   id: string;
   order: number;
@@ -34,7 +35,7 @@ const uploads =api.injectEndpoints({
                             }
                         }
                     )
-                    console.log(response)
+                    console.log("image in fronetend",response)
                     return {
                         data:response.data
                     }
