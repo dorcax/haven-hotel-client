@@ -1,18 +1,17 @@
 import Upload from '@/components/fileupload/Upload'
 import { AppLayout } from '@/components/layout/AppLayout'
-import { colums, data } from '@/constant/roomdata'
 import ForgotPassword from '@/pages/auth/ForgotPassword'
 import Login from '@/pages/auth/Login'
 import PasswordVerification from '@/pages/auth/PasswordVerification'
 import ResetPassword from '@/pages/auth/ResetPassword'
 import SignUp from '@/pages/auth/SignUp'
 import DashboardApp from '@/pages/dashboard/DashboardApp'
-import RoomList from '@/pages/dashboard/room/RoomList'
+import { RoomList } from '@/pages/dashboard/room/RoomList'
 // import Dashboard from '@/pages/dashboard/Dashboard'
 // import Dashboard from '@/pages/dashboard/'
+import AddHotel from '@/components/Dialog/hotel/AddHotel'
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import ProtectedRoute from './ProtectedRoute'
-import AddHotel from '@/components/Dialog/hotel/AddHotel'
 
 
 
@@ -45,6 +44,7 @@ const router = createBrowserRouter([
     path:"/addhotel",
     element:<AddHotel/>
   },
+
   {
     path: "/dashboard",
     element: <ProtectedRoute />,
@@ -55,11 +55,13 @@ const router = createBrowserRouter([
         element: <DashboardApp />
       }, {
         path: "room",
-        element: <RoomList columns={colums} data={data} />
-      },{
-        path:"addhotel",
-        element:<AddHotel/>
-      }]
+        element: <RoomList  />
+      },
+      // {
+      //   path:"addroom",
+      //   element:<AddRoom/>
+      // }
+    ]
 
     },
 

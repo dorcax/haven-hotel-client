@@ -47,8 +47,13 @@ const SignUp = () => {
   // call the api function 
   const [signUp,{isLoading}] =useSignUpMutation()
   const onSubmit = async (values:z.infer<typeof formSchema>) => {
+    // const payload={
+    //   ...values,
+    //   role:"CUSTOMER"
+    // }
     try {
-      const res =await signUp(values).unwrap()
+      const {confirmPassword ,...payload} =values
+      const res =await signUp(payload).unwrap()
       toast.success(res.message)
       // directly open otpDialog
       // openDialog(<OtpDialog/>)

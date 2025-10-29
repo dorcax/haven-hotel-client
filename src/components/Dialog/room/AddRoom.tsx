@@ -1,4 +1,7 @@
+import { useAddRoomMutation } from "@/api/data/rooms.api";
 import CustomInfoDialog from "@/components/common/CustomInfoDialog";
+import DropZoneImage from "@/components/common/DropZoneImage";
+import { addRoomSchema, categoryEnum } from "@/components/common/validation";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -9,7 +12,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -18,15 +20,56 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import TagInput from "@/components/ui/TagsInput";
+import { usePopUpContext } from "@/context/PopUpContext";
+import UploaderProvider from "@/context/UploaderContext";
+import { zodResolver } from "@hookform/resolvers/zod";
 // import { Select, SelectTrigger } from "@radix-ui/react-select"
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import type z from "zod";
 
 const AddRoom = () => {
-  const form = useForm();
+  const [addRoom,{isLoading}] =useAddRoomMutation()
+  const {closeDialog} =usePopUpContext()
+  const form = useForm<z.infer<typeof addRoomSchema>>({
+    resolver:zodResolver(addRoomSchema),
+    defaultValues:{
+      roomNumber:"",
+      description:"",
+      price:"",
+      floor:"",
+      capacity:"",
+      amenities:[],
+      attachments:[],
+      category:categoryEnum.STANDARD
+    }
+  });
+
+
+  const onSubmit=async(values:z.infer<typeof addRoomSchema>)=>{
+    try {
+    const payload ={
+      ...values,
+       floor :parseInt(values.floor),
+      price :parseInt(values.price),
+      capacity :parseInt(values.capacity)
+    }
+     
+
+      const res  =await addRoom(payload).unwrap()
+      console.log("creating room", res)
+      toast.success(res.message)
+      closeDialog()
+    } catch (error) {
+      console.log(error)
+      
+    }
+  }
   return (
-    <CustomInfoDialog
+   <UploaderProvider>
+     <CustomInfoDialog
       title="create room"
-      description="Add a new r loading={true}oom to the hotel system"
+      // description="Add a new r loading={true}oom to the hotel system"
       className="w-full md:max-w-4xl max-h-[500px] overflow-y-auto overflow [&::-webkit-scrollbar]:hidden  [-ms-overflow-style-none] [scrollbar-width:none]"
       loading={true}
     >
@@ -35,56 +78,35 @@ const AddRoom = () => {
           action=""
           method="post"
           className="grid grid-cols-2 gap-4   text-[#6B7280] "
+          onSubmit={form.handleSubmit(onSubmit)}
         >
-          <div className=" w-full">
+          <div className=" w-full ">
             {/* left hand image */}
             <FormField
+              name="attachments"
               control={form.control}
-              name="imageUrl"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="capitalize text-base">
-                    uplaod image
-                  </FormLabel>
-                  <FormControl>
-                    <div className=" border border-dashed border-[#E3B23C] w-full  max-w-[300px] h-[200px] rounded-xl mt-2">
-                      <div className="flex flex-col justify-center items-center h-full">
-                        <Label className="capitalize text-sm">
-                          upload photo
-                        </Label>
-                        <p className="text-xs text-[#E3B23C] mb-1">
-                          click & drag an image here or click to select a file
-                        </p>
-                        <Input
-                          type="file"
-                          placeholder="upload images"
-                          {...field}
-                          className=" hidden"
-                        />
-                        <Button className="bg-[#e3a03c]/80 mt-4 cursor-pointer rounded-full hover:bg-0 text-white">
-                          Upload
-                        </Button>
-                      </div>
-                    </div>
+                  <FormLabel className="capitalize text-base text-gray-900 pb-4">hotel image</FormLabel>
+                  <FormControl className="">
+                    <DropZoneImage name={field.name} maxCount={4} maxSize={6} acceptType="image" />
                   </FormControl>
-                  {/* <FormDescription>This is your public display name.</FormDescription> */}
-                  <FormMessage />
                 </FormItem>
               )}
-            />
+     />
           </div>
 
           {/* Right Column: Room Details Form */}
-          <div className="w-full flex flex-col ">
+          <div className="w-full flex flex-col   ">
             <h2 className="text-base font-semibold py-2">Room Details</h2>
 
             <FormField
-              name="name"
+              name="roomNumber"
               control={form.control}
               render={({ field }) => (
                 <FormItem className="my-2">
                   <FormLabel className="text-sm capitalize">
-                    Room Name
+                    Room Number
                   </FormLabel>
                   <FormControl>
                     <Input {...field} placeholder="Enter room name" />
@@ -142,14 +164,14 @@ const AddRoom = () => {
                     Amenities
                   </FormLabel>
                   <FormControl>
-                    <TagInput />
+                    <TagInput onChange={field.onChange} value={field.value} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <div className="flex flex-wrap gap-4 my-2">
+            <div className="flex flex-wrap gap-4 mt-3">
               <FormField
                 name="floor"
                 control={form.control}
@@ -158,6 +180,7 @@ const AddRoom = () => {
                     <FormLabel className="text-sm capitalize">Floor</FormLabel>
                     <FormControl>
                       <Input
+                      
                         {...field}
                         placeholder="e.g. 5"
                         className="w-[100px] rounded-full"
@@ -177,6 +200,7 @@ const AddRoom = () => {
                     </FormLabel>
                     <FormControl>
                       <Input
+                    
                         {...field}
                         placeholder="e.g. 240"
                         className="w-[100px] rounded-full"
@@ -196,6 +220,7 @@ const AddRoom = () => {
                     </FormLabel>
                     <FormControl>
                       <Input
+                      
                         {...field}
                         placeholder="e.g. 2"
                         className="w-[100px] rounded-full"
@@ -215,6 +240,7 @@ const AddRoom = () => {
         </form>
       </Form>
     </CustomInfoDialog>
+   </UploaderProvider>
   );
 };
 

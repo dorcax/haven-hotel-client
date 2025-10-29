@@ -14,7 +14,7 @@ const UseAuthComplete = () => {
         if(res.hotelId){
             navigate(`/dashboard/hotel/${res.hotelId}`)
         }else{
-            navigate("/dashboard",{replace:true})
+            navigate("/addhotel",{replace:true})
         }
         return res
      

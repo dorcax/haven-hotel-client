@@ -1,5 +1,6 @@
 import { Role } from "@/api/api.type";
 import { genderRole } from "@/api/data/auth.api";
+import { Description } from "@radix-ui/react-dialog";
 import { z } from "zod";
 
 export const formSchema = z
@@ -13,6 +14,7 @@ export const formSchema = z
     password: z
       .string()
       .min(5, { message: "password must be atleast 5 characters" }),
+    
     confirmPassword: z.string(),
     gender: z.enum(genderRole, {
       message: "Gender is required",
@@ -33,56 +35,6 @@ export const formSchema = z
    password:z.string()
   })
 
-
-  // export const addHotelSchema =z.object({
-  //   attachments:z.array(z.string().min(1, "At least one image is required").max(4,"four images are required")),
-  //   email:z.email("enter a vaild email"),
-  //   address:z.string(),
-  //   name:z.string().min(10,"name must be alteast 10 character").max(30,"name must be less than 30 characters"),
-  //   description:z.string().min(50,"description must be atleast 50 characters").max(1000,"description must be less than 1000 character"),
-  //   contactPhone:z.string().min(11,"phone number must be 11 character").max(15,"phone number is too long"),
-  //   amenities:z.array(z.string().min(1,"please atleast select one amenity")),
-  //   features:z.array(z.string().min(1,"please atleast select one feature")),
-  //   rule:z.array(z.string().min(1,"please upload atleast hotel rule").max(2, "Cannot upload more than 1 images"))
-
-  // })
-
-
-
-//   export const addHotelSchema = z.object({
-//   attachments: z
-//     .array(z.string().min(1, "Invalid image URL"))
-//     .length(4, "four images are required"), // ✅ exactly 4 uploads required
-
-//   email: z.string().email("Enter a valid email"),
-
-//   address: z.string(),
-
-//   name: z
-//     .string()
-//     .min(10, "Name must be at least 10 characters")
-//     .max(30, "Name must be less than 30 characters"),
-
-//   description: z
-//     .string()
-//     .min(50, "Description must be at least 50 characters")
-//     .max(1000, "Description must be less than 1000 characters"),
-
-//   contactPhone: z
-//     .string()
-//     .min(11, "Phone number must be 11 characters")
-//     .max(15, "Phone number is too long"),
-
-//   amenities: z
-//     .array(z.string().min(1, "Please select at least one amenity")),
-
-//   features: z
-//     .array(z.string().min(1, "Please select at least one feature")),
-
-//   rule: z
-//     .array(z.string().min(1, "Please upload at least one hotel rule"))
-//     .max(1, "Cannot upload more than 1 image"), // ✅ only one allowed
-// });
 
 
 export const addHostelSchema = z.object({
@@ -117,3 +69,47 @@ export const addHostelSchema = z.object({
     .max(1, "Cannot upload more than 1 images"),
 });
 
+
+// @IsString()
+//   name: string;
+//   @IsString()
+//   description: string;
+//   @Type(() => Number)
+//   @IsNumber()
+//   price: number;
+//   @IsArray()
+//   amenities: string[];
+//   @Type(() => Number)
+//   @IsNumber()
+//   floor: number;
+//   @Type(() => Number)
+//   @IsNumber()
+//   capacity: number;
+//   @IsString()
+//   hotelId: string;
+//   @IsEnum(RoomCategory)
+//   category: RoomCategory;
+//   @IsArray()
+//   attachments: string[]
+
+
+
+export enum categoryEnum {
+  DELUXE="DELUXE",
+  STANDARD="STANDARD",
+  SUITE ="SUITE"
+
+}
+ export const addRoomSchema =z.object({
+  roomNumber:z.string().min(3,"name must be atleast 3 character").max(5,"name must not be more than 5 character"),
+  description:z.string().min(50,"description must be atleast 20 characters").max(1000,"description must not be more than 1000 character "),
+  price :z.string().min(0),
+  amenities:z.array(z.string()).min(1,"please add atleast one amenities"),
+  floor:z.string().min(1).max(9),
+  capacity:z.string().min(1,"capacity must be atleast 1 character").max(4,"capacity must not be more than 4"),
+  category:z.enum(categoryEnum,{message:"select one of the room categorye"}),
+  attachments:z.array(z.string()).min(1, "Please select at least one image").max(4, "Exactly 4 images are required")
+
+
+
+ })

@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input"
 import TagInput from "@/components/ui/TagsInput"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 import type z from "zod"
 // import { Form } from "react-router-dom"
 
@@ -28,6 +30,7 @@ const AddHotel = () => {
 
 
     })
+    const navigate =useNavigate()
     const onSubmit = async (values: z.infer<typeof addHostelSchema>) => {
         //     const res =await Hotel({
         //         ...values,
@@ -41,6 +44,9 @@ const AddHotel = () => {
               rule: values.rule?.[0],
               
             }).unwrap();
+            toast.success("Hotel created successfully")
+            navigate("/dashboard")
+
             console.log("Response:", res);
           } catch (err) {
             console.error("Error creating hotel:", err);
@@ -49,17 +55,18 @@ const AddHotel = () => {
     return (
         <section className='bg-[#F5F6FA] flex justify-center items-center min-h-screen w-full  '>
             <Form {...form}>
-                <form className=" grid grid-cols-2 gap-6 w-full max-w-5xl max-h-[90vh]  bg-white shadow-5xl rounded-xl px-4 py-6 overflow-y-auto overflow [&::-webkit-scrollbar]:hidden  [-ms-overflow-style-none] [scrollbar-width:none]" onSubmit={form.handleSubmit(onSubmit, (errors) => {
+                <form className=" grid grid-cols-3 gap-6 w-full max-w-5xl max-h-[90vh]  bg-white shadow-5xl rounded-xl px-4 overflow-y-auto overflow [&::-webkit-scrollbar]:hidden  [-ms-overflow-style-none] [scrollbar-width:none]" onSubmit={form.handleSubmit(onSubmit, (errors) => {
                     console.log("❌ Validation Errors:", errors);
                 })}>
                     {/* the hotel image  */}
-                    <FormField
+                   <div className="py-10 col-span-1">
+                     <FormField
                         name="attachments"
                         control={form.control}
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="capitalize text-base text-gray-900">hotel image</FormLabel>
-                                <FormControl>
+                                <FormLabel className="capitalize text-base text-gray-900 pb-4">hotel image</FormLabel>
+                                <FormControl className="border border-amber-950">
                                     <DropZoneImage name={field.name} maxCount={4} maxSize={6} acceptType="image" />
                                 </FormControl>
                             </FormItem>
@@ -68,11 +75,12 @@ const AddHotel = () => {
 
                     />
 
+                   </div>
 
 
                     {/* the hotel details */}
-                    <div className="space-y-4">
-                        <h2 className="capitalize text-base text-gray-900 ">hotel details</h2>
+                    <div className="space-y-4 py-10 col-span-2 ">
+                        <h2 className="capitalize text-base text-gray-900 pb-4 ">hotel details</h2>
                         <div className="flex flex-col md:flex-row gap-2">
 
                             <FormField
