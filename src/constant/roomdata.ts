@@ -132,3 +132,70 @@ export const data: RoomType[] = [
     ],
   },
 ];
+
+
+export const hotelFeatures = [
+  {
+    title: "Comfortable Bedding & Furniture",
+    description:
+      "Spacious rooms with cozy beds, work desks, and seating areas for maximum comfort.",
+    icon: "🛏️",
+  },
+  {
+    title: "Smart TV & Wi-Fi",
+    description:
+      "Enjoy high-speed internet access and entertainment with Smart TVs and streaming services.",
+    icon: "📺",
+  },
+  {
+    title: "Air Conditioning & Heating",
+    description:
+      "In-room climate control to keep you comfortable all year round.",
+    icon: "❄️",
+  },
+  {
+    title: "Private Bathroom",
+    description:
+      "Modern bathrooms with showers or bathtubs, free toiletries, and fresh towels.",
+    icon: "🛁",
+  },
+  {
+    title: "Mini Bar / Coffee Station",
+    description:
+      "Refresh yourself with a selection of drinks, snacks, and a coffee or tea maker.",
+    icon: "☕",
+  },
+];
+
+export const hotelFacilities = [
+  {
+    title: "Restaurant & Bar",
+    description:
+      "On-site dining serving local and international cuisines with refreshing beverages.",
+    icon: "🍽️",
+  },
+  {
+    title: "Swimming Pool",
+    description:
+      "A relaxing pool area for guests to unwind and enjoy the sunshine.",
+    icon: "🏊",
+  },
+  {
+    title: "Fitness Center / Gym",
+    description:
+      "Stay active with our modern gym facilities equipped with weights and machines.",
+    icon: "💪",
+  },
+  {
+    title: "Conference & Meeting Rooms",
+    description:
+      "Fully equipped spaces for business meetings, workshops, and corporate events.",
+    icon: "🏢",
+  },
+  {
+    title: "24-Hour Front Desk & Room Service",
+    description:
+      "Round-the-clock assistance including housekeeping and food delivery.",
+    icon: "🕒",
+  },
+];

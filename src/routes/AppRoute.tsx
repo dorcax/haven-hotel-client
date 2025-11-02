@@ -46,7 +46,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/dashboard",
+    path: "/dashboard/hotel/:id",
     element: <ProtectedRoute />,
     children: [{
       element: <AppLayout />,

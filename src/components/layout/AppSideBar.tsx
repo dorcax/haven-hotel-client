@@ -12,18 +12,26 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
+import UseAuthComplete from "@/hooks/UseAuthComplete"
+import { useAuthState } from "@/api/data/auth"
 // import { DropdownMenu } from "@radix-ui/react-dropdown-menu"
 
 // Menu items.
-const items = [
+
+
+export function AppSidebar() {
+
+const {auth} =useAuthState()
+
+  const items = [
   {
     title: "Dashboard",
-    url: "/dashboard",
+    url: `/dashboard/hotel/${auth?.hotelId}`,
     icon: Home,
   },
   {
     title: "rooms",
-    url: "/dashboard/room",
+    url: `/dashboard/hotel/${auth?.hotelId}/room`,
     icon: Inbox,
   },
   {
@@ -47,8 +55,6 @@ const items = [
     icon: Settings,
   },
 ]
-
-export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarContent>

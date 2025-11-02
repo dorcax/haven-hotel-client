@@ -10,7 +10,8 @@ const UseAuthComplete = () => {
   return useCallback(
     async(result:Promise<AuthState>)=>{
         const res =await result 
-        auth.set({token:res.token})
+        console.log("loginging",res)
+        auth.set(res)
         if(res.hotelId){
             navigate(`/dashboard/hotel/${res.hotelId}`)
         }else{

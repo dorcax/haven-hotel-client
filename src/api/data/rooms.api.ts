@@ -1,19 +1,25 @@
 import { api } from "./base"
 
 
-type roomInputType ={
-    name:string,
-    description:string,
-    floor:number,
-    capacity:number,
+export type roomInputType ={
+    name:string
+    description:string
+    floor:number
+    capacity:number
+    price:number
+    category:string[]
     amenities:string[]
     attachments:string[]
+    isAvailable?:boolean
+    attachment?:{
+        uploads:{url:string}[]
+    }
 
 }
 type roomInputResponse ={
     message:string
 }
-const hotels =api.injectEndpoints({
+const rooms =api.injectEndpoints({
     endpoints:({mutation,query})=>({
         addRoom:mutation<roomInputResponse,roomInputType>({
          query:(body)=>({
@@ -22,9 +28,27 @@ const hotels =api.injectEndpoints({
             body
          }),
          invalidatesTags:["room"]
+        }),
+        listRooms:query<any,any>({
+        query:(q)=>({
+            url:"room",
+            params: q ?? undefined
+        }),
+        providesTags:["room"]
+
+        }),
+        deleteRoom:mutation<{message:string},string>({
+            query:(roomId:string)=>({
+                url:`room/${roomId}`,
+                method:"Delete"
+
+            }),
+            invalidatesTags:["room"]
+
         })
+        
         
     })
 })
 
-export const {useAddRoomMutation} =hotels
+export const {useAddRoomMutation ,useListRoomsQuery,useDeleteRoomMutation} =rooms

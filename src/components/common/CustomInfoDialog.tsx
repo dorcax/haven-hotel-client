@@ -15,7 +15,7 @@ import type { ReactNode } from "react"
 
 type CustomInfoDialogType={
     imgUrl?:string
-    title:string,
+    title?:string,
     children:ReactNode,
     description?:string
     okText?:string
@@ -27,6 +27,7 @@ type CustomInfoDialogType={
 const CustomInfoDialog = ({title,children,description,okText,imgUrl,loading,className,close}:CustomInfoDialogType) => {
 const{isDialogOpen,openDialog,closeDialog} =usePopUpContext()
 
+
   return (
     <Dialog open={isDialogOpen} onOpenChange={openDialog}>
       <DialogTrigger asChild>
@@ -37,7 +38,7 @@ const{isDialogOpen,openDialog,closeDialog} =usePopUpContext()
            {imgUrl &&  <div className="flex justify-center">
                 <img src={imgUrl} alt="hotel-image" width={70}/>
             </div>}
-          <DialogTitle className=" capitalize text-xl font-semibold text-[#2F4858]">{title}</DialogTitle>
+          <DialogTitle className=" capitalize text-lg font-semibold text-gray-900">{title}</DialogTitle>
           <DialogDescription className="text-sm ">
            {description}
           </DialogDescription>
