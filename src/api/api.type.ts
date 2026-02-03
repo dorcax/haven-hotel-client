@@ -5,7 +5,7 @@ export enum Role {
 
 
 export type AuthState = {
-  token: string;
+  token?: string;
   role?: Role;
   success?: boolean;
   hotelId?: string;

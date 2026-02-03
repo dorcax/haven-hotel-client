@@ -19,7 +19,7 @@ type CustomInfoDialogType={
     children:ReactNode,
     description?:string
     okText?:string
-    loading:boolean
+    loading?:boolean
     className?:string
     close?:boolean
     // onClick:()=>void

@@ -1,3 +1,4 @@
+import React from 'react'
 
 import {
   type ColumnDef,
@@ -11,7 +12,6 @@ import {
   type VisibilityState
 } from "@tanstack/react-table"
 import { ArrowUpDown, Ban, CircleCheck, CircleEllipsis, MoreHorizontal } from "lucide-react"
-import * as React from "react"
 
 import { useAuthState } from "@/api/data/auth"
 import { useListRoomsQuery } from "@/api/data/rooms.api"
@@ -41,7 +41,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { usePopUpContext } from "@/context/PopUpContext"
 
-
 export type RoomType = {
   // id: string
   name: string
@@ -54,7 +53,6 @@ export type RoomType = {
   attachments: string[]
   isAvailable: boolean
 }
-
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -251,7 +249,7 @@ export const columns: ColumnDef<any>[] = [
           <DropdownMenuContent align="end">
             {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
             <DropdownMenuItem
-              onClick={() => openDrawer()}
+            // onClick={()=>openDrawer()}
             // onClick={() => navigator.clipboard.writeText(payment.id)}
             >
               View room
@@ -266,8 +264,8 @@ export const columns: ColumnDef<any>[] = [
   },
 ]
 
-export function RoomList() {
 
+const ReservationList = () => {
   // const {id} =useParams()
   const { auth } = useAuthState()
   const { openDialog, openDrawer } = usePopUpContext()
@@ -571,14 +569,13 @@ export function RoomList() {
     value: pagination.INACTIVE,
     icon: <Ban />
   }]
-
   return (
     <div className="space-y-4">
       <PageHeader
-        title="Room"
-        description="Here's a list of all rooms in the hotel."
+        title="Reservation list "
+        description="Here's a list of all reservations in the hotel."
         primary={{
-          title: "create room",
+          title: "create booking",
           action: () => openDialog(<AddRoom />)
 
         }}
@@ -636,6 +633,4 @@ export function RoomList() {
   )
 }
 
-
-
-
+export default ReservationList

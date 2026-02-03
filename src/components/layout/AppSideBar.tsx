@@ -36,7 +36,7 @@ const {auth} =useAuthState()
   },
   {
     title: "reservations",
-    url: "#",
+    url:`/dashboard/hotel/${auth?.hotelId}/reservations`,
     icon: Calendar,
   },
   {

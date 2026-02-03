@@ -7,9 +7,8 @@ import ResetPassword from '@/pages/auth/ResetPassword'
 import SignUp from '@/pages/auth/SignUp'
 import DashboardApp from '@/pages/dashboard/DashboardApp'
 import { RoomList } from '@/pages/dashboard/room/RoomList'
-// import Dashboard from '@/pages/dashboard/Dashboard'
-// import Dashboard from '@/pages/dashboard/'
 import AddHotel from '@/components/Dialog/hotel/AddHotel'
+import ReservationList from '@/pages/reservation/ReservationList'
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import ProtectedRoute from './ProtectedRoute'
 
@@ -57,10 +56,10 @@ const router = createBrowserRouter([
         path: "room",
         element: <RoomList  />
       },
-      // {
-      //   path:"addroom",
-      //   element:<AddRoom/>
-      // }
+      {
+        path:"reservations",
+        element:<ReservationList/>
+      }
     ]
 
     },

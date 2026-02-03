@@ -17,18 +17,18 @@ export const api =createApi({
     baseQuery:fetchBaseQuery({
         // baseUrl,
         baseUrl:"http://localhost:3000",
-        prepareHeaders(headers,{getState}){
-            const state =getState() as RootState
-            const token =state.auth.token 
-            if(token){
+        credentials:"include"
+        // prepareHeaders(headers,{getState}){
+        //     const state =getState() as RootState
+        //     const token =state.auth.token 
+        //     if(token){
             
-            headers.set("Authorization",`Bearer ${token}`)
-            }
+        //     headers.set("Authorization",`Bearer ${token}`)
+        //     }
             // console.log("authorization",token)
 
-            return headers
 
-        }
+        // }
     })
 
 })

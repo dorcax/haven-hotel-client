@@ -2,14 +2,7 @@ import React, { useCallback, useState } from 'react'
 import {useDropzone}  from "react-dropzone"
 import { Button } from '../ui/button'
 import { Progress } from '../ui/progress'
-// import { Progress } from '@comp/react-progress'
 
-// useCallback	Prevents the onDrop function from being recreated every render.
-// useDropzone({ onDrop, accept })	Hook from react-dropzone that gives us all drag/drop logic automatically.
-// getRootProps()	Adds drag-and-drop behavior to our main container <div>.
-// getInputProps()	Adds hidden <input type="file"> that opens file picker when clicked.
-// isDragActive	Boolean that tells us when the user is dragging a file over the box (for styling).
-// console.log(acceptedFiles)	For now, we just log the files to check if upload works.
 const mb= 1024*1024
 
 
@@ -66,7 +59,7 @@ const Upload = ({maxCount=3,maxSizeMb =5}) => {
     // for(const file of newFile){
     //     stimulateUpload(file)
     // }
-    newFile.forEach((f)=>simulateUpload(f))
+    newFile.forEach((f:any)=>simulateUpload(f))
     // end of modular 4
     //  update the state
     //    setFiles((prev:any) => [...prev,...newfile])
