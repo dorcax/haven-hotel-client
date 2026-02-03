@@ -1,77 +1,88 @@
-import Upload from '@/components/fileupload/Upload'
-import { AppLayout } from '@/components/layout/AppLayout'
-import ForgotPassword from '@/pages/auth/ForgotPassword'
-import Login from '@/pages/auth/Login'
-import PasswordVerification from '@/pages/auth/PasswordVerification'
-import ResetPassword from '@/pages/auth/ResetPassword'
-import SignUp from '@/pages/auth/SignUp'
-import DashboardApp from '@/pages/dashboard/DashboardApp'
-import { RoomList } from '@/pages/dashboard/room/RoomList'
+import Upload from "@/components/fileupload/Upload";
+import { AppLayout } from "@/components/layout/AppLayout";
+import ForgotPassword from "@/pages/auth/ForgotPassword";
+import Login from "@/pages/auth/Login";
+import PasswordVerification from "@/pages/auth/PasswordVerification";
+import ResetPassword from "@/pages/auth/ResetPassword";
+import SignUp from "@/pages/auth/SignUp";
+import DashboardApp from "@/pages/dashboard/DashboardApp";
+import { RoomList } from "@/pages/dashboard/room/RoomList";
 // import Dashboard from '@/pages/dashboard/Dashboard'
 // import Dashboard from '@/pages/dashboard/'
-import AddHotel from '@/components/Dialog/hotel/AddHotel'
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import ProtectedRoute from './ProtectedRoute'
-
-
+import AddHotel from "@/components/Dialog/hotel/AddHotel";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
+import HomePage from "@/pages/main-pages/HomePage";
+import DetailsPage from "@/pages/main-pages/DetailsPage";
 
 const router = createBrowserRouter([
   {
     index: true,
-    element: <SignUp />
+    element: <HomePage />,
   },
   {
     path: "/login",
-    element: <Login />
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <SignUp />,
   },
   {
     path: "/verify-otp",
-    element: <PasswordVerification />
+    element: <PasswordVerification />,
   },
   {
     path: "/forgot-password",
-    element: <ForgotPassword />
+    element: <ForgotPassword />,
   },
   {
     path: "/reset-password",
-    element: <ResetPassword />
+    element: <ResetPassword />,
   },
   {
     path: "/file",
-    element: <Upload />
+    element: <Upload />,
   },
   {
-    path:"/addhotel",
-    element:<AddHotel/>
+    path: "/addhotel",
+    element: <AddHotel />,
+  },
+  {
+    path: "/apartment/:id",
+    element: <DetailsPage />,
+  },
+  {
+    path: "/hotel/:id",
+    element: <DetailsPage />,
   },
 
   {
     path: "/dashboard/hotel/:id",
     element: <ProtectedRoute />,
-    children: [{
-      element: <AppLayout />,
-      children: [{
-        index: true,
-        element: <DashboardApp />
-      }, {
-        path: "room",
-        element: <RoomList  />
+    children: [
+      {
+        element: <AppLayout />,
+        children: [
+          {
+            index: true,
+            element: <DashboardApp />,
+          },
+          {
+            path: "room",
+            element: <RoomList />,
+          },
+          // {
+          //   path:"addroom",
+          //   element:<AddRoom/>
+          // }
+        ],
       },
-      // {
-      //   path:"addroom",
-      //   element:<AddRoom/>
-      // }
-    ]
-
-    },
-
     ],
   },
-])
+]);
 const AppRoute = () => {
-  return (
-    <RouterProvider router={router} />
-  )
-}
+  return <RouterProvider router={router} />;
+};
 
-export default AppRoute
+export default AppRoute;

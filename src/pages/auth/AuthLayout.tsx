@@ -1,27 +1,40 @@
-import { cn } from '@/lib/utils'
-import  { type ReactNode } from 'react'
+import { cn } from "@/lib/utils";
+import { type ReactNode } from "react";
 
-const AuthLayout = ({children,title,description,imgUrl,className}:{children:ReactNode,title:string,description:string,imgUrl?:string,className?:string}) => {
+const AuthLayout = ({
+  children,
+  title,
+  description,
+  imgUrl,
+  className,
+}: {
+  children: ReactNode;
+  title: string;
+  description: string;
+  imgUrl?: string;
+  className?: string;
+}) => {
   return (
     <main className="bg-[#F5F6FA] min-h-svh flex  justify-center items-center px-4">
       <section className="grid grid-cols-2 w-full h-screen bg-white shadow-5xl overflow-hidden max-w-4xl items-start mt-3 ">
         {/* left form side */}
         <article className="h-full flex flex-col justify-center px-6 py-10 ">
-
-          <header className={cn(" flex flex-col justify-center items-center mb-8",className)}>
-            <img src={imgUrl}/>
+          <header
+            className={cn(
+              " flex flex-col justify-center items-center mb-8",
+              className,
+            )}
+          >
+            <img src={imgUrl} />
             <h2 className="text-[#2F4858] text-2xl font-semibold capitalize">
               {title}
             </h2>
-            <p className="text-gray-500 text-sm mt-1">
-              {description}
-            </p>
+            <p className="text-gray-500 text-sm mt-1">{description}</p>
           </header>
-        
-          {children}
-          </article>
 
-         
+          {children}
+        </article>
+
         <section className="relative  ">
           <img
             src="./hotel1.jpg"
@@ -34,13 +47,14 @@ const AuthLayout = ({children,title,description,imgUrl,className}:{children:Reac
             </h2>
             <p className="text-base">
               join a community of foward-thinking hoteliers who are redefining
-              hospitality with our intuitive and powerful management platform{" "}
+              hospitality with our intuitive and powerful management
+              platform{" "}
             </p>
           </div>
         </section>
       </section>
     </main>
-  )
-}
+  );
+};
 
-export default AuthLayout
+export default AuthLayout;
