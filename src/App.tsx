@@ -18,7 +18,6 @@ export const App = () => {
           <UploaderProvider>
             <AppRoute />
           </UploaderProvider>
-
         </PopupProvider>
         <ToastContainer />
       </PersistGate>

@@ -1,4 +1,3 @@
-
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -8,10 +7,16 @@ import {
   getSortedRowModel,
   type SortingState,
   useReactTable,
-  type VisibilityState
-} from "@tanstack/react-table"
-import { ArrowUpDown, Ban, CircleCheck, CircleEllipsis, MoreHorizontal } from "lucide-react"
-import * as React from "react"
+  type VisibilityState,
+} from "@tanstack/react-table";
+import {
+  ArrowUpDown,
+  Ban,
+  CircleCheck,
+  CircleEllipsis,
+  MoreHorizontal,
+} from "lucide-react";
+import * as React from "react";
 
 import { useAuthState } from "@/api/data/auth"
 import { useListRoomsQuery } from "@/api/data/rooms.api"
@@ -89,9 +94,10 @@ export const columns: ColumnDef<any>[] = [
           className="capitalize border"
         >
           room image
+          room image
           <ArrowUpDown />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => {
       const attachments = row.getValue("attachment") as {
@@ -124,6 +130,7 @@ export const columns: ColumnDef<any>[] = [
 
   },
   {
+  {
     accessorKey: "roomNumber",
     header: ({ column }) => {
       return (
@@ -133,12 +140,16 @@ export const columns: ColumnDef<any>[] = [
           className="capitalize"
         >
           room number
+          room number
           <ArrowUpDown />
         </Button>
-      )
+      );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("roomNumber")}</div>,
+    cell: ({ row }) => (
+      <div className="lowercase">{row.getValue("roomNumber")}</div>
+    ),
   },
+  {
   {
     accessorKey: "price",
     header: ({ column }) => {
@@ -151,20 +162,21 @@ export const columns: ColumnDef<any>[] = [
           price
           <ArrowUpDown />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price"))
+      const price = parseFloat(row.getValue("price"));
 
       // Format the amount as a dollar amount
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-      }).format(price)
+      }).format(price);
 
-      return <div className=" font-medium">{formatted}</div>
+      return <div className=" font-medium">{formatted}</div>;
     },
   },
+  {
   {
     accessorKey: "category",
     header: ({ column }) => {
@@ -176,10 +188,13 @@ export const columns: ColumnDef<any>[] = [
           category
           <ArrowUpDown />
         </Button>
-      )
+      );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("category")}</div>,
+    cell: ({ row }) => (
+      <div className="lowercase">{row.getValue("category")}</div>
+    ),
   },
+  {
   {
     accessorKey: "floor",
     header: ({ column }) => {
@@ -191,10 +206,11 @@ export const columns: ColumnDef<any>[] = [
           floor
           <ArrowUpDown />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("floor")}</div>,
   },
+  {
   {
     accessorKey: "amenities",
     header: ({ column }) => {
@@ -206,7 +222,7 @@ export const columns: ColumnDef<any>[] = [
           room facility
           <ArrowUpDown />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => {
       const amenities = row.getValue("amenities") as string[]
@@ -231,7 +247,6 @@ export const columns: ColumnDef<any>[] = [
       return <div className="capitalize" >{available ? <Badge variant="secondary">available</Badge> : <Badge variant="secondary">booked</Badge>}</div>
     },
   },
-
 
   {
     id: "actions",
@@ -261,20 +276,19 @@ export const columns: ColumnDef<any>[] = [
             <DropdownMenuItem>Delete room</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      )
+      );
     },
   },
-]
+];
 
 export function RoomList() {
-
   // const {id} =useParams()
   const { auth } = useAuthState()
   const { openDialog, openDrawer } = usePopUpContext()
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
+    [],
+  );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
@@ -286,7 +300,7 @@ export function RoomList() {
   })
 
 
-  const hotelId = auth?.hotelId ?? ""
+  const hotelId = auth?.hotelId ?? "";
 
 
   const {
@@ -531,7 +545,7 @@ export function RoomList() {
       columnVisibility,
       rowSelection,
     },
-  })
+  });
   // ✅ handle loading states cleanly
   if (!hotelId) return <Loader />
   if (isLoading) return <Loader />
@@ -551,7 +565,7 @@ export function RoomList() {
 
   }
 
-  // handle page size 
+  // handle page size
 
   const handlePageSize = (size: number) => {
     setFilter((prev) => ({ ...prev, count: size, page: 1 }))
@@ -586,6 +600,7 @@ export function RoomList() {
           action: rooms.refetch,
           isLoading: rooms.isFetching,
         }}
+      />
       />
 
       {/* * summary card */}
@@ -633,9 +648,5 @@ export function RoomList() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-
-
-
-

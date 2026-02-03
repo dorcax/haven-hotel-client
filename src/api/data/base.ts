@@ -1,12 +1,8 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react' 
-import type {RootState} from "./index"
-const tagTypes =[
-    "user",
-    "hotel",
-    "room"
-] as const
-const envUrl =import.meta.env.VITE_API_URL
-const defaultUrl =import.meta.env.BASE_URL
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import type { RootState } from "./index";
+const tagTypes = ["user", "hotel", "room"] as const;
+const envUrl = import.meta.env.VITE_API_URL;
+const defaultUrl = import.meta.env.BASE_URL;
 // backend development url
 
 export const baseUrl =(envUrl || defaultUrl).replace(/\blocalhost\b/,window.location.hostname)
