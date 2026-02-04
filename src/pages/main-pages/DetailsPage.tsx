@@ -175,6 +175,7 @@ const DetailsPage = () => {
           <div className="hidden md:block relative overflow-hidden rounded-xl bg-slate-100 group">
             <img
               src={details.gallery[1]}
+              loading="lazy"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               alt={`${property.name} interior`}
             />
@@ -182,6 +183,7 @@ const DetailsPage = () => {
           <div className="hidden md:block relative overflow-hidden rounded-xl bg-slate-100 group">
             <img
               src={details.gallery[2]}
+              loading="lazy"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               alt={`${property.name} view`}
             />
@@ -189,6 +191,7 @@ const DetailsPage = () => {
           <div className="hidden md:block relative overflow-hidden rounded-xl bg-slate-100 group">
             <img
               src={details.gallery[3]}
+              loading="lazy"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               alt={`${property.name} detail`}
             />
@@ -196,6 +199,7 @@ const DetailsPage = () => {
           <div className="hidden md:block relative overflow-hidden rounded-xl bg-slate-100 group">
             <img
               src={details.gallery[2]}
+              loading="lazy"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 blur-[2px] opacity-70"
               alt={`${property.name} more`}
             />

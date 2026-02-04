@@ -1,60 +1,104 @@
-import Upload from "@/components/fileupload/Upload";
+import { lazy, Suspense } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
-import ForgotPassword from "@/pages/auth/ForgotPassword";
-import Login from "@/pages/auth/Login";
-import PasswordVerification from "@/pages/auth/PasswordVerification";
-import ResetPassword from "@/pages/auth/ResetPassword";
-import SignUp from "@/pages/auth/SignUp";
-import DashboardApp from "@/pages/dashboard/DashboardApp";
-import { RoomList } from "@/pages/dashboard/room/RoomList";
-// import Dashboard from '@/pages/dashboard/Dashboard'
-// import Dashboard from '@/pages/dashboard/'
-import AddHotel from "@/components/Dialog/hotel/AddHotel";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
-import HomePage from "@/pages/main-pages/HomePage";
-import DetailsPage from "@/pages/main-pages/DetailsPage";
+import Loader from "@/components/common/Loader";
+
+// Lazy load components
+const HomePage = lazy(() => import("@/pages/main-pages/HomePage"));
+const Login = lazy(() => import("@/pages/auth/Login"));
+const SignUp = lazy(() => import("@/pages/auth/SignUp"));
+const PasswordVerification = lazy(
+  () => import("@/pages/auth/PasswordVerification"),
+);
+const ForgotPassword = lazy(() => import("@/pages/auth/ForgotPassword"));
+const ResetPassword = lazy(() => import("@/pages/auth/ResetPassword"));
+const Upload = lazy(() => import("@/components/fileupload/Upload"));
+const AddHotel = lazy(() => import("@/components/Dialog/hotel/AddHotel"));
+const DetailsPage = lazy(() => import("@/pages/main-pages/DetailsPage"));
+const DashboardApp = lazy(() => import("@/pages/dashboard/DashboardApp"));
+const RoomList = lazy(() => import("@/pages/dashboard/room/RoomList"));
 
 const router = createBrowserRouter([
   {
     index: true,
-    element: <HomePage />,
+    element: (
+      <Suspense fallback={<Loader />}>
+        <HomePage />
+      </Suspense>
+    ),
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <Suspense fallback={<Loader />}>
+        <Login />
+      </Suspense>
+    ),
   },
   {
     path: "/register",
-    element: <SignUp />,
+    element: (
+      <Suspense fallback={<Loader />}>
+        <SignUp />
+      </Suspense>
+    ),
   },
   {
     path: "/verify-otp",
-    element: <PasswordVerification />,
+    element: (
+      <Suspense fallback={<Loader />}>
+        <PasswordVerification />
+      </Suspense>
+    ),
   },
   {
     path: "/forgot-password",
-    element: <ForgotPassword />,
+    element: (
+      <Suspense fallback={<Loader />}>
+        <ForgotPassword />
+      </Suspense>
+    ),
   },
   {
     path: "/reset-password",
-    element: <ResetPassword />,
+    element: (
+      <Suspense fallback={<Loader />}>
+        <ResetPassword />
+      </Suspense>
+    ),
   },
   {
     path: "/file",
-    element: <Upload />,
+    element: (
+      <Suspense fallback={<Loader />}>
+        <Upload />
+      </Suspense>
+    ),
   },
   {
     path: "/addhotel",
-    element: <AddHotel />,
+    element: (
+      <Suspense fallback={<Loader />}>
+        <AddHotel />
+      </Suspense>
+    ),
   },
   {
     path: "/apartment/:id",
-    element: <DetailsPage />,
+    element: (
+      <Suspense fallback={<Loader />}>
+        <DetailsPage />
+      </Suspense>
+    ),
   },
   {
     path: "/hotel/:id",
-    element: <DetailsPage />,
+    element: (
+      <Suspense fallback={<Loader />}>
+        <DetailsPage />
+      </Suspense>
+    ),
   },
 
   {
@@ -66,16 +110,20 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <DashboardApp />,
+            element: (
+              <Suspense fallback={<Loader />}>
+                <DashboardApp />
+              </Suspense>
+            ),
           },
           {
             path: "room",
-            element: <RoomList />,
+            element: (
+              <Suspense fallback={<Loader />}>
+                <RoomList />
+              </Suspense>
+            ),
           },
-          // {
-          //   path:"addroom",
-          //   element:<AddRoom/>
-          // }
         ],
       },
     ],

@@ -1,6 +1,8 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { popularDestinations } from "@/data/dummyData";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 interface popularData {
   title: string;
@@ -46,15 +48,14 @@ const PopularDestinations = ({
                 key={id}
                 className="group cursor-pointer"
               >
-                <div
-                  className="relative aspect-[3/4] overflow-hidden rounded-xl mb-3 shadow-md"
-                  data-alt={dataAlt}
-                  style={{
-                    backgroundImage: `url(${image})`,
-                    backgroundSize: `cover`,
-                    backgroundPosition: `center`,
-                  }}
-                >
+                <div className="relative aspect-[3/4] overflow-hidden rounded-xl mb-3 shadow-md">
+                  <LazyLoadImage
+                    src={image}
+                    alt={dataAlt || name}
+                    effect="blur"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    wrapperClassName="w-full h-full"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0">
                     <p className="font-bold">{name}</p>
