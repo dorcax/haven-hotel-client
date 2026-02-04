@@ -6,12 +6,19 @@ const HeroSection = () => {
   return (
     <section className="relative w-full">
       <div
-        className="h-[500px] w-full bg-cover bg-center flex items-center justify-center px-4"
+        className="h-[500px] w-full bg-cover bg-center flex items-center justify-center px-4 relative overflow-hidden"
         data-alt="Modern architectural luxury hotel with infinity pool"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%), url(${backgroundImage})`,
         }}
       >
+        {/* Preload/Priority hint for background image */}
+        <img
+          src={backgroundImage}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover opacity-0 -z-10"
+          fetchPriority="high"
+        />
         <div className="max-w-[960px] text-center flex flex-col items-center gap-4">
           <h1 className="text-white text-5xl md:text-7xl font-black tracking-tight drop-shadow-lg">
             Experience Luxury Without Compromise

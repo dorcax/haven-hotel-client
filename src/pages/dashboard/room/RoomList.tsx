@@ -42,24 +42,22 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { usePopUpContext } from "@/context/PopUpContext";
 
-
 export type RoomType = {
   // id: string
-  name: string
-  floor: number
-  description?: string,
-  category: string
-  hotelId?: string
-  price: number,
-  amenities: string[],
-  attachments: string[]
-  isAvailable: boolean
-}
-
+  name: string;
+  floor: number;
+  description?: string;
+  category: string;
+  hotelId?: string;
+  price: number;
+  amenities: string[];
+  attachments: string[];
+  isAvailable: boolean;
+};
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -93,43 +91,43 @@ export const columns: ColumnDef<any>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="capitalize border"
         >
-          room image
-          room image
+          room image room image
           <ArrowUpDown />
         </Button>
       );
     },
     cell: ({ row }) => {
       const attachments = row.getValue("attachment") as {
-        uploads: { url: string }[]
-      }
+        uploads: { url: string }[];
+      };
 
-      return <Carousel className="w-full max-w-[120px]">
-        <CarouselContent>
-          {attachments?.uploads?.map((attachment: any, index) => (
-            <CarouselItem key={index}>
-              <div className="p-1 flex justify-center">
-                <img src={attachment?.url} className="w-full rounded-md h-20 object-cover" />
+      return (
+        <Carousel className="w-full max-w-[120px]">
+          <CarouselContent>
+            {attachments?.uploads?.map((attachment: any, index) => (
+              <CarouselItem key={index}>
+                <div className="p-1 flex justify-center">
+                  <img
+                    src={attachment?.url}
+                    className="w-full rounded-md h-20 object-cover"
+                  />
 
-                {/* <Card>
+                  {/* <Card>
                 <CardContent className="flex aspect-square items-center justify-center p-6">
                   <span className="text-4xl font-semibold">{index + 1}</span>
                 </CardContent>
               </Card> */}
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className="left-0  size-[25px] mx-1" />
-        <CarouselNext className="right-0  size-[25px] mx-1" />
-      </Carousel>
-
-    }
-
-
-
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="left-0  size-[25px] mx-1" />
+          <CarouselNext className="right-0  size-[25px] mx-1" />
+        </Carousel>
+      );
+    },
   },
-  
+
   {
     accessorKey: "roomNumber",
     header: ({ column }) => {
@@ -139,8 +137,7 @@ export const columns: ColumnDef<any>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="capitalize"
         >
-          room number
-          room number
+          room number room number
           <ArrowUpDown />
         </Button>
       );
@@ -149,11 +146,10 @@ export const columns: ColumnDef<any>[] = [
       <div className="lowercase">{row.getValue("roomNumber")}</div>
     ),
   },
-  
+
   {
     accessorKey: "price",
     header: ({ column }) => {
-
       return (
         <Button
           variant="ghost"
@@ -176,7 +172,7 @@ export const columns: ColumnDef<any>[] = [
       return <div className=" font-medium">{formatted}</div>;
     },
   },
-  
+
   {
     accessorKey: "category",
     header: ({ column }) => {
@@ -194,7 +190,7 @@ export const columns: ColumnDef<any>[] = [
       <div className="lowercase">{row.getValue("category")}</div>
     ),
   },
-  
+
   {
     accessorKey: "floor",
     header: ({ column }) => {
@@ -210,7 +206,7 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("floor")}</div>,
   },
-  
+
   {
     accessorKey: "amenities",
     header: ({ column }) => {
@@ -225,14 +221,16 @@ export const columns: ColumnDef<any>[] = [
       );
     },
     cell: ({ row }) => {
-      const amenities = row.getValue("amenities") as string[]
+      const amenities = row.getValue("amenities") as string[];
       // const amenity =amenities.split(" ").join(",")
 
-      return <div className="">
-        {amenities?.map((amenity, i) => (
-          <span key={i}>{amenity},</span>
-        ))}
-      </div>
+      return (
+        <div className="">
+          {amenities?.map((amenity, i) => (
+            <span key={i}>{amenity},</span>
+          ))}
+        </div>
+      );
 
       // <div className="lowercase">{row.getValue("amenities")}</div>
     },
@@ -242,19 +240,25 @@ export const columns: ColumnDef<any>[] = [
     accessorKey: "isAvailable",
     header: "Status",
     cell: ({ row }) => {
-      const available = row.getValue("isAvailable")
+      const available = row.getValue("isAvailable");
 
-      return <div className="capitalize" >{available ? <Badge variant="secondary">available</Badge> : <Badge variant="secondary">booked</Badge>}</div>
+      return (
+        <div className="capitalize">
+          {available ? (
+            <Badge variant="secondary">available</Badge>
+          ) : (
+            <Badge variant="secondary">booked</Badge>
+          )}
+        </div>
+      );
     },
   },
 
   {
     id: "actions",
     enableHiding: false,
-    cell: ({row}) => {
-      
-
-const {openDrawer} =usePopUpContext()
+    cell: ({ row }) => {
+      const { openDrawer } = usePopUpContext();
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -267,7 +271,7 @@ const {openDrawer} =usePopUpContext()
             {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
             <DropdownMenuItem
               onClick={() => openDrawer(row.id)}
-            // onClick={() => navigator.clipboard.writeText(payment.id)}
+              // onClick={() => navigator.clipboard.writeText(payment.id)}
             >
               View room
             </DropdownMenuItem>
@@ -283,42 +287,38 @@ const {openDrawer} =usePopUpContext()
 
 export function RoomList() {
   // const {id} =useParams()
-  const { auth } = useAuthState()
-  const { openDialog, openDrawer } = usePopUpContext()
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const { auth } = useAuthState();
+  const { openDialog, openDrawer } = usePopUpContext();
+  const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   );
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
-  const [query] = React.useState<string>("")
+    React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
+  const [query] = React.useState<string>("");
 
   const [filters, setFilter] = React.useState({
     page: 0,
-    count: 10
-  })
-
+    count: 10,
+  });
 
   const hotelId = auth?.hotelId ?? "";
-
 
   const {
     data: listRoom,
     isLoading,
     // refetch,
     // isFetching,
-  } = useListRoomsQuery({ hotelId, ...filters }, { skip: !hotelId })
+  } = useListRoomsQuery({ hotelId, ...filters }, { skip: !hotelId });
 
-
-
-  const rooms = listRoom?.list ?? []
-  console.log("room list", rooms)
-  const pagination = listRoom?.pagination.filterCounts ?? {}
-  console.log("33333", pagination)
+  const rooms = listRoom?.list ?? [];
+  console.log("room list", rooms);
+  const pagination = listRoom?.pagination.filterCounts ?? {};
+  console.log("33333", pagination);
   // const pagination =listRoom.pagination
 
-  // data table colums 
+  // data table colums
   const columns: ColumnDef<any>[] = [
     {
       id: "select",
@@ -354,37 +354,38 @@ export function RoomList() {
             room image
             <ArrowUpDown />
           </Button>
-        )
+        );
       },
       cell: ({ row }) => {
         const attachments = row.getValue("attachment") as {
-          uploads: { url: string }[]
-        }
+          uploads: { url: string }[];
+        };
 
-        return <Carousel className="w-full max-w-[120px]">
-          <CarouselContent>
-            {attachments?.uploads?.map((attachment: any, index) => (
-              <CarouselItem key={index}>
-                <div className="p-1 flex justify-center">
-                  <img src={attachment?.url} className="w-full rounded-md h-20 object-cover" />
+        return (
+          <Carousel className="w-full max-w-[120px]">
+            <CarouselContent>
+              {attachments?.uploads?.map((attachment: any, index) => (
+                <CarouselItem key={index}>
+                  <div className="p-1 flex justify-center">
+                    <img
+                      src={attachment?.url}
+                      className="w-full rounded-md h-20 object-cover"
+                    />
 
-                  {/* <Card>
+                    {/* <Card>
                 <CardContent className="flex aspect-square items-center justify-center p-6">
                   <span className="text-4xl font-semibold">{index + 1}</span>
                 </CardContent>
               </Card> */}
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious className="left-0  size-[25px] mx-1" />
-          <CarouselNext className="right-0  size-[25px] mx-1" />
-        </Carousel>
-
-      }
-
-
-
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-0  size-[25px] mx-1" />
+            <CarouselNext className="right-0  size-[25px] mx-1" />
+          </Carousel>
+        );
+      },
     },
     {
       accessorKey: "roomNumber",
@@ -398,14 +399,15 @@ export function RoomList() {
             room number
             <ArrowUpDown />
           </Button>
-        )
+        );
       },
-      cell: ({ row }) => <div className="lowercase">{row.getValue("roomNumber")}</div>,
+      cell: ({ row }) => (
+        <div className="lowercase">{row.getValue("roomNumber")}</div>
+      ),
     },
     {
       accessorKey: "price",
       header: ({ column }) => {
-
         return (
           <Button
             variant="ghost"
@@ -414,18 +416,18 @@ export function RoomList() {
             price
             <ArrowUpDown />
           </Button>
-        )
+        );
       },
       cell: ({ row }) => {
-        const price = parseFloat(row.getValue("price"))
+        const price = parseFloat(row.getValue("price"));
 
         // Format the amount as a dollar amount
         const formatted = new Intl.NumberFormat("en-US", {
           style: "currency",
           currency: "USD",
-        }).format(price)
+        }).format(price);
 
-        return <div className=" font-medium">{formatted}</div>
+        return <div className=" font-medium">{formatted}</div>;
       },
     },
     {
@@ -439,9 +441,11 @@ export function RoomList() {
             category
             <ArrowUpDown />
           </Button>
-        )
+        );
       },
-      cell: ({ row }) => <div className="lowercase">{row.getValue("category")}</div>,
+      cell: ({ row }) => (
+        <div className="lowercase">{row.getValue("category")}</div>
+      ),
     },
     {
       accessorKey: "floor",
@@ -454,9 +458,11 @@ export function RoomList() {
             floor
             <ArrowUpDown />
           </Button>
-        )
+        );
       },
-      cell: ({ row }) => <div className="lowercase">{row.getValue("floor")}</div>,
+      cell: ({ row }) => (
+        <div className="lowercase">{row.getValue("floor")}</div>
+      ),
     },
     {
       accessorKey: "amenities",
@@ -469,17 +475,19 @@ export function RoomList() {
             room facility
             <ArrowUpDown />
           </Button>
-        )
+        );
       },
       cell: ({ row }) => {
-        const amenities = row.getValue("amenities") as string[]
+        const amenities = row.getValue("amenities") as string[];
         // const amenity =amenities.split(" ").join(",")
 
-        return <div className="">
-          {amenities?.map((amenity, i) => (
-            <span key={i}>{amenity},</span>
-          ))}
-        </div>
+        return (
+          <div className="">
+            {amenities?.map((amenity, i) => (
+              <span key={i}>{amenity},</span>
+            ))}
+          </div>
+        );
 
         // <div className="lowercase">{row.getValue("amenities")}</div>
       },
@@ -489,19 +497,24 @@ export function RoomList() {
       accessorKey: "isAvailable",
       header: "Status",
       cell: ({ row }) => {
-        const available = row.getValue("isAvailable")
+        const available = row.getValue("isAvailable");
 
-        return <div className="capitalize" >{available ? <Badge variant="secondary">available</Badge> : <Badge variant="secondary">booked</Badge>}</div>
+        return (
+          <div className="capitalize">
+            {available ? (
+              <Badge variant="secondary">available</Badge>
+            ) : (
+              <Badge variant="secondary">booked</Badge>
+            )}
+          </div>
+        );
       },
     },
-
 
     {
       id: "actions",
       enableHiding: false,
       cell: ({ row }) => {
-      
-
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -514,19 +527,27 @@ export function RoomList() {
               {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
               <DropdownMenuItem
                 onClick={() => openDrawer(<RoomDetail room={row.original} />)}
-              // onClick={() => navigator.clipboard.writeText(payment.id)}
+                // onClick={() => navigator.clipboard.writeText(payment.id)}
               >
                 View room
               </DropdownMenuItem>
               {/* <DropdownMenuSeparator /> */}
-              <DropdownMenuItem onClick={() => openDialog(<EditRoom room={row.original} />)}>Edit room</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => openDialog(<DeleteRoom room={row.original} />)}>Delete room</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => openDialog(<EditRoom room={row.original} />)}
+              >
+                Edit room
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => openDialog(<DeleteRoom room={row.original} />)}
+              >
+                Delete room
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        )
+        );
       },
     },
-  ]
+  ];
 
   const table = useReactTable({
     data: rooms,
@@ -547,8 +568,8 @@ export function RoomList() {
     },
   });
   // ✅ handle loading states cleanly
-  if (!hotelId) return <Loader />
-  if (isLoading) return <Loader />
+  if (!hotelId) return <Loader />;
+  if (isLoading) return <Loader />;
   // if (!listRoom?.list?.length) return <div className="text-center py-10">No rooms found</div>
 
   // const handleRoom = () => {
@@ -557,9 +578,7 @@ export function RoomList() {
 
   // }
 
-
-
-  // // handle page change 
+  // // handle page change
   // const handlePageChange = (page: number) => {
   //   setFilter((prev) => ({ ...prev, page }))
 
@@ -570,21 +589,25 @@ export function RoomList() {
   // const handlePageSize = (size: number) => {
   //   setFilter((prev) => ({ ...prev, count: size, page: 1 }))
   // }
-  // summary card  
+  // summary card
 
-  const summaryCard:any = [{
-    title: "Total",
-    value: pagination.TOTAL,
-    icon: <CircleEllipsis />
-  }, {
-    title: "Available",
-    value: pagination.ACTIVE,
-    icon: <CircleCheck />
-  }, {
-    title: "Booked",
-    value: pagination.INACTIVE,
-    icon: <Ban />
-  }]
+  const summaryCard: any = [
+    {
+      title: "Total",
+      value: pagination.TOTAL,
+      icon: <CircleEllipsis />,
+    },
+    {
+      title: "Available",
+      value: pagination.ACTIVE,
+      icon: <CircleCheck />,
+    },
+    {
+      title: "Booked",
+      value: pagination.INACTIVE,
+      icon: <Ban />,
+    },
+  ];
 
   return (
     <div className="space-y-4">
@@ -593,23 +616,16 @@ export function RoomList() {
         description="Here's a list of all rooms in the hotel."
         primary={{
           title: "create room",
-          action: () => openDialog(<AddRoom />)
-
+          action: () => openDialog(<AddRoom />),
         }}
         refresh={{
           action: rooms.refetch,
           isLoading: rooms.isFetching,
         }}
       />
-      
 
       {/* * summary card */}
-      <SummaryCard
-        cards={summaryCard}
-
-
-
-      />
+      <SummaryCard cards={summaryCard} />
 
       <DataTable
         data={rooms}
@@ -618,10 +634,7 @@ export function RoomList() {
         //  search={(q) => setFilters((p) => ({ ...p, search: q }))}
         search={(q) => setFilter((prev) => ({ ...prev, search: q }))}
         searchQuery={query}
-
       />
-
-
 
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="text-muted-foreground flex-1 text-sm">
@@ -650,3 +663,5 @@ export function RoomList() {
     </div>
   );
 }
+
+export default RoomList;

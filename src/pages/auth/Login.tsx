@@ -15,11 +15,11 @@ import Loader from "@/components/common/Loader";
 import { loginSchema } from "@/components/common/validation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { icons } from "@/constant/icon";
 import UseAuthComplete from "@/hooks/UseAuthComplete";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import Header from "@/components/common/Header";
 
 const Login = () => {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -47,6 +47,7 @@ const Login = () => {
 
   return (
     <>
+      <Header />
       <main className="flex-1 flex overflow-hidden font-inter">
         <div className="flex w-full">
           <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-slate-900">
@@ -71,11 +72,6 @@ const Login = () => {
 
           <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 lg:p-20 bg-white dark:bg-background-dark">
             <div className="w-full max-w-[480px] flex flex-col">
-              <div className="lg:hidden flex items-center gap-2 mb-4 md:mb-8">
-                <span className="text-2xl font-bold text-slate-900 dark:text-white">
-                  HavenHotel
-                </span>
-              </div>
               <div className="mb-10">
                 <h2 className="text-[#1A365D] dark:text-white text-3xl font-bold mb-2">
                   Sign in to your account
@@ -168,19 +164,17 @@ const Login = () => {
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {icons.map((icon) => (
-                  <button className="flex items-center justify-center gap-2 h-11 border border-slate-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer w-full px-2">
-                    <img
-                      alt={icon.alt}
-                      className="size-5 shrink-0"
-                      data-alt={icon.alt}
-                      src={icon.icon}
-                    />
-                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 truncate">
-                      {icon.name}
-                    </span>
-                  </button>
-                ))}
+                <button className="flex items-center justify-center gap-2 h-11 border border-slate-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer w-full px-2">
+                  <img
+                    alt="Google Logo"
+                    className="size-5 shrink-0"
+                    data-alt="Google Logo"
+                    src="./google-icon.svg"
+                  />
+                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 truncate">
+                    Google
+                  </span>
+                </button>
               </div>
               <p className="mt-8 text-center text-sm text-slate-500 dark:text-slate-400">
                 Don't have an account?
