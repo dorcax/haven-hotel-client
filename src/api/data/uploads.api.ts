@@ -20,7 +20,7 @@ const uploads =api.injectEndpoints({
                     formData.append("file",file)
                     console.log("user token",localStorage.getItem("token"))
                     const response =await axios.post(
-                        `http://localhost:3000/upload`,formData,{
+                        `${process.env.BASE_URL}/upload`,formData,{
                             params:{order},
                             signal,
                             withCredentials:true,

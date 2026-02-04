@@ -11,7 +11,7 @@ export const api =createApi({
     endpoints:()=>({}),
     baseQuery:fetchBaseQuery({
         // baseUrl,
-        baseUrl:"http://localhost:3000",
+        baseUrl:process.env.BASE_URL,
         credentials:"include"
      
     })
