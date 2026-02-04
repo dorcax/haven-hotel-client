@@ -20,7 +20,6 @@ import UseAuthComplete from "@/hooks/UseAuthComplete";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import AuthLayout from "./AuthLayout";
 
 const Login = () => {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -45,100 +44,158 @@ const Login = () => {
       console.log(error);
     }
   };
-  const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:3000/auth/google/login";
-  };
+
   return (
-    <AuthLayout
-      title="login to your account"
-      description=" Enter your email and password to continue"
-    >
-      <Form {...form}>
-        <form
-          action=""
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 text-[#6B7280] capitalize"
-        >
-          <FormField
-            name="email"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>email</FormLabel>
-                <FormControl>
-                  <Input type="email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <>
+      <main className="flex-1 flex overflow-hidden font-inter">
+        <div className="flex w-full">
+          <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-slate-900">
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-80"
+              data-alt="Modern luxury hotel suite with mountain view"
+              style={{
+                backgroundImage: 'url("/hotel1.jpg")',
+              }}
+            ></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"></div>
+            <div className="relative z-10 flex flex-col justify-end p-16 h-full">
+              <h1 className="text-white text-5xl font-black leading-tight mb-4 max-w-md">
+                Elevate Your Guest Experience.
+              </h1>
+              <p className="text-slate-200 text-lg font-normal max-w-sm">
+                Join a community of foward-thinking hoteliers who are redefining
+                hospitality with our intuitive and powerful management platform.
+              </p>
+            </div>
+          </div>
 
-          <FormField
-            name="password"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>password</FormLabel>
-                <FormControl>
-                  <Input type="password" {...field} />
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* forgot password */}
-          <article className="flex justify-between items-center">
-            <label className="inline-flex items-center gap-2">
-              <Input type="checkbox" className="size-3 cursor-pointer" />
-              <span className="text-sm">remember me</span>
-            </label>
-            <Link to="/forgot-password" className="text-sm">
-              Forgot password
-            </Link>
-          </article>
-
-          <Button
-            disabled={isLoading}
-            className="w-full bg-[#E3B23C] capitalize hover:bg-[#d4a62e]"
-          >
-            {isLoading ? <Loader /> : "log in"}
-          </Button>
-        </form>
-      </Form>
-
-      {/* social login */}
-      <article className="pt-6">
-        <div className="flex justify-center items-center mb-4 gap-2 ">
-          <hr className="flex-grow border-gray-500" />
-          <p className="text-sm text-[#6B7280] ">Or continue with</p>
-          <hr className="flex-grow border-gray-500" />
+          <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 lg:p-20 bg-white dark:bg-background-dark">
+            <div className="w-full max-w-[480px] flex flex-col">
+              <div className="lg:hidden flex items-center gap-2 mb-4 md:mb-8">
+                <span className="text-2xl font-bold text-slate-900 dark:text-white">
+                  HavenHotel
+                </span>
+              </div>
+              <div className="mb-10">
+                <h2 className="text-[#1A365D] dark:text-white text-3xl font-bold mb-2">
+                  Sign in to your account
+                </h2>
+                <p className="text-slate-500 dark:text-slate-400">
+                  Welcome back! Please enter your details below.
+                </p>
+              </div>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-5"
+                >
+                  <FormField
+                    name="email"
+                    control={form.control}
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col gap-2">
+                        <FormLabel className="text-slate-900 dark:text-slate-200 text-sm font-semibold">
+                          Email Address
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            className="form-input flex w-full rounded-lg text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-slate-400"
+                            type="email"
+                            placeholder="name@company.com"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    name="password"
+                    control={form.control}
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col gap-2">
+                        <div className="flex justify-between items-center">
+                          <FormLabel>Password</FormLabel>
+                          <Link
+                            className="text-primary text-xs font-bold hover:underline"
+                            to="/forgot-password"
+                          >
+                            Forgot Password?
+                          </Link>
+                        </div>
+                        <FormControl>
+                          <Input
+                            className="form-input flex w-full rounded-lg text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-slate-400 pr-12"
+                            placeholder="••••••••"
+                            type="password"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="flex items-center gap-3 py-1">
+                    <input
+                      className="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-primary focus:ring-primary dark:bg-slate-900"
+                      id="remember"
+                      type="checkbox"
+                    />
+                    <label
+                      className="text-sm font-medium text-slate-600 dark:text-slate-400 cursor-pointer"
+                      htmlFor="remember"
+                    >
+                      Remember me
+                    </label>
+                  </div>
+                  <Button
+                    disabled={isLoading}
+                    className="flex w-full items-center justify-center rounded-lg h-12 px-5 bg-[#1A365D] text-white text-base font-bold tracking-tight hover:bg-[#1A365D]/90 cursor-pointer transition-all shadow-lg shadow-primary/20"
+                    type="submit"
+                  >
+                    {isLoading ? <Loader /> : "Sign In"}
+                  </Button>
+                </form>
+              </Form>
+              <div className="relative my-8">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-slate-200 dark:border-slate-800"></div>
+                </div>
+                <div className="relative flex justify-center text-xs font-medium uppercase">
+                  <span className="bg-white dark:bg-background-dark px-3 text-slate-400">
+                    Or continue with
+                  </span>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {icons.map((icon) => (
+                  <button className="flex items-center justify-center gap-2 h-11 border border-slate-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer w-full px-2">
+                    <img
+                      alt={icon.alt}
+                      className="size-5 shrink-0"
+                      data-alt={icon.alt}
+                      src={icon.icon}
+                    />
+                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 truncate">
+                      {icon.name}
+                    </span>
+                  </button>
+                ))}
+              </div>
+              <p className="mt-8 text-center text-sm text-slate-500 dark:text-slate-400">
+                Don't have an account?
+                <Link
+                  className="ml-2 text-[#1A365D] font-bold hover:underline"
+                  to="/register"
+                >
+                  Sign up
+                </Link>
+              </p>
+            </div>
+          </div>
         </div>
-        {/* image icon */}
-        <div className="flex justify-between items-center gap-4">
-          {icons.map((icon) => (
-            <button
-              key={icon.name}
-              onClick={handleGoogleLogin}
-              className="p-2 border w-full flex justify-center items-center rounded-md  hover:bg-gray-100 transition"
-            >
-              <img
-                src={icon.icon}
-                alt={icon.name}
-                className="w-[30px] object-cover"
-              />
-            </button>
-          ))}
-        </div>
-        <p className="text-sm pt-3 text-center text-[#6B7280]">
-          Dont have an account?{" "}
-          <Link to="/" className="text-[#E3B23C] text-sm underline">
-            SignUp
-          </Link>
-        </p>
-      </article>
-    </AuthLayout>
+      </main>
+    </>
   );
 };
 

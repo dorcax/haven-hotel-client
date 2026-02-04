@@ -1,11 +1,11 @@
-const wheatbaker = "/images/wheatbaker.png";
-const transcorp = "/images/transcorp.png";
-const presidential = "/images/presidential.png";
-const nike_lake = "/images/nike_lake.png";
-const azureImage = "/images/azure_suites.png";
-const oceanViewImage = "/images/ocean_view.png";
-const capitalHubImage = "/images/capital_hub.png";
-const heritageImage = "/images/heritage.png";
+const wheatbaker = "/images/wheatbaker.webp";
+const transcorp = "/images/transcorp.webp";
+const presidential = "/images/presidential.webp";
+const nike_lake = "/images/nike_lake.webp";
+const azureImage = "/images/azure_suites.webp";
+const oceanViewImage = "/images/ocean_view.webp";
+const capitalHubImage = "/images/capital_hub.webp";
+const heritageImage = "/images/heritage.webp";
 
 export interface Amenity {
   icon: string;
@@ -55,8 +55,8 @@ export const popularHotels: popularDestinations[] = [
       reviewCount: 245,
       gallery: [
         wheatbaker,
-        "/images/wheatbaker_bedroom.png",
-        "/images/wheatbaker_spa.png",
+        "/images/wheatbaker_bedroom.webp",
+        "/images/wheatbaker_spa.webp",
         wheatbaker,
       ],
       amenities: [

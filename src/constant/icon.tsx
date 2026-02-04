@@ -1,12 +1,17 @@
 export const icons = [
   {
-    name: "apple-logo",
     icon: "./apple-icon.png",
+    name: "Apple",
+    alt: "Apple Logo",
   },
   {
-    name: "google-logo",
     icon: "./google-icon.svg",
+    name: "Google",
+    alt: "Google Logo",
   },
-  { name: "twitter-logo",
-    icon: "./twitter-icon.svg" },
+  {
+    icon: "./twitter-icon.svg",
+    name: "Twitter",
+    alt: "Twitter Logo",
+  },
 ];
