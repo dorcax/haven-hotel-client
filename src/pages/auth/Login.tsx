@@ -45,6 +45,10 @@ const Login = () => {
     }
   };
 
+   const handleGoogleLogin = () => {
+      window.location.href = `${envUrl}/auth/google/login`;
+    };
+
   return (
     <>
       <Header />
@@ -163,8 +167,8 @@ const Login = () => {
                   </span>
                 </div>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <button className="flex items-center justify-center gap-2 h-11 border border-slate-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer w-full px-2">
+              <div className="">
+                <button className="flex items-center justify-center gap-2 h-11 border border-slate-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer w-full px-2" onClick={handleGoogleLogin}>
                   <img
                     alt="Google Logo"
                     className="size-5 shrink-0"
