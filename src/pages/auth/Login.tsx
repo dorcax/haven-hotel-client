@@ -20,6 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Header from "@/components/common/Header";
+import { envUrl } from "@/api/data/base";
 
 const Login = () => {
   const form = useForm<z.infer<typeof loginSchema>>({
