@@ -1,5 +1,6 @@
 import { MapPin, Calendar, Users, Search } from "lucide-react";
-const backgroundImage = "/images/patrick-robert-doyle-AH8zKXqFITA-unsplash.jpg";
+const backgroundImage =
+  "/images/patrick-robert-doyle-AH8zKXqFITA-unsplash.webp";
 
 const HeroSection = () => {
   return (

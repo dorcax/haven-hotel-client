@@ -16,7 +16,7 @@ const AuthLayout = ({
 }) => {
   return (
     <main className="bg-[#F5F6FA] min-h-svh flex  justify-center items-center px-4">
-      <section className="grid grid-cols-2 w-full h-screen bg-white shadow-5xl overflow-hidden max-w-4xl items-start mt-3 ">
+      <section className="grid grid-cols-1 lg:grid-cols-2 w-full h-auto lg:h-screen bg-white shadow-5xl overflow-hidden max-w-4xl items-start lg:mt-3 ">
         {/* left form side */}
         <article className="h-full flex flex-col justify-center px-6 py-10 ">
           <header
@@ -25,7 +25,7 @@ const AuthLayout = ({
               className,
             )}
           >
-            <img src={imgUrl} />
+            {imgUrl && <img src={imgUrl} alt="logo" />}
             <h2 className="text-[#2F4858] text-2xl font-semibold capitalize">
               {title}
             </h2>
@@ -35,11 +35,11 @@ const AuthLayout = ({
           {children}
         </article>
 
-        <section className="relative  ">
+        <section className="relative hidden lg:block h-full">
           <img
             src="./hotel1.jpg"
             alt="image"
-            className="object-cover w-full h-full  max-h-[550px] rounded-r-md "
+            className="object-cover w-full h-full rounded-r-md "
           />
           <div className="absolute bottom-5 left-4 right-4 text-white ">
             <h2 className="text-2xl font-semibold capitalize p-1">
