@@ -17,22 +17,20 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { icons } from "@/constant/icon";
 import { genderRole, useSignUpMutation } from "@/api/data/auth.api";
-import { formSchema } from "@/components/common/validation";
-import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
-import { usePopUpContext } from "@/context/PopUpContext";
-import OtpDialog from "@/components/Dialog/auth/OtpDialog";
-import AuthLayout from "./AuthLayout";
 import Loader from "@/components/common/Loader";
+import { formSchema } from "@/components/common/validation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { icons } from "@/constant/icon";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import AuthLayout from "./AuthLayout";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const { openDialog } = usePopUpContext();
+  // const { openDialog } = usePopUpContext();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

@@ -1,19 +1,12 @@
-import React, { type ReactNode } from 'react'
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import {
     Sheet,
-    SheetClose,
     SheetContent,
-    SheetDescription,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
+    SheetTrigger
 } from "@/components/ui/sheet"
 import { usePopUpContext } from '@/context/PopUpContext'
 import { cn } from '@/lib/utils'
+import { type ReactNode } from 'react'
 
 type customInfoDrawerType = {
     children: ReactNode
@@ -23,7 +16,7 @@ type customInfoDrawerType = {
     className?:string
 }
 
-const CustomInfoDrawer = ({ children,  close ,className}: customInfoDrawerType) => {
+const CustomInfoDrawer = ({ children ,className}: customInfoDrawerType) => {
     const { openDrawer, isDrawerOpen } = usePopUpContext()
     // Convert category & image to arrays safely
 

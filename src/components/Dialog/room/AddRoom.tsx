@@ -92,7 +92,7 @@ const AddRoom = () => {
                   <FormControl className="">
                     <DropZoneImage name={field.name}   
                     // acceptType="image"
-                    maxCount={4} maxSize={6} type="image" 
+                    maxCount={4}  type="image" 
                     
                     />
                   </FormControl>

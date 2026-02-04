@@ -1,5 +1,4 @@
-import React from 'react'
-import AuthLayout from './AuthLayout'
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -8,9 +7,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { useForm } from 'react-hook-form';
+import AuthLayout from './AuthLayout';
 
 const ResetPassword = () => {
     const form =useForm()

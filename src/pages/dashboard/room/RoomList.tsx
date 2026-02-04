@@ -18,33 +18,33 @@ import {
 } from "lucide-react";
 import * as React from "react";
 
-import { useAuthState } from "@/api/data/auth"
-import { useListRoomsQuery } from "@/api/data/rooms.api"
-import Loader from "@/components/common/Loader"
-import PageHeader from "@/components/common/PageHeader"
-import SummaryCard from "@/components/common/SummaryCard"
-import AddRoom from "@/components/Dialog/room/AddRoom"
-import DeleteRoom from "@/components/Dialog/room/DeleteRoom"
-import EditRoom from "@/components/Dialog/room/EditRoom"
-import RoomDetail from "@/components/Drawer/Room/RoomDetail"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { useAuthState } from "@/api/data/auth";
+import { useListRoomsQuery } from "@/api/data/rooms.api";
+import Loader from "@/components/common/Loader";
+import PageHeader from "@/components/common/PageHeader";
+import SummaryCard from "@/components/common/SummaryCard";
+import AddRoom from "@/components/Dialog/room/AddRoom";
+import DeleteRoom from "@/components/Dialog/room/DeleteRoom";
+import EditRoom from "@/components/Dialog/room/EditRoom";
+import RoomDetail from "@/components/Drawer/Room/RoomDetail";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
-import { Checkbox } from "@/components/ui/checkbox"
-import DataTable from "@/components/ui/data-table"
+} from "@/components/ui/carousel";
+import { Checkbox } from "@/components/ui/checkbox";
+import DataTable from "@/components/ui/data-table";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu"
-import { usePopUpContext } from "@/context/PopUpContext"
+} from "@/components/ui/dropdown-menu";
+import { usePopUpContext } from "@/context/PopUpContext";
 
 
 export type RoomType = {
@@ -129,7 +129,7 @@ export const columns: ColumnDef<any>[] = [
 
 
   },
-  {
+  
   {
     accessorKey: "roomNumber",
     header: ({ column }) => {
@@ -149,7 +149,7 @@ export const columns: ColumnDef<any>[] = [
       <div className="lowercase">{row.getValue("roomNumber")}</div>
     ),
   },
-  {
+  
   {
     accessorKey: "price",
     header: ({ column }) => {
@@ -176,7 +176,7 @@ export const columns: ColumnDef<any>[] = [
       return <div className=" font-medium">{formatted}</div>;
     },
   },
-  {
+  
   {
     accessorKey: "category",
     header: ({ column }) => {
@@ -194,7 +194,7 @@ export const columns: ColumnDef<any>[] = [
       <div className="lowercase">{row.getValue("category")}</div>
     ),
   },
-  {
+  
   {
     accessorKey: "floor",
     header: ({ column }) => {
@@ -210,7 +210,7 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("floor")}</div>,
   },
-  {
+  
   {
     accessorKey: "amenities",
     header: ({ column }) => {
@@ -251,10 +251,10 @@ export const columns: ColumnDef<any>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
-      const RoomType = row.original
+    cell: ({row}) => {
+      
 
-
+const {openDrawer} =usePopUpContext()
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -266,7 +266,7 @@ export const columns: ColumnDef<any>[] = [
           <DropdownMenuContent align="end">
             {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
             <DropdownMenuItem
-              onClick={() => openDrawer()}
+              onClick={() => openDrawer(row.id)}
             // onClick={() => navigator.clipboard.writeText(payment.id)}
             >
               View room
@@ -306,8 +306,8 @@ export function RoomList() {
   const {
     data: listRoom,
     isLoading,
-    refetch,
-    isFetching,
+    // refetch,
+    // isFetching,
   } = useListRoomsQuery({ hotelId, ...filters }, { skip: !hotelId })
 
 
@@ -500,7 +500,7 @@ export function RoomList() {
       id: "actions",
       enableHiding: false,
       cell: ({ row }) => {
-        const RoomType = row.original
+      
 
         return (
           <DropdownMenu>
@@ -551,28 +551,28 @@ export function RoomList() {
   if (isLoading) return <Loader />
   // if (!listRoom?.list?.length) return <div className="text-center py-10">No rooms found</div>
 
-  const handleRoom = () => {
+  // const handleRoom = () => {
 
-    openDialog(<AddRoom />)
+  //   openDialog(<AddRoom />)
 
-  }
+  // }
 
 
 
-  // handle page change 
-  const handlePageChange = (page: number) => {
-    setFilter((prev) => ({ ...prev, page }))
+  // // handle page change 
+  // const handlePageChange = (page: number) => {
+  //   setFilter((prev) => ({ ...prev, page }))
 
-  }
+  // }
 
   // handle page size
 
-  const handlePageSize = (size: number) => {
-    setFilter((prev) => ({ ...prev, count: size, page: 1 }))
-  }
+  // const handlePageSize = (size: number) => {
+  //   setFilter((prev) => ({ ...prev, count: size, page: 1 }))
+  // }
   // summary card  
 
-  const summaryCard = [{
+  const summaryCard:any = [{
     title: "Total",
     value: pagination.TOTAL,
     icon: <CircleEllipsis />
@@ -601,7 +601,7 @@ export function RoomList() {
           isLoading: rooms.isFetching,
         }}
       />
-      />
+      
 
       {/* * summary card */}
       <SummaryCard

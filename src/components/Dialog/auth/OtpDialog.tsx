@@ -1,24 +1,8 @@
 import CustomInfoDialog from '@/components/common/CustomInfoDialog'
-import { Button } from '@/components/ui/button'
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form"
-import {
-    InputOTP,
-    InputOTPGroup,
-    InputOTPSlot,
-} from "@/components/ui/input-otp"
-import { useForm } from 'react-hook-form'
 
 const OtpDialog = () => {
-    const form =useForm()
-     const onSubmit=()=>{}
+    // const form =useForm()
+    //  const onSubmit=()=>{}
   return (
    <CustomInfoDialog 
    title="verify-otp"

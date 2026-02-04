@@ -234,8 +234,8 @@ export const columns: ColumnDef<any>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
-      const RoomType = row.original
+    cell: () => {
+   
 
 
       return (
@@ -290,8 +290,8 @@ const ReservationList = () => {
   const {
     data: listRoom,
     isLoading,
-    refetch,
-    isFetching,
+    // refetch,
+    // isFetching,
   } = useListRoomsQuery({ hotelId, ...filters }, { skip: !hotelId })
 
 
@@ -484,7 +484,7 @@ const ReservationList = () => {
       id: "actions",
       enableHiding: false,
       cell: ({ row }) => {
-        const RoomType = row.original
+        // const RoomType = row.original
 
         return (
           <DropdownMenu>
@@ -535,28 +535,28 @@ const ReservationList = () => {
   if (isLoading) return <Loader />
   // if (!listRoom?.list?.length) return <div className="text-center py-10">No rooms found</div>
 
-  const handleRoom = () => {
+  // const handleRoom = () => {
 
-    openDialog(<AddRoom />)
+  //   openDialog(<AddRoom />)
 
-  }
+  // }
 
 
 
-  // handle page change 
-  const handlePageChange = (page: number) => {
-    setFilter((prev) => ({ ...prev, page }))
+  // // handle page change 
+  // const handlePageChange = (page: number) => {
+  //   setFilter((prev) => ({ ...prev, page }))
 
-  }
+  // }
 
   // handle page size 
 
-  const handlePageSize = (size: number) => {
-    setFilter((prev) => ({ ...prev, count: size, page: 1 }))
-  }
+  // const handlePageSize = (size: number) => {
+  //   setFilter((prev) => ({ ...prev, count: size, page: 1 }))
+  // }
   // summary card  
 
-  const summaryCard = [{
+  const summaryCard:any = [{
     title: "Total",
     value: pagination.TOTAL,
     icon: <CircleEllipsis />

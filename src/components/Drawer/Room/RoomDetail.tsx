@@ -1,11 +1,9 @@
-import CustomInfoDrawer from '@/components/common/CustomInfoDrawer'
-import React from 'react'
 import { type roomInputType } from '@/api/data/rooms.api'
+import CustomInfoDrawer from '@/components/common/CustomInfoDrawer'
 import { Badge } from '@/components/ui/badge'
 import { hotelFacilities, hotelFeatures } from '@/constant/roomdata'
 import { CircleCheck } from 'lucide-react'
-// import { LazyLoadImage } from "react-lazy-load-image-component";
-// import "react-lazy-load-image-component/src/effects/blur.css";
+
 
 
 
@@ -29,8 +27,7 @@ const RoomDetail = ({ room }: props) => {
     const firstImage = attachment.length > 0 ? attachment[0].url : "";
     console.log("firstImages",firstImage)
     const otherImages = attachment.slice(1);
-    const optimizeImage = (url:any) =>
-  url.replace("/upload/", "/upload/w_400,h_300,c_fill,q_auto,f_auto/");
+    
     return (
         <CustomInfoDrawer
 

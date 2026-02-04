@@ -1,5 +1,6 @@
 import { useAddHotelMutation } from "@/api/data/hotels.api"
 import DropZoneImage from "@/components/common/DropZoneImage"
+import Loader from "@/components/common/Loader"
 import {addHostelSchema } from "@/components/common/validation"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
@@ -68,7 +69,7 @@ const AddHotel = () => {
                             <FormItem>
                                 <FormLabel className="capitalize text-base text-gray-900 pb-4">hotel image</FormLabel>
                                 <FormControl className="border border-amber-950">
-                                    <DropZoneImage name={field.name} maxCount={4} maxSize={6} type="image" />
+                                    <DropZoneImage name={field.name} maxCount={4}  type="image" />
                                 </FormControl>
                             </FormItem>
                         )}
@@ -197,7 +198,7 @@ const AddHotel = () => {
                                         rule
                                     </FormLabel>
                                     <FormControl>
-                                        {/* <Input {...field} placeholder="Enter hotel address" /> */}
+                                       
                                         <DropZoneImage  name={field.name} maxCount={1} type="pdf" />
                                     </FormControl>
                                     <FormMessage />
@@ -206,7 +207,8 @@ const AddHotel = () => {
                         />
 
                         <Button type="submit" className="w-full bg-[#E3B23C] hover:bg-[#d4a62e] capitalize">
-                            create hotel
+                       
+                            {isLoading ?<Loader/> :"create hotel"}
                         </Button>
 
 
