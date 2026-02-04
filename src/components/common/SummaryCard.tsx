@@ -1,9 +1,9 @@
-import React from "react";
+
 
 const SummaryCard = ({ cards = [] }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {cards.map((c:any, i) => (
+      {cards.map((c: any, i) => (
         <div
           key={i}
           className="bg-white rounded-2xl transition-all p-5 flex items-center justify-between border border-gray-100"

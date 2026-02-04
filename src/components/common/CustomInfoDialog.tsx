@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button"
 import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog"
 import { usePopUpContext } from "@/context/PopUpContext"
 import { cn } from "@/lib/utils"
@@ -19,12 +19,12 @@ type CustomInfoDialogType={
     children:ReactNode,
     description?:string
     okText?:string
-    loading:boolean
+    loading?:boolean
     className?:string
     close?:boolean
     // onClick:()=>void
 }
-const CustomInfoDialog = ({title,children,description,okText,imgUrl,loading,className,close}:CustomInfoDialogType) => {
+const CustomInfoDialog = ({title,children,description,okText,imgUrl,className,close}:CustomInfoDialogType) => {
 const{isDialogOpen,openDialog,closeDialog} =usePopUpContext()
 
 

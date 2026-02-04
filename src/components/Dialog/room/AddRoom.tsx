@@ -1,7 +1,8 @@
 import { useAddRoomMutation } from "@/api/data/rooms.api";
 import CustomInfoDialog from "@/components/common/CustomInfoDialog";
 import DropZoneImage from "@/components/common/DropZoneImage";
-import { addRoomSchema, categoryEnum } from "@/components/common/validation";
+import Loader from "@/components/common/Loader";
+import { categoryEnum, roomSchema } from "@/components/common/validation";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -31,8 +32,8 @@ import type z from "zod";
 const AddRoom = () => {
   const [addRoom,{isLoading}] =useAddRoomMutation()
   const {closeDialog} =usePopUpContext()
-  const form = useForm<z.infer<typeof addRoomSchema>>({
-    resolver:zodResolver(addRoomSchema),
+  const form = useForm<z.infer<typeof roomSchema>>({
+    resolver:zodResolver(roomSchema),
     defaultValues:{
       roomNumber:"",
       description:"",
@@ -46,7 +47,7 @@ const AddRoom = () => {
   });
 
 
-  const onSubmit=async(values:z.infer<typeof addRoomSchema>)=>{
+  const onSubmit=async(values:z.infer<typeof roomSchema>)=>{
     try {
     const payload ={
       ...values,
@@ -89,7 +90,11 @@ const AddRoom = () => {
                 <FormItem>
                   <FormLabel className="capitalize text-base text-gray-900 pb-4">hotel image</FormLabel>
                   <FormControl className="">
-                    <DropZoneImage name={field.name} maxCount={4} maxSize={6} acceptType="image" />
+                    <DropZoneImage name={field.name}   
+                    // acceptType="image"
+                    maxCount={4}  type="image" 
+                    
+                    />
                   </FormControl>
                 </FormItem>
               )}
@@ -232,8 +237,9 @@ const AddRoom = () => {
               />
             </div>
             <div className="flex justify-end mt-5">
-              <Button className="w-[140px]   bg-[#E3B23C] hover:bg-[#d4a62e]">
-                create room
+              <Button disabled={isLoading} className="w-[140px]   bg-[#E3B23C] hover:bg-[#d4a62e]">
+                {/* create room */}
+                {isLoading ? <Loader/> :"create room"}
               </Button>
             </div>
           </div>

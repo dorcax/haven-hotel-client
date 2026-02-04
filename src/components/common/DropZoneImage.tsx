@@ -1,182 +1,446 @@
+// // import { useUploader, type UploadCategory } from "@/context/UploaderContext";
+// // import { UploadCloud, X, FileText } from "lucide-react";
+// // import { useCallback, useEffect, useMemo, useState } from "react";
+// // import { useDropzone } from "react-dropzone";
+// // import { useFormContext } from "react-hook-form";
+// // import { Progress } from "../ui/progress";
+// // import { toast } from "react-toastify";
 
-// export default DropZoneImage;
-import { useUploader } from "@/context/UploaderContext";
-import { UploadCloud, X } from "lucide-react";
-import { useCallback, useState, useEffect } from "react";
+// // interface UploadedFile {
+// //   id: string;
+// //   url: string;
+// //   file?: File;
+// //   done?: boolean;
+// //   progress?: number;
+// //   serverId?: string;
+// //   type?: "image" | "pdf";
+// // }
+
+// // interface Props {
+// //   name: string;
+// //   type: "image" | "pdf";
+// //   maxCount?: number;
+// //   maxSize?: number;
+// //   defaultFiles?: UploadedFile[];
+// // }
+
+// // // const MB = 1024 * 1024;
+
+// // export default function DropZoneImage({
+// //   name,
+// //   type,
+// //   maxCount = 4,
+// //   // maxSize = 20,
+// //   defaultFiles = [],
+// // }: Props) {
+// //   const { setValue } = useFormContext();
+// //   const uploader = useUploader(type);
+
+// //   const [existing, setExisting] = useState<UploadedFile[]>(defaultFiles);
+
+// //   const uploads = useMemo(() => Object.values(uploader.uploads) as UploadedFile[], [uploader.uploads]);
+
+// //   const display = useMemo(() => [...existing, ...uploads], [existing, uploads]);
+// //   console.log("display",display)
+
+// //   useEffect(() => {
+// //     const attachmentIds = display
+// //       .filter((f) => f.done && f.serverId)
+// //       .map((f) => f.serverId);
+// //     setValue(name, attachmentIds, { shouldValidate: true });
+// //   }, [display, name, setValue]);
+
+// //   const onRemove = useCallback(
+// //     (type:UploadCategory,id: string) => {
+// //       uploader.cancelUpload(type,id);
+// //       setExisting((prev) => prev.filter((f) => f.id !== id));
+// //     },
+// //     [uploader]
+// //   );
+
+// //   const onDrop = useCallback(
+// //     (type:UploadCategory,acceptedFiles: File[]) => {
+// //       if (display.length + acceptedFiles.length > maxCount) {
+// //         toast(`Only ${maxCount} files allowed`);
+// //         return;
+// //       }
+
+// //       const validFiles = acceptedFiles.map((file) => ({
+// //         id: `${file.name}-${file.lastModified}`,
+// //         url: URL.createObjectURL(file),
+// //         file,
+// //         done: false,
+// //         progress: 0,
+// //         type: type,
+// //       }));
+
+// //       uploader.addUploads(validFiles);
+// //     },
+// //     [display.length, maxCount, uploader, type]
+// //   );
+
+// //   const { getRootProps, getInputProps } = useDropzone({
+// //     onDrop,
+// //     multiple: maxCount > 1,
+// //     accept:
+// //       type === "image"
+// //         ? { "image/*": [".jpeg", ".jpg", ".png", ".webp"] }
+// //         : { "application/pdf": [".pdf"] },
+// //   });
+
+// //   useEffect(() => {
+// //     return () => {
+// //       display.forEach((f) => {
+// //         if (f.url.startsWith("blob:")) URL.revokeObjectURL(f.url);
+// //       });
+// //     };
+// //   }, [display]);
+
+// //   return (
+// //     <div className="space-y-4">
+// //       {(maxCount > 1 || display.length === 0) && (
+// //         <div
+// //           {...getRootProps()}
+// //           className="flex flex-col items-center justify-center p-6 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+// //         >
+// //           <UploadCloud size={20} />
+// //           <p className="mt-2 text-sm">
+// //             {type === "image" ? "Click or drag images" : "Click or drag PDF"}
+// //           </p>
+// //           <input {...getInputProps()} /> {/* No type="file" and no extra label */}
+// //         </div>
+// //       )}
+
+// //       {display.length > 0 && (
+// //         <div className="grid gap-4 grid-cols-3">
+// //           {display.map((f) => (
+// //             <div
+// //               key={f.id}
+// //               className="relative rounded-lg overflow-hidden border p-1 flex items-center justify-center h-32"
+// //             >
+// //               {f.type?.startsWith("image") ? (
+// //                 <img
+// //                   src={f.url}
+// //                   alt="upload"
+// //                   className="object-cover w-full h-full rounded-lg border-amber-300"
+// //                 />
+// //               ) : (
+// //                 <div className="flex flex-col items-center justify-center">
+// //                   <FileText size={32} />
+// //                   <span className="text-xs">{f.file?.name || f.url.split("/").pop()}</span>
+// //                 </div>
+// //               )}
+
+// //               {!f.done && f.file && (
+// //                 <Progress
+// //                   value={Math.max(f.progress ?? 0, 5)}
+// //                   className="absolute bottom-0 w-full"
+// //                 />
+// //               )}
+
+// //               <button
+// //                 onClick={(e) => {
+// //                   e.stopPropagation();
+// //                   onRemove(f.id);
+// //                 }}
+// //                 className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded"
+// //               >
+// //                 <X size={14} />
+// //               </button>
+// //             </div>
+// //           ))}
+// //         </div>
+// //       )}
+// //     </div>
+// //   );
+// // }
+
+
+
+// import { useUploader, type UploadCategory } from "@/context/UploaderContext";
+// import { UploadCloud, X, FileText } from "lucide-react";
+// import { useCallback, useEffect, useMemo, useState } from "react";
+// import { useDropzone } from "react-dropzone";
+// import { useFormContext } from "react-hook-form";
+// import { Progress } from "../ui/progress";
+// import { toast } from "react-toastify";
+
+// interface UploadedFile {
+//   id: string;
+//   url: string;
+//   file?: File;
+//   serverId?: string;
+//   progress?: number;
+// }
+
+// interface Props {
+//   name: string;
+//   type: UploadCategory;
+//   maxCount?: number;
+//   defaultFiles?: UploadedFile[];
+// }
+
+// export default function DropZoneImage({
+//   name,
+//   type,
+//   maxCount = 4,
+//   defaultFiles = [],
+// }: Props) {
+//   const { setValue } = useFormContext();
+//   const uploader = useUploader(type);
+
+//   const [existing, setExisting] = useState<UploadedFile[]>(defaultFiles);
+
+//   // const uploads = uploader.uploads;
+//    const uploads = useMemo(() => Object.values(uploader.uploads) as UploadedFile[], [uploader.uploads]);
+
+//   const display = useMemo(
+//     () => [...existing, ...uploads],
+//     [existing, uploads]
+//   );
+
+//   useEffect(() => {
+//     const attachmentIds = display
+//       .filter((f) => f.serverId)
+//       .map((f) => f.serverId);
+
+//     setValue(name, attachmentIds, { shouldValidate: true });
+//   }, [display, name, setValue]);
+
+//   const onRemove = useCallback(
+//     (id: string) => {
+//       uploader.cancelUpload(type,id);
+//       setExisting((prev) => prev.filter((f) => f.id !== id));
+//     },
+//     [uploader]
+//   );
+
+//   const onDrop = useCallback(
+//     (acceptedFiles: File[]) => {
+//       if (display.length + acceptedFiles.length > maxCount) {
+//         toast(`Only ${maxCount} files allowed`);
+//         return;
+//       }
+
+//       uploader.addUploads(acceptedFiles);
+//     },
+//     [display.length, maxCount, uploader]
+//   );
+
+//   const { getRootProps, getInputProps } = useDropzone({
+//     onDrop,
+//     multiple: maxCount > 1,
+//     accept:
+//       type === "image"
+//         ? { "image/*": [".jpeg", ".jpg", ".png", ".webp"] }
+//         : { "application/pdf": [".pdf"] },
+//   });
+
+//   return (
+//     <div className="space-y-4">
+//       {(maxCount > 1 || display.length === 0) && (
+//         <div
+//           {...getRootProps()}
+//           className="flex flex-col items-center justify-center p-6 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+//         >
+//           <UploadCloud size={20} />
+//           <p className="mt-2 text-sm">
+//             {type === "image"
+//               ? "Click or drag images"
+//               : "Click or drag PDF"}
+//           </p>
+//           <input {...getInputProps()} />
+//         </div>
+//       )}
+
+//       {display.length > 0 && (
+//         <div className="grid gap-4 grid-cols-3">
+//           {display.map((f) => (
+//             <div
+//               key={f.id}
+//               className="relative rounded-lg overflow-hidden border p-1 flex items-center justify-center h-32"
+//             >
+//               {type === "image" ? (
+//                 <img
+//                   src={f.url}
+//                   alt="upload"
+//                   className="object-cover w-full h-full rounded-lg"
+//                 />
+//               ) : (
+//                 <div className="flex flex-col items-center justify-center">
+//                   <FileText size={32} />
+//                   <span className="text-xs">
+//                     {f.file?.name || f.url.split("/").pop()}
+//                   </span>
+//                 </div>
+//               )}
+
+//               {!f.serverId && (
+//                 <Progress
+//                   value={Math.max(f.progress ?? 0, 5)}
+//                   className="absolute bottom-0 w-full"
+//                 />
+//               )}
+
+//               <button
+//                 onClick={(e) => {
+//                   e.stopPropagation();
+//                   onRemove(f.id);
+//                 }}
+//                 className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded"
+//               >
+//                 <X size={14} />
+//               </button>
+//             </div>
+//           ))}
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
+
+
+
+
+import { useUploader, type UploadCategory } from "@/context/UploaderContext";
+import { UploadCloud, X, FileText } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { toast } from "react-toastify";
-import { Input } from "../ui/input";
 import { useFormContext } from "react-hook-form";
+import { Progress } from "../ui/progress";
+import { toast } from "react-toastify";
 
-type DropZoneProps = {
-  name: string; // form field name (like "attachments")
-  maxSize?: number; // in MB
+interface UploadedFile {
+  id: string;
+  url: string;
+  file?: File;
+  serverId?: string;
+  progress?: number;
+}
+
+interface Props {
+  name: string;
+  type: UploadCategory;
   maxCount?: number;
-  acceptType: "image" | "pdf";
-};
+  defaultFiles?: UploadedFile[];
+}
 
-const DropZoneImage = ({
+export default function DropZoneImage({
   name,
-  maxSize = 5,
-  maxCount = 5,
-  acceptType,
-}: DropZoneProps) => {
-  const mb = 1024 * 1024;
-  const [localFiles, setLocalFiles] = useState<File[]>([]);
-  const { uploads, addUploads, cancelUpload } = useUploader(acceptType);
-  const { setValue, getValues } = useFormContext();
+  type,
+  maxCount = 4,
+  defaultFiles = [],
+}: Props) {
+  const { setValue } = useFormContext();
+  const uploader = useUploader(type);
 
-  // ✅ Normalize uploads into an array
-  const normalizeUploads = (uploads: any) => {
-    if (Array.isArray(uploads)) return uploads;
-    if (uploads && typeof uploads === "object")
-      return Object.values(uploads).flat();
-    return [];
-  };
+  const [existing, setExisting] = useState<UploadedFile[]>(defaultFiles);
 
-  // ✅ Whenever uploads change, update form field
-  useEffect(() => {
-    const uploadArray = normalizeUploads(uploads);
-    console.log("🔍 Full uploads data:", uploadArray);
-    const doneUploads = uploadArray.filter((u) => u.done && u.id);
-    const urls = doneUploads.map((u) => u.id);
+  const uploads = uploader.uploads;
 
-    console.log("✅ Uploaded URLs:", urls);
-    // ✅ Only update if uploads are finished
-    if (urls.length > 0) {
-      setValue(name, urls, { shouldValidate: true });
-    }
-    // setValue(name, urls, { shouldValidate: true });
-    console.log("📦 get image from react-hook-form:", getValues(name));
-  }, [uploads, name, setValue, getValues]);
-
-  const handleOnDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      const newFiles: File[] = [];
-
-      for (let file of acceptedFiles) {
-        if (localFiles.length + newFiles.length >= maxCount) {
-          toast.error(`You can only upload ${maxCount} file(s).`);
-          break;
-        }
-
-        if (file.size > maxSize * mb) {
-          toast.error(`${file.name} is too large (max ${maxSize} MB).`);
-          continue;
-        }
-
-        const duplicate = localFiles.some(
-          (f) => f.name === file.name && f.size === file.size
-        );
-        if (duplicate) {
-          toast.error(`${file.name} has already been added.`);
-          continue;
-        }
-
-        if (acceptType === "image" && !file.type.startsWith("image/")) {
-          toast.error(`${file.name} is not an image.`);
-          continue;
-        }
-        if (acceptType === "pdf" && file.type !== "application/pdf") {
-          toast.error(`${file.name} is not a PDF.`);
-          continue;
-        }
-
-        newFiles.push(file);
-      }
-
-      if (newFiles.length > 0) {
-        addUploads(newFiles); // upload to server
-        setLocalFiles((prev) => [...prev, ...newFiles]);
-      }
-    },
-    [addUploads, acceptType, localFiles, maxCount, maxSize]
+  const display = useMemo(
+    () => [...existing, ...uploads],
+    [existing, uploads]
   );
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop: handleOnDrop,
+  useEffect(() => {
+    const attachmentIds = display
+      .filter((f) => f.serverId)
+      .map((f) => f.serverId);
+
+    setValue(name, attachmentIds, { shouldValidate: true });
+  }, [display, name, setValue]);
+
+  const onRemove = useCallback(
+    (id: string) => {
+      uploader.cancelUpload(id);
+      setExisting((prev) => prev.filter((f) => f.id !== id));
+    },
+    [uploader]
+  );
+
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      if (display.length + acceptedFiles.length > maxCount) {
+        toast(`Only ${maxCount} files allowed`);
+        return;
+      }
+
+      uploader.addUploads(acceptedFiles);
+    },
+    [display.length, maxCount, uploader]
+  );
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    multiple: maxCount > 1,
     accept:
-      acceptType === "image"
-        ? { "image/*": [".jpeg", ".jpg", ".png"] }
+      type === "image"
+        ? { "image/*": [".jpeg", ".jpg", ".png", ".webp"] }
         : { "application/pdf": [".pdf"] },
   });
 
-  const uploadArray = normalizeUploads(uploads);
-
   return (
-    <section {...getRootProps()} >
-      {uploadArray.length ===0 &&acceptType === "image"  && (
-        <div className="border border-dashed border-[#E3B23C] h-[300px] flex flex-col justify-center items-center rounded-2xl cursor-pointer">
-          <UploadCloud size={40} className="text-[#E3B23C] pb-2" />
-          <p className="text-gray-900 text-sm py-2">
-            {isDragActive
-              ? "Drop image files here"
-              : "Drag & drop images here or click to upload"}
+    <div className="space-y-4">
+      {(maxCount > 1 || display.length === 0) && (
+        <div
+          {...getRootProps()}
+          className="flex flex-col items-center justify-center p-6 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+        >
+          <UploadCloud size={20} />
+          <p className="mt-2 text-sm">
+            {type === "image"
+              ? "Click or drag images"
+              : "Click or drag PDF"}
           </p>
-          <Input type="file" className="hidden" {...getInputProps()} multiple />
+          <input {...getInputProps()} />
         </div>
-      )} 
-       
-       {
-        uploadArray.length===0 && acceptType==="pdf" &&(
-           <div className="flex flex-col items-start gap-2">
-          <Input
-            type="file"
-            accept="application/pdf"
-            
-            {...getInputProps()}
-            className="p-2 cursor-pointer w-full "
-          />
-          <p className="text-sm px-2 py-3 text-gray-500 mt-1 border w-full h-12 rounded-xl">
-            Only PDF files are allowed.
-          </p>
-        </div>
-        )
-       }
-    
+      )}
 
-
-
-      {/* Preview uploaded files */}
-      {uploadArray.length > 0 && acceptType === "image" && (
-        <div className="grid grid-cols-2 gap-2">
-          {uploadArray.map((upload: any) => (
-            <div key={upload.id} className="relative group">
-              <img
-                src={upload.url}
-                alt={upload.file.name}
-                className="object-cover w-full h-48 rounded-md"
-              />
-              {upload.done && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    cancelUpload(upload.id);
-                    setLocalFiles((prev) => prev.filter((f) => f !== upload.file));
-                  }}
-                  className="absolute top-1 right-1 bg-black bg-opacity-60 p-1 rounded-full text-white opacity-0 group-hover:opacity-100 transition"
-                >
-                  <X size={14} />
-                </button>
+      {display.length > 0 && (
+        <div className="grid gap-4 grid-cols-3">
+          {display.map((f) => (
+            <div
+              key={f.id}
+              className="relative rounded-lg overflow-hidden border p-1 flex items-center justify-center h-32"
+            >
+              {type === "image" ? (
+                <img
+                  src={f.url}
+                  alt="upload"
+                  className="object-cover w-full h-full rounded-lg"
+                />
+              ) : (
+                <div className="flex flex-col items-center justify-center">
+                  <FileText size={32} />
+                  <span className="text-xs">
+                    {f.file?.name || f.url.split("/").pop()}
+                  </span>
+                </div>
               )}
+
+              {!f.serverId && (
+                <Progress
+                  value={Math.max(f.progress ?? 0, 5)}
+                  className="absolute bottom-0 w-full"
+                />
+              )}
+
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRemove(f.id);
+                }}
+                className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded"
+              >
+                <X size={14} />
+              </button>
             </div>
           ))}
         </div>
       )}
-
-      {/* PDF Preview */}
-      {uploadArray.length > 0 && acceptType === "pdf" && (
-        <div className="mt-4 flex flex-col gap-2">
-          {uploadArray.map((upload: any) => (
-            <div key={upload.id} className="border p-3 rounded-md text-sm bg-gray-50">
-              {upload.file.name}
-            </div>
-          ))}
-        </div>
-      )}
-
-    </section>
+    </div>
   );
-};
+}
 
-export default DropZoneImage;
+

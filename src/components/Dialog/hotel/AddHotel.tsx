@@ -1,5 +1,6 @@
 import { useAddHotelMutation } from "@/api/data/hotels.api"
 import DropZoneImage from "@/components/common/DropZoneImage"
+import Loader from "@/components/common/Loader"
 import {addHostelSchema } from "@/components/common/validation"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
@@ -45,7 +46,8 @@ const AddHotel = () => {
               
             }).unwrap();
             toast.success("Hotel created successfully")
-            navigate("/dashboard")
+            // /dashboard/hotel/${auth?.hotelId}
+            navigate(`/dashboard/hotel/${res.id}`)
 
             console.log("Response:", res);
           } catch (err) {
@@ -56,7 +58,7 @@ const AddHotel = () => {
         <section className='bg-[#F5F6FA] flex justify-center items-center min-h-screen w-full  '>
             <Form {...form}>
                 <form className=" grid grid-cols-3 gap-6 w-full max-w-5xl max-h-[90vh]  bg-white shadow-5xl rounded-xl px-4 overflow-y-auto overflow [&::-webkit-scrollbar]:hidden  [-ms-overflow-style-none] [scrollbar-width:none]" onSubmit={form.handleSubmit(onSubmit, (errors) => {
-                    console.log("❌ Validation Errors:", errors);
+                    console.log(" Validation Errors:", errors);
                 })}>
                     {/* the hotel image  */}
                    <div className="py-10 col-span-1">
@@ -67,7 +69,7 @@ const AddHotel = () => {
                             <FormItem>
                                 <FormLabel className="capitalize text-base text-gray-900 pb-4">hotel image</FormLabel>
                                 <FormControl className="border border-amber-950">
-                                    <DropZoneImage name={field.name} maxCount={4} maxSize={6} acceptType="image" />
+                                    <DropZoneImage name={field.name} maxCount={4}  type="image" />
                                 </FormControl>
                             </FormItem>
                         )}
@@ -196,8 +198,8 @@ const AddHotel = () => {
                                         rule
                                     </FormLabel>
                                     <FormControl>
-                                        {/* <Input {...field} placeholder="Enter hotel address" /> */}
-                                        <DropZoneImage  name={field.name} maxCount={1} acceptType="pdf" />
+                                       
+                                        <DropZoneImage  name={field.name} maxCount={1} type="pdf" />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -205,7 +207,8 @@ const AddHotel = () => {
                         />
 
                         <Button type="submit" className="w-full bg-[#E3B23C] hover:bg-[#d4a62e] capitalize">
-                            create hotel
+                       
+                            {isLoading ?<Loader/> :"create hotel"}
                         </Button>
 
 

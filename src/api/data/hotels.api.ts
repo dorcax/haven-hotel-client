@@ -12,7 +12,7 @@ type hotelInputTypes = {
 };
 
 const hotels = api.injectEndpoints({
-  endpoints: ({ mutation, query }) => ({
+  endpoints: ({ mutation }) => ({
     addHotel: mutation<any,hotelInputTypes>({
         query:(body)=>({
             url:"/hotel",

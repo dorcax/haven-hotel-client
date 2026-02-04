@@ -1,4 +1,9 @@
-import React from 'react'
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import {
   Table,
@@ -8,13 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu"
+import useSearch from '@/hooks/useSearch'
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -27,9 +26,9 @@ import {
   useReactTable,
   type VisibilityState,
 } from "@tanstack/react-table"
-import { Button } from './button'
 import { ChevronDown } from 'lucide-react'
-import useSearch from '@/hooks/UseSearch'
+import React from 'react'
+import { Button } from './button'
 import TableSkeleton from './table-skeleton'
 
 
@@ -47,8 +46,6 @@ const DataTable = <TData, TValue>({
   columns,
   data,
   loading,
-  placeholder,
-  onRowClick,
   search,
   searchQuery,
 }: DataTableProps<TData, TValue>) => {

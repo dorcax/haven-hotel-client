@@ -1,9 +1,8 @@
-import React from 'react'
-import AuthLayout from './AuthLayout'
 import { Button } from '@/components/ui/button'
-import { FormControl, FormField, FormItem, FormLabel, FormMessage,Form } from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {  useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
+import AuthLayout from './AuthLayout'
 
 const ForgotPassword = () => {
     const form =useForm()

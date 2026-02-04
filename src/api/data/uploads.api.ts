@@ -12,7 +12,7 @@ type UploadProps = {
 
 
 const uploads =api.injectEndpoints({
-    endpoints:({mutation,query})=>({
+    endpoints:({mutation})=>({
         uploadFile:mutation<any,UploadProps>({
             async queryFn({file,order,onProgress,signal}){
                 try {
@@ -23,10 +23,8 @@ const uploads =api.injectEndpoints({
                         `http://localhost:3000/upload`,formData,{
                             params:{order},
                             signal,
-                            headers:{"Content-Type":"multipart/form-data",
-                                 Authorization: `Bearer ${localStorage.getItem("token")}`
-
-                            },
+                            withCredentials:true,
+                           
                             onUploadProgress:(event)=>{
                                 if(onProgress && event.total){
                                     const percent =Math.round((event.loaded *100)/event.total)
@@ -35,7 +33,7 @@ const uploads =api.injectEndpoints({
                             }
                         }
                     )
-                    console.log("image in fronetend",response)
+                 
                     return {
                         data:response.data
                     }

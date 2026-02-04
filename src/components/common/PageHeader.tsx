@@ -1,7 +1,5 @@
-import React from 'react'
-import { Button } from '../ui/button'
-import Loader from './Loader'
 import { Loader2, RefreshCcw } from 'lucide-react'
+import { Button } from '../ui/button'
 
 
 type pageHeaderProps = {
@@ -35,7 +33,7 @@ const PageHeader = ({ title, description, primary, refresh }: pageHeaderProps) =
                     
                     
                     >Refresh {refresh?.isLoading ? <Loader2/>:<RefreshCcw/>} </Button>
-                    <Button className="bg-[#E3B23C] hover:bg-[#d4a62e] capitalize text-sm" onClick={primary?.action}>create room</Button>
+                    <Button className="bg-[#E3B23C] hover:bg-[#d4a62e] capitalize text-sm" onClick={primary?.action}>{primary?.title}</Button>
                 </div>
 
 

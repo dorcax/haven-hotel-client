@@ -1,5 +1,6 @@
-import { Calendar, ChevronUp, Home, Inbox, Search, Settings, User, User2 } from "lucide-react"
+import { Calendar, Home, Inbox, Settings, User } from "lucide-react"
 
+import { useAuthState } from "@/api/data/auth"
 import {
   Sidebar,
   SidebarContent,
@@ -11,12 +12,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
-import UseAuthComplete from "@/hooks/UseAuthComplete"
-import { useAuthState } from "@/api/data/auth"
-// import { DropdownMenu } from "@radix-ui/react-dropdown-menu"
 
-// Menu items.
 
 
 export function AppSidebar() {
@@ -36,7 +32,7 @@ const {auth} =useAuthState()
   },
   {
     title: "reservations",
-    url: "#",
+    url:`/dashboard/hotel/${auth?.hotelId}/reservations`,
     icon: Calendar,
   },
   {

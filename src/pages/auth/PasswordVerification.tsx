@@ -28,6 +28,7 @@ const PasswordVerification = () => {
   const onSubmit = async (value: z.infer<typeof verifySchema>) => {
     try {
       const res = await verifyOtp(value).unwrap();
+      console.log(res)
       toast.success("user verified successfully");
       navigate("/login");
     } catch (error: any) {

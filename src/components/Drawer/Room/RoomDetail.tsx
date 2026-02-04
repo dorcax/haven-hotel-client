@@ -1,9 +1,9 @@
-import CustomInfoDrawer from '@/components/common/CustomInfoDrawer'
-import React from 'react'
 import { type roomInputType } from '@/api/data/rooms.api'
+import CustomInfoDrawer from '@/components/common/CustomInfoDrawer'
 import { Badge } from '@/components/ui/badge'
 import { hotelFacilities, hotelFeatures } from '@/constant/roomdata'
 import { CircleCheck } from 'lucide-react'
+
 
 
 
@@ -25,7 +25,9 @@ const RoomDetail = ({ room }: props) => {
     const images = Array.isArray(attachments) ? attachments : attachments ? [attachments] : [];
     const attachment = images.map((u) => u)
     const firstImage = attachment.length > 0 ? attachment[0].url : "";
+    console.log("firstImages",firstImage)
     const otherImages = attachment.slice(1);
+    
     return (
         <CustomInfoDrawer
 
@@ -44,6 +46,8 @@ const RoomDetail = ({ room }: props) => {
                     {firstImage &&
                         <div className='col-span-3'>
                             <img src={firstImage} className=' h-60 w-full object-cover rounded-md' />
+                            
+          
                         </div>}
                     {/* second images */}
                     {otherImages.length > 0 &&
