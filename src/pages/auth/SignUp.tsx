@@ -26,7 +26,6 @@ import { icons } from "@/constant/icon";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import AuthLayout from "./AuthLayout";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -60,9 +59,9 @@ const SignUp = () => {
       console.log(error);
     }
   };
-  const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:3000/auth/google/login";
-  };
+  // const handleGoogleLogin = () => {
+  //   window.location.href = "http://localhost:3000/auth/google/login";
+  // };
   return (
     <div className="flex w-full min-h-screen">
       <div className="hidden lg:flex lg:w-1/2 relative bg-primary items-center justify-center overflow-hidden">
