@@ -630,7 +630,7 @@ export function RoomList() {
       <DataTable
         data={rooms}
         columns={columns}
-        loading={listRoom.isFetching}
+        loading={isLoading}
         //  search={(q) => setFilters((p) => ({ ...p, search: q }))}
         search={(q) => setFilter((prev) => ({ ...prev, search: q }))}
         searchQuery={query}

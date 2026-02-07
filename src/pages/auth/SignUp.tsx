@@ -61,7 +61,12 @@ const SignUp = () => {
     }
   };
   const handleGoogleLogin = () => {
-    window.location.href = `${envUrl}/auth/google/login`;
+    // window.location.href = `${envUrl}/auth/google/login`;
+    window.location.href = "http://localhost:3000/auth/google";
+
+    console.log("envUrl:", envUrl);
+
+    console.log("hi google")
   };
   return (
     <>

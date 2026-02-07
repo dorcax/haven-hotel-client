@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-const tagTypes = ["user", "hotel", "room"] as const;
+const tagTypes = ["user", "property", "room"] as const;
 export const envUrl = import.meta.env.VITE_API_URL;
 const defaultUrl = import.meta.env.BASE_URL;
 

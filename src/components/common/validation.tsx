@@ -55,16 +55,28 @@ export const addHostelSchema = z.object({
   amenities: z.array(z.string()).min(1, "Please select at least one amenity"),
   features: z.array(z.string()).min(1, "Please select at least one feature"),
   attachments: z.array(z.string()).min(1, "Please select at least one image").max(4, "Exactly 4 images are required"), // Changed to require exactly 4
-  contactPhone: z
+  phoneNumber: z
     .string()
     .min(11, "phone number must be at least 11 digits")
-    .max(15, "phone number too long"),
+    .max(11, "phone number too long"),
+    location:z.string(),
+   
 
+    type:z.string(),
+    price:z.number().min(2, "price must be at least #2 naira")
+    ,
+    capacity:z.number().min(1, "capacity must be at least 1"),
+    
   email: z.email(),
+  // rule: z
+  //   .string().min(1, "Please upload at least one file")
+  // .max(1, "Cannot upload more than 1 file")
+  //   ,
   rule: z
-    .array(z.string())
-    .min(1, "Please upload at least one image")
-    .max(1, "Cannot upload more than 1 images"),
+  .array(z.string()) // array from DropZone
+  .min(1, "Please upload at least one file")
+  .max(1, "Cannot upload more than 1 file")
+  // .transform((val) => val[0]) 
 });
 
 
