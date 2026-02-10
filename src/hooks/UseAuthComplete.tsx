@@ -10,6 +10,7 @@ const UseAuthComplete = () => {
   return useCallback(
     async(result:Promise<AuthState>)=>{
         const res =await result 
+        console.log("Logging in:", res);
         console.log("loginging",res)
         auth.set(res)
         if(res.hotelId){

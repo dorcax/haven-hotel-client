@@ -3,7 +3,7 @@ import { api } from "./base"
 
 
 export type roomInputType ={
-    roomNumber:string
+    title:string
     description:string
     floor:number
     capacity:number
@@ -30,6 +30,7 @@ const rooms =api.injectEndpoints({
          }),
          invalidatesTags:["room"]
         }),
+
         listRooms:query<any,any>({
         query:(q)=>({
             url:"room",

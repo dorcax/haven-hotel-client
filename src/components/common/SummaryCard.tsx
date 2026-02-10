@@ -1,6 +1,15 @@
+import type { JSX } from "react";
 
+export type SummaryCardItem = {
+  title: string;
+  value: number | string;
+  icon: JSX.Element;
+};
 
-const SummaryCard = ({ cards = [] }) => {
+interface SummaryCardProps {
+  cards: SummaryCardItem[];
+}
+const SummaryCard = ({ cards }:SummaryCardProps) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {cards.map((c: any, i) => (
