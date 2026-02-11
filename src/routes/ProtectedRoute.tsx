@@ -45,6 +45,7 @@ const ProtectedRoute = () => {
   const [shouldFetch, setShouldFetch] = useState(false);
   const { isLoading, isError } = useAuthUserQuery(undefined, {
     skip: !shouldFetch, // Don't fetch until we're ready
+    refetchOnMountOrArgChange: true,
   });
   const navigate = useNavigate();
 
