@@ -45,6 +45,7 @@ const UseAuthComplete = () => {
     async (loginPromise: Promise<AuthState>) => {
       const res = await loginPromise; // original login mutation
 console.log("Initial login result:", res);
+console.log("env",envUrl)
       // ✅ Wait for backend to confirm cookie
         auth.set(res)
       // const meRes = await fetch(`${envUrl}/auth`, {
@@ -61,7 +62,7 @@ console.log("Initial login result:", res);
         navigate("/", { replace: true });
       }
 
-      return meRes;
+      return res;
     },
     [auth, navigate]
   );
