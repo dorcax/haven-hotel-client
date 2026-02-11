@@ -497,14 +497,14 @@ const ReservationList = () => {
             <DropdownMenuContent align="end">
               {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
               <DropdownMenuItem
-                onClick={() => openDrawer(<RoomDetail room={row.original} />)}
+                onClick={() => openDrawer(()=><RoomDetail room={row.original} />)}
               // onClick={() => navigator.clipboard.writeText(payment.id)}
               >
                 View room
               </DropdownMenuItem>
               {/* <DropdownMenuSeparator /> */}
-              <DropdownMenuItem onClick={() => openDialog(<EditRoom room={row.original} />)}>Edit room</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => openDialog(<DeleteRoom room={row.original} />)}>Delete room</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => openDialog(()=><EditRoom room={row.original} />)}>Edit room</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => openDialog(()=><DeleteRoom room={row.original} />)}>Delete room</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         )
@@ -576,7 +576,7 @@ const ReservationList = () => {
         description="Here's a list of all reservations in the hotel."
         primary={{
           title: "create booking",
-          action: () => openDialog(<AddRoom />)
+          action: () => openDialog(()=><AddRoom />)
 
         }}
         refresh={{

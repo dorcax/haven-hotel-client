@@ -1,24 +1,13 @@
+
+
+
+
+
 import {
-  type ColumnDef,
-  type ColumnFiltersState,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  type SortingState,
-  useReactTable,
-  type VisibilityState,
+  type ColumnDef
 } from "@tanstack/react-table";
-import {
-  ArrowUpDown,
-  Ban,
-  CircleCheck,
-  CircleEllipsis,
-  MoreHorizontal,
-} from "lucide-react";
-import * as React from "react";
-
-
+import { ArrowUpDown, Ban, CircleCheck, CircleEllipsis, MoreHorizontal } from "lucide-react";
+import React from "react";
 
 import { useAuthState } from "@/api/data/auth";
 import { useListRoomsQuery } from "@/api/data/rooms.api";
@@ -29,15 +18,10 @@ import AddRoom from "@/components/Dialog/room/AddRoom";
 import DeleteRoom from "@/components/Dialog/room/DeleteRoom";
 import EditRoom from "@/components/Dialog/room/EditRoom";
 import RoomDetail from "@/components/Drawer/Room/RoomDetail";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Checkbox } from "@/components/ui/checkbox";
 import DataTable from "@/components/ui/data-table";
 import {
@@ -46,45 +30,51 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 import { usePopUpContext } from "@/context/PopUpContext";
+import useSearch from "@/hooks/useSearch";
 
 export function RoomList() {
   const { auth } = useAuthState();
   const { openDialog, openDrawer } = usePopUpContext();
 
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
-
-  const [query] = React.useState<string>("");
-
-  const [filters, setFilter] = React.useState({
-    page: 0,
-    count: 10,
-    search: "", // Add search to filters
-  });
-
   const propertyId = auth?.hotelId ?? "";
 
-  const {
-    data: listRoom,
-    isLoading,
-    isFetching,
-    refetch,
-  } = useListRoomsQuery({ propertyId, ...filters }, {
-    skip: !propertyId,
+  // Fetch rooms from API
+  const { data: listRoom, isLoading, isFetching, refetch } = useListRoomsQuery(
+    { propertyId, page: 0, count: 100 },
+    { skip: !propertyId }
+  );
 
-  });
-
+  // Rooms from API
   const rooms = listRoom?.list ?? [];
-  console.log("rooms", rooms)
   const pagination = listRoom?.pagination.filterCounts ?? {};
 
-  // Memoize columns
+  // Search state
+  // const { query, onSearch } = useSearch("", 500);
+  const [filteredRooms, setFilteredRooms] = React.useState(rooms);
+
+   const { query } = useSearch("", 500); 
+
+
+
+
+
+
+const handleSearch = React.useCallback((value: string) => {
+  if (!value) {
+    setFilteredRooms(rooms);
+  } else {
+    setFilteredRooms(
+      rooms.filter((r: any) =>
+        (r.title ?? "").toLowerCase().includes(value.toLowerCase())
+      )
+    );
+  }
+}, [rooms]); 
+
+
+  // Columns
   const columns = React.useMemo<ColumnDef<any>[]>(() => [
     {
       id: "select",
@@ -108,7 +98,7 @@ export function RoomList() {
       enableSorting: false,
       enableHiding: false,
     },
-    {
+      {
       accessorKey: "attachments",
       header: ({ column }) => (
         <Button
@@ -151,60 +141,25 @@ export function RoomList() {
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="capitalize"
         >
-          room number
-          <ArrowUpDown />
+          Room Number <ArrowUpDown />
         </Button>
       ),
-      cell: ({ row }) => <div className="lowercase">{row.getValue("title")}</div>,
+      cell: ({ row }) => <div>{row.getValue("title")}</div>,
     },
     {
       accessorKey: "price",
-      header: ({ column }) => (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          price
-          <ArrowUpDown />
-        </Button>
-      ),
+      header: "Price",
       cell: ({ row }) => {
-        const price = parseFloat(row.getValue("price"));
-        const formatted = new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(price);
-        return <div className="font-medium">{formatted}</div>;
+        const price = parseFloat(row.getValue("price") ?? 0);
+        return <div>{price.toLocaleString("en-US", { style: "currency", currency: "USD" })}</div>;
       },
     },
     {
       accessorKey: "category",
-      header: ({ column }) => (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          category
-          <ArrowUpDown />
-        </Button>
-      ),
-      cell: ({ row }) => <div className="lowercase">{row.getValue("category")}</div>,
+      header: "Category",
+      cell: ({ row }) => <div>{row.getValue("category")}</div>,
     },
-    // {
-    //   accessorKey: "floor",
-    //   header: ({ column }) => (
-    //     <Button
-    //       variant="ghost"
-    //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    //     >
-    //       floor
-    //       <ArrowUpDown />
-    //     </Button>
-    //   ),
-    //   cell: ({ row }) => <div className="lowercase">{row.getValue("floor")}</div>,
-    // },
     {
       accessorKey: "amenities",
       header: ({ column }) => (
@@ -231,18 +186,13 @@ export function RoomList() {
       accessorKey: "isAvailable",
       header: "Status",
       cell: ({ row }) => (
-        <div className="capitalize">
-          {row.getValue("isAvailable") ? (
-            <Badge variant="secondary">available</Badge>
-          ) : (
-            <Badge variant="secondary">booked</Badge>
-          )}
-        </div>
+        <Badge variant="secondary">
+          {row.getValue("isAvailable") ? "Available" : "Booked"}
+        </Badge>
       ),
     },
     {
       id: "actions",
-      enableHiding: false,
       cell: ({ row }) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -251,20 +201,14 @@ export function RoomList() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem
-              onClick={() => openDrawer(<RoomDetail room={row.original} />)}
-            >
-              View room
+            <DropdownMenuItem onClick={() => openDrawer(() => <RoomDetail room={row.original} />)}>
+              View Room
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => openDialog(<EditRoom room={row.original} />)}
-            >
-              Edit room
+            <DropdownMenuItem onClick={() => openDialog(() => <EditRoom room={row.original} />)}>
+              Edit Room
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => openDialog(<DeleteRoom room={row.original} />)}
-            >
-              Delete room
+            <DropdownMenuItem onClick={() => openDialog(() => <DeleteRoom room={row.original} />)}>
+              Delete Room
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -272,90 +216,40 @@ export function RoomList() {
     },
   ], [openDialog, openDrawer]);
 
-  const table = useReactTable({
-    data: rooms,
-    columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
-  });
+  
 
-  const summaryCard = [
+  const summaryCards = [
     { title: "Total", value: pagination.TOTAL || 0, icon: <CircleEllipsis /> },
     { title: "Available", value: pagination.ACTIVE || 0, icon: <CircleCheck /> },
     { title: "Booked", value: pagination.INACTIVE || 0, icon: <Ban /> },
   ];
 
-  const handleCreateRoom = React.useCallback(() => {
-    openDialog(<AddRoom />);
-  }, [openDialog]);
 
-
-
-
-  if (isLoading) return <Loader />;
 
   return (
     <div className="space-y-4">
+            {isLoading && <Loader />}
+
       <PageHeader
         title="Room"
         description="Here's a list of all rooms in the hotel."
-        primary={{ title: "create room", action: handleCreateRoom }}
-        refresh={{
-          action: refetch,
-          isLoading: isFetching
-        }}
+        primary={{ title: "Create Room", action: () => openDialog(() => <AddRoom />) }}
+        refresh={{ action: refetch, isLoading: isFetching }}
       />
 
-      <SummaryCard cards={summaryCard} />
+      <SummaryCard cards={summaryCards} />
 
       <DataTable
-        data={rooms}
+        data={filteredRooms}
         columns={columns}
         loading={isLoading}
-        search={(q) => setFilter((p) => ({ ...p, search: q }))}
+        search={handleSearch}
         searchQuery={query}
-      // search={handleSearch} 
-      // searchQuery={searchQuery}
       />
-
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="text-muted-foreground flex-1 text-sm">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
-      </div>
     </div>
   );
 }
 
-export default RoomList; 
+export default RoomList;
+
+

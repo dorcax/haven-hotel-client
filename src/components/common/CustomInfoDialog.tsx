@@ -25,11 +25,18 @@ type CustomInfoDialogType={
     // onClick:()=>void
 }
 const CustomInfoDialog = ({title,children,description,okText,imgUrl,className,close}:CustomInfoDialogType) => {
-const{isDialogOpen,openDialog,closeDialog} =usePopUpContext()
+const{isDialogOpen,closeDialog} =usePopUpContext()
 
 
   return (
-    <Dialog open={isDialogOpen} onOpenChange={openDialog}>
+    <Dialog open={isDialogOpen} 
+    
+    // onOpenChange={openDialog}
+     onOpenChange={(open) => {
+    if (!open) closeDialog()
+  }}
+    
+    >
       <DialogTrigger asChild>
         {/* <Button variant="outline">Share</Button> */}
       </DialogTrigger>

@@ -22,7 +22,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import TagInput from "@/components/ui/TagsInput";
-import UploaderProvider from "../../../context/UploaderContext";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
@@ -87,8 +86,7 @@ const EditRoom = ({ room }: any) => {
   }));
   console.log("default files", defaultFiles)
   return (
-    <UploaderProvider>
-      <CustomInfoDialog
+    <CustomInfoDialog
         title="Edit Room"
         className="w-full md:max-w-4xl max-h-[500px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         loading={isLoading}
@@ -272,7 +270,6 @@ const EditRoom = ({ room }: any) => {
           </form>
         </Form>
       </CustomInfoDialog>
-    </UploaderProvider>
   );
 };
 

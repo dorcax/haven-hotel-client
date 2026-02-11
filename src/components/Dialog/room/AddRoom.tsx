@@ -21,8 +21,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import TagInput from "@/components/ui/TagsInput";
-import { usePopUpContext } from "@/context/PopUpContext";
-import UploaderProvider from "@/context/UploaderContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -30,7 +28,7 @@ import type z from "zod";
 
 const AddRoom = () => {
   const [addRoom, { isLoading }] = useAddRoomMutation();
-  const { closeDialog } = usePopUpContext();
+ 
   
   const form = useForm<z.infer<typeof roomSchema>>({
     resolver: zodResolver(roomSchema),
@@ -62,10 +60,7 @@ const AddRoom = () => {
       console.log("creating room", res);
       toast.success(res.message);
       
-      // Use setTimeout to prevent render cycle issues
-      setTimeout(() => {
-        closeDialog();
-      }, 0);
+      
       
     } catch (error: any) {
       console.log(error);
@@ -74,8 +69,7 @@ const AddRoom = () => {
   };
   
   return (
-    <UploaderProvider>
-      <CustomInfoDialog
+ <CustomInfoDialog
         title="create room"
         className="w-full md:max-w-4xl max-h-[500px] overflow-y-auto overflow [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         loading={isLoading} // Use actual loading state
@@ -263,8 +257,8 @@ const AddRoom = () => {
           </form>
         </Form>
       </CustomInfoDialog>
-    </UploaderProvider>
   );
 };
 
 export default AddRoom;
+

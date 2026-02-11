@@ -1,10 +1,14 @@
+
+
+
+
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -12,8 +16,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import useSearch from '@/hooks/useSearch'
+} from "@/components/ui/table";
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -25,22 +28,22 @@ import {
   type SortingState,
   useReactTable,
   type VisibilityState,
-} from "@tanstack/react-table"
-import { ChevronDown } from 'lucide-react'
-import React from 'react'
-import { Button } from './button'
-import TableSkeleton from './table-skeleton'
-
+} from "@tanstack/react-table";
+import { ChevronDown } from "lucide-react";
+import React from "react";
+import { Button } from "./button";
+import TableSkeleton from "./table-skeleton";
 
 type DataTableProps<TData, TValue> = {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
-  loading?: boolean
-  placeholder?: string
-  onRowClick?: (row: TData) => void
-  search?: (arg: string) => void
-  searchQuery?: string
-}
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  loading?: boolean;
+  placeholder?: string;
+  onRowClick?: (row: TData) => void;
+  // Parent should provide a stable search callback (debounced) and current query
+  search?: (arg: string) => void;
+  searchQuery?: string;
+};
 
 const DataTable = <TData, TValue>({
   columns,
@@ -49,19 +52,12 @@ const DataTable = <TData, TValue>({
   search,
   searchQuery,
 }: DataTableProps<TData, TValue>) => {
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
 
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  const { query, onSearch } = useSearch(searchQuery)
-  console.log("query", query)
-  console.log("onsearch",onSearch)
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
-
-
+  // Memoize the table config so table instance isn't recreated unnecessarily
   const table = useReactTable({
     data,
     columns,
@@ -83,14 +79,11 @@ const DataTable = <TData, TValue>({
 
   return (
     <div>
-
       <div className="flex items-center justify-between py-4">
         <Input
-          placeholder="Filter emails..."
-          value={query}
-          //   onChange={(event) =>onSearch(event.target.value)
-          onChange={(e) => onSearch(e.target.value, search!)}
-
+          placeholder="Filter..."
+          value={searchQuery ?? ""}
+          onChange={(e) => search?.(e.target.value)}
           className="max-w-sm"
         />
         <DropdownMenu>
@@ -100,82 +93,62 @@ const DataTable = <TData, TValue>({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
+            {table.getAllColumns()
               .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
+              .map((column) => (
+                <DropdownMenuCheckboxItem
+                  key={column.id}
+                  className="capitalize"
+                  checked={column.getIsVisible()}
+                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                >
+                  {column.id}
+                </DropdownMenuCheckboxItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="">
-        {loading ? (<TableSkeleton columns={columns.length} />) :
-          <Table className="">
+
+      <div>
+        {loading ? (
+          <TableSkeleton columns={columns.length} />
+        ) : (
+          <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id} className="text-center  font-semibold whitespace-nowrap">
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                      </TableHead>
-                    )
-                  })}
+                  {headerGroup.headers.map((header) => (
+                    <TableHead key={header.id} className="text-center font-semibold whitespace-nowrap">
+                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                    </TableHead>
+                  ))}
                 </TableRow>
               ))}
             </TableHeader>
             <TableBody>
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
+                  <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="text-center  whitespace-nowrap">
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
+                      <TableCell key={cell.id} className="text-center whitespace-nowrap">
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </TableCell>
                     ))}
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
+                  <TableCell colSpan={columns.length} className="h-24 text-center">
                     No results.
                   </TableCell>
                 </TableRow>
               )}
             </TableBody>
           </Table>
-        }
+        )}
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-
-export default DataTable
+export default DataTable;
