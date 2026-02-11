@@ -14,7 +14,7 @@ const UseAuthComplete = () => {
         console.log("loginging",res)
         auth.set(res)
           // CRITICAL FIX: Add a small delay to ensure cookie is stored
-            // await new Promise(resolve => setTimeout(resolve, 300));
+            await new Promise(resolve => setTimeout(resolve, 300));
         if(res.role ===Role.GUEST){
             navigate('/dashboard',{replace:true})
         }else{
