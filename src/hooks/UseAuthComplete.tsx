@@ -12,7 +12,7 @@ const UseAuthComplete = () => {
   return useCallback(async (loginPromise: Promise<AuthState>) => {
     const res = await loginPromise;
 
-    console.log("Logging in now:", res);
+    console.log("Logging in now3333:", res);
 
     auth.set(res);
 
