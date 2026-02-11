@@ -11,7 +11,7 @@ export const api =createApi({
     endpoints:()=>({}),
     baseQuery:fetchBaseQuery({
         // baseUrl,
-        baseUrl:defaultUrl,
+        baseUrl,
         credentials:"include"
      
     })
