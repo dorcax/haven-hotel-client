@@ -10,9 +10,9 @@ export type roomInputType ={
     price:number
     category:categoryEnum
     amenities:string[]
-    attachments:string[]
+    // attachments:string[]
     isAvailable?:boolean
-    attachment?:{
+    attachments?:{
         uploads:{url:string}[]
     }
 

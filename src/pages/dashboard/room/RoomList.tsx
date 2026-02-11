@@ -59,8 +59,8 @@ export function RoomList() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  const [searchQuery, setSearchQuery] = React.useState<string>("")
-    const [query] = React.useState<string>("");
+
+  const [query] = React.useState<string>("");
 
   const [filters, setFilter] = React.useState({
     page: 0,
@@ -75,13 +75,13 @@ export function RoomList() {
     isLoading,
     isFetching,
     refetch,
-  } = useListRoomsQuery({ propertyId, ...filters }, { 
+  } = useListRoomsQuery({ propertyId, ...filters }, {
     skip: !propertyId,
-  
+
   });
 
   const rooms = listRoom?.list ?? [];
-  console.log("rooms",rooms)
+  console.log("rooms", rooms)
   const pagination = listRoom?.pagination.filterCounts ?? {};
 
   // Memoize columns
@@ -301,18 +301,10 @@ export function RoomList() {
     openDialog(<AddRoom />);
   }, [openDialog]);
 
-  // Debounced search handler
-  const handleSearch = React.useCallback((query: string) => {
-    setSearchQuery(query);
-    // Use debounce or timeout to prevent too many re-renders
-    const timeoutId = setTimeout(() => {
-      setFilter(prev => ({ ...prev, search: query }));
-    }, 300);
-    
-    return () => clearTimeout(timeoutId);
-  }, []);
 
-  if ( isLoading) return <Loader />;
+
+
+  if (isLoading) return <Loader />;
 
   return (
     <div className="space-y-4">
@@ -320,24 +312,24 @@ export function RoomList() {
         title="Room"
         description="Here's a list of all rooms in the hotel."
         primary={{ title: "create room", action: handleCreateRoom }}
-        refresh={{ 
-          action: refetch, 
-          isLoading: isFetching 
+        refresh={{
+          action: refetch,
+          isLoading: isFetching
         }}
       />
-      
+
       <SummaryCard cards={summaryCard} />
-      
+
       <DataTable
         data={rooms}
         columns={columns}
         loading={isLoading}
         search={(q) => setFilter((p) => ({ ...p, search: q }))}
         searchQuery={query}
-        // search={handleSearch} 
-        // searchQuery={searchQuery}
+      // search={handleSearch} 
+      // searchQuery={searchQuery}
       />
-      
+
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="text-muted-foreground flex-1 text-sm">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}

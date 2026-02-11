@@ -1,5 +1,14 @@
-import type { RoomType } from "@/pages/dashboard/room/RoomList";
+// import type { RoomType } from "@/pages/dashboard/room/RoomList"
 
+export type RoomType = {
+  name: string
+  price: number
+  floor: number
+  category: string
+  amenities: string[]
+  isAvailable: boolean
+  attachments: string[]
+}
 export const data: RoomType[] = [
   {
     name: "Deluxe Suite",

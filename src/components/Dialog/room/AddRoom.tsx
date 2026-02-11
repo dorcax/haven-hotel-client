@@ -52,7 +52,10 @@ const AddRoom = () => {
         ...values,
         // floor: parseInt(values.floor),
         price: parseInt(values.price),
-        capacity: parseInt(values.capacity)
+        capacity: parseInt(values.capacity),
+         attachments: {
+         uploads: values.attachments.map((url) => ({ url }))
+  }
       };
 
       const res = await addRoom(payload).unwrap();

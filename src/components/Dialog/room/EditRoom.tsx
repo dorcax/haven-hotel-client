@@ -49,18 +49,21 @@ const EditRoom = ({ room }: any) => {
   });
 
   const onSubmit = async (values: z.infer<typeof roomSchema>) => {
-    console.log("Form submitted with values:", values); 
-    console.log("edit image",room?.attachment.uploads)
-    
+    console.log("Form submitted with values:", values);
+    console.log("edit image", room?.attachment.uploads)
+
     try {
       const payload = {
         ...values,
         // floor: parseInt(values.floor, 10),
         price: parseInt(values.price, 10),
         capacity: parseInt(values.capacity, 10),
+        attachments: {
+          uploads: values.attachments.map((url) => ({ url }))
+        }
       };
 
-      console.log("Sending payload:", payload); 
+      console.log("Sending payload:", payload);
 
       const response = await updateRoom({
         body: payload,
@@ -77,12 +80,12 @@ const EditRoom = ({ room }: any) => {
     }
   };
 
-  const defaultFiles = room.attachment.uploads.map((img:any) => ({
-  id: img.id,
-  url: img.url, 
-  type:img.type
-}));
-console.log("default files",defaultFiles)
+  const defaultFiles = room.attachment.uploads.map((img: any) => ({
+    id: img.id,
+    url: img.url,
+    type: img.type
+  }));
+  console.log("default files", defaultFiles)
   return (
     <UploaderProvider>
       <CustomInfoDialog
@@ -108,11 +111,11 @@ console.log("default files",defaultFiles)
                       <DropZoneImage
                         name={field.name}
                         maxCount={4}
-                        
+
                         type="image"
                         // onChange={field.onChange}
                         defaultFiles={defaultFiles}
-                   
+
                       />
                     </FormControl>
                     <FormMessage />
@@ -255,11 +258,11 @@ console.log("default files",defaultFiles)
                   )}
                 />
               </div>
-              
+
               <div className="flex justify-end mt-5">
-                <Button 
-                  type="submit" 
-                  disabled={isLoading} 
+                <Button
+                  type="submit"
+                  disabled={isLoading}
                   className="w-[140px] bg-[#E3B23C] hover:bg-[#d4a62e]"
                 >
                   {isLoading ? <Loader /> : "Update Room"}

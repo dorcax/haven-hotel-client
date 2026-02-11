@@ -1,6 +1,5 @@
 import { Calendar, Home, Inbox, Settings, User } from "lucide-react"
 
-import { useAuthState } from "@/api/data/auth"
 import {
   Sidebar,
   SidebarContent,
@@ -17,7 +16,7 @@ import {
 
 export function AppSidebar() {
 
-// const {auth} =useAuthState()
+
 
   const items = [
   {
