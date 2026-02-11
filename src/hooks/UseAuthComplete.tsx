@@ -14,7 +14,7 @@ const UseAuthComplete = () => {
         console.log("loginging",res)
         auth.set(res)
         if(res.role ===Role.GUEST){
-            navigate('/dashboard')
+            navigate('/dashboard',{replace:true})
         }else{
             navigate("/",{replace:true})
         }
