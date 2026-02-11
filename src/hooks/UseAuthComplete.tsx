@@ -44,7 +44,7 @@ const UseAuthComplete = () => {
   return useCallback(
     async (loginPromise: Promise<AuthState>) => {
       const res = await loginPromise; // original login mutation
-
+console.log("Initial login result:", res);
       // ✅ Wait for backend to confirm cookie
       const meRes = await fetch(`${envUrl}/auth`, {
         credentials: "include", // important
