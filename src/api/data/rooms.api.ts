@@ -5,7 +5,7 @@ import { api } from "./base"
 export type roomInputType ={
     title:string
     description:string
-    floor:number
+    // floor:number
     capacity:number
     price:number
     category:categoryEnum

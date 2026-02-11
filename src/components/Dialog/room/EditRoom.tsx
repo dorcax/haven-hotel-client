@@ -38,11 +38,11 @@ const EditRoom = ({ room }: any) => {
     resolver: zodResolver(roomSchema),
     defaultValues: {
       attachments: room?.attachment?.uploads || [],  // ✅ MUST include this!
-      roomNumber: room?.roomNumber || "",
+      title: room?.title || "",
       description: room?.description || "",
       category: room?.category || "STANDARD",
       amenities: room?.amenities || [],
-      floor: room?.floor?.toString() || "",
+      // floor: room?.floor?.toString() || "",
       price: room?.price?.toString() || "",
       capacity: room?.capacity?.toString() || ""
     }
@@ -55,7 +55,7 @@ const EditRoom = ({ room }: any) => {
     try {
       const payload = {
         ...values,
-        floor: parseInt(values.floor, 10),
+        // floor: parseInt(values.floor, 10),
         price: parseInt(values.price, 10),
         capacity: parseInt(values.capacity, 10),
       };
@@ -125,7 +125,7 @@ console.log("default files",defaultFiles)
               <h2 className="text-base font-semibold py-2">Room Details</h2>
 
               <FormField
-                name="roomNumber"
+                name="title"
                 control={form.control}
                 render={({ field }) => (
                   <FormItem className="my-2">
@@ -196,7 +196,7 @@ console.log("default files",defaultFiles)
               />
 
               <div className="flex flex-wrap gap-4 mt-3">
-                <FormField
+                {/* <FormField
                   name="floor"
                   control={form.control}
                   render={({ field }) => (
@@ -213,7 +213,7 @@ console.log("default files",defaultFiles)
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
                 <FormField
                   name="price"
                   control={form.control}

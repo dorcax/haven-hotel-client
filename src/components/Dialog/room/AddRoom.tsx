@@ -38,7 +38,7 @@ const AddRoom = () => {
       title: "",
       description: "",
       price: "",
-      floor: "",
+      // floor: "",
       capacity: "",
       amenities: [],
       attachments: [],
@@ -50,7 +50,7 @@ const AddRoom = () => {
     try {
       const payload = {
         ...values,
-        floor: parseInt(values.floor),
+        // floor: parseInt(values.floor),
         price: parseInt(values.price),
         capacity: parseInt(values.capacity)
       };
@@ -187,7 +187,7 @@ const AddRoom = () => {
               />
 
               <div className="flex flex-wrap gap-4 mt-3">
-                <FormField
+                {/* <FormField
                   name="floor"
                   control={form.control}
                   render={({ field }) => (
@@ -204,7 +204,7 @@ const AddRoom = () => {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
                 <FormField
                   name="price"
                   control={form.control}

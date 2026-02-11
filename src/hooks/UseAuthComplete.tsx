@@ -1,4 +1,4 @@
-import type { AuthState } from '@/api/api.type'
+import { Role, type AuthState } from '@/api/api.type'
 import { useAuthState } from '@/api/data/auth'
 import { useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -13,10 +13,10 @@ const UseAuthComplete = () => {
         console.log("Logging in:", res);
         console.log("loginging",res)
         auth.set(res)
-        if(res.hotelId){
-            navigate(`/dashboard/hotel/${res.hotelId}`)
+        if(res.role ===Role.GUEST){
+            navigate('/dashboard')
         }else{
-            navigate("/addhotel",{replace:true})
+            navigate("/",{replace:true})
         }
         return res
      

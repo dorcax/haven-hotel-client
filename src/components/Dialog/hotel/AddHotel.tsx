@@ -19,45 +19,46 @@ const AddHotel = () => {
     const [Hotel, { isLoading }] = useAddHotelMutation()
 
 
-const form = useForm<z.infer<typeof addHostelSchema>>({
-  resolver: zodResolver(addHostelSchema),
-  defaultValues: {
-    name: "",
-    description: "",
-    email: "",
-    address: "",
-    phoneNumber:"",
-    type: "",
-    location:"",
-    price: 1,
-    capacity: 2,
-    features: [],
-    amenities: [],
-    rule:[],
-    attachments: [],
-  },
-});
+    const form = useForm<z.infer<typeof addHostelSchema>>({
+        resolver: zodResolver(addHostelSchema),
+        defaultValues: {
+            name: "",
+            description: "",
+            email: "",
+            address: "",
+            phoneNumber: "",
+            type: "",
+            location: "",
+            price: 1,
+            capacity: 2,
+            features: [],
+            amenities: [],
+            rule: [],
+            attachments: [],
+        },
+    });
 
     const navigate = useNavigate()
     const { watch } = form
     const selectedType = watch("type")
     const onSubmit = async (values: z.infer<typeof addHostelSchema>) => {
-     
+
         console.log("Submitting...", values);
-        console.log("type",typeof(values.price))
+        console.log("type", typeof (values.price))
         try {
             const res = await Hotel({
                 ...values,
-                // price:Number(values.price),
-                // capacity:Number(values.capacity),
-               
-                // rule: values.rule?.[0],
-                 rule: values.rule[0],
+                price: values.price ?? 2000,
+                capacity: values.capacity ?? 1,
+
+
+
+                rule: values.rule[0],
 
             }).unwrap();
             toast.success("Hotel created successfully")
             // /dashboard/hotel/${auth?.hotelId}
-            
+
             navigate(`/dashboard/hotel/${res.id}`)
 
             console.log("Response:", res);
@@ -158,19 +159,19 @@ const form = useForm<z.infer<typeof addHostelSchema>>({
                                     )}
                                 />
                             </div>
-                              <FormField
-                                    control={form.control}
-                                    name="location"
-                                    render={({ field }) => (
-                                        <FormItem className="w-full">
-                                            <FormLabel className="capitalize text-sm text-gray-600">location</FormLabel>
-                                            <FormControl>
-                                                <Input {...field} placeholder="Enter hotel address " className="w-full" />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
+                            <FormField
+                                control={form.control}
+                                name="location"
+                                render={({ field }) => (
+                                    <FormItem className="w-full">
+                                        <FormLabel className="capitalize text-sm text-gray-600">location</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} placeholder="Enter hotel address " className="w-full" />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
                             <div className="flex flex-col md:flex-row gap-2">
                                 <FormField
                                     control={form.control}
@@ -220,7 +221,12 @@ const form = useForm<z.infer<typeof addHostelSchema>>({
                                             <FormItem className="w-full">
                                                 <FormLabel className="capitalize text-sm text-gray-600">Apartment Price</FormLabel>
                                                 <FormControl>
-                                                    <Input {...field} type="number"   onChange={(e) => field.onChange(Number(e.target.value))}  className="w-full" />
+                                                    <Input {...field} type="number" value={field.value === null ? '' : field.value}
+                                                        onChange={(e) => {
+                                                            const value = e.target.value;
+                                                            // Convert empty string to null, otherwise parse as number
+                                                            field.onChange(value === '' ? null : Number(value));
+                                                        }} className="w-full" />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -234,7 +240,11 @@ const form = useForm<z.infer<typeof addHostelSchema>>({
                                             <FormItem className="w-full">
                                                 <FormLabel className="capitalize text-sm text-gray-600">Apartment Capacity</FormLabel>
                                                 <FormControl>
-                                                    <Input {...field} type="number"   onChange={(e) => field.onChange(Number(e.target.value))}  className="w-full" />
+                                                    <Input {...field} type="number" value={field.value === null ? '' : field.value}
+                                                        onChange={(e) => {
+                                                            const value = e.target.value;
+                                                            field.onChange(value === '' ? null : Number(value));
+                                                        }} className="w-full" />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>

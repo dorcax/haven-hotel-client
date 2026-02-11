@@ -81,6 +81,7 @@ export function RoomList() {
   });
 
   const rooms = listRoom?.list ?? [];
+  console.log("rooms",rooms)
   const pagination = listRoom?.pagination.filterCounts ?? {};
 
   // Memoize columns
@@ -108,7 +109,7 @@ export function RoomList() {
       enableHiding: false,
     },
     {
-      accessorKey: "attachment",
+      accessorKey: "attachments",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -120,7 +121,7 @@ export function RoomList() {
         </Button>
       ),
       cell: ({ row }) => {
-        const attachments = row.getValue("attachment") as {
+        const attachments = row.getValue("attachments") as {
           uploads: { url: string }[];
         };
         return (
@@ -145,7 +146,7 @@ export function RoomList() {
       },
     },
     {
-      accessorKey: "roomNumber",
+      accessorKey: "title",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -156,7 +157,7 @@ export function RoomList() {
           <ArrowUpDown />
         </Button>
       ),
-      cell: ({ row }) => <div className="lowercase">{row.getValue("roomNumber")}</div>,
+      cell: ({ row }) => <div className="lowercase">{row.getValue("title")}</div>,
     },
     {
       accessorKey: "price",
@@ -191,19 +192,19 @@ export function RoomList() {
       ),
       cell: ({ row }) => <div className="lowercase">{row.getValue("category")}</div>,
     },
-    {
-      accessorKey: "floor",
-      header: ({ column }) => (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          floor
-          <ArrowUpDown />
-        </Button>
-      ),
-      cell: ({ row }) => <div className="lowercase">{row.getValue("floor")}</div>,
-    },
+    // {
+    //   accessorKey: "floor",
+    //   header: ({ column }) => (
+    //     <Button
+    //       variant="ghost"
+    //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+    //     >
+    //       floor
+    //       <ArrowUpDown />
+    //     </Button>
+    //   ),
+    //   cell: ({ row }) => <div className="lowercase">{row.getValue("floor")}</div>,
+    // },
     {
       accessorKey: "amenities",
       header: ({ column }) => (
@@ -311,7 +312,7 @@ export function RoomList() {
     return () => clearTimeout(timeoutId);
   }, []);
 
-  if (!propertyId || isLoading) return <Loader />;
+  if ( isLoading) return <Loader />;
 
   return (
     <div className="space-y-4">

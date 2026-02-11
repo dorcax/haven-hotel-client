@@ -4,12 +4,12 @@ type hotelInputTypes = {
   
   name: string;
   description: string;
-  price:number;
+  price?:number;
   address:string;
   location:string;
   phoneNumber:string;
   type:string
-  capacity:number;
+  capacity?:number;
   email: string;
   features: string[];
   amenities: string[];

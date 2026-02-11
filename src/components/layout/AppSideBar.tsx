@@ -17,22 +17,22 @@ import {
 
 export function AppSidebar() {
 
-const {auth} =useAuthState()
+// const {auth} =useAuthState()
 
   const items = [
   {
     title: "Dashboard",
-    url: `/dashboard/hotel/${auth?.hotelId}`,
+    url: '/dashboard',
     icon: Home,
   },
   {
     title: "rooms",
-    url: `/dashboard/hotel/${auth?.hotelId}/room`,
+    url: '/dashboard/room',
     icon: Inbox,
   },
   {
     title: "reservations",
-    url:`/dashboard/hotel/${auth?.hotelId}/reservations`,
+    url:'/dashboard/reservations',
     icon: Calendar,
   },
   {

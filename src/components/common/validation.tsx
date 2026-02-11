@@ -63,20 +63,17 @@ export const addHostelSchema = z.object({
    
 
     type:z.string(),
-    price:z.number().min(2, "price must be at least #2 naira")
+    price:z.number().optional()
     ,
-    capacity:z.number().min(1, "capacity must be at least 1"),
+    capacity:z.number().min(1, "capacity must be at least 1").optional(),
     
   email: z.email(),
-  // rule: z
-  //   .string().min(1, "Please upload at least one file")
-  // .max(1, "Cannot upload more than 1 file")
-  //   ,
+ 
   rule: z
   .array(z.string()) // array from DropZone
   .min(1, "Please upload at least one file")
   .max(1, "Cannot upload more than 1 file")
-  // .transform((val) => val[0]) 
+
 });
 
 
@@ -115,7 +112,7 @@ export enum categoryEnum {
   description:z.string().min(50,"description must be atleast 20 characters").max(1000,"description must not be more than 1000 character "),
   price:z.string().min(0),
   amenities:z.array(z.string()).min(1,"please add atleast one amenities"),
-  floor:z.string().min(1).max(9),
+  // floor:z.string().min(1).max(9),
   capacity:z.string().min(1,"capacity must be atleast 1 character").max(4,"capacity must not be more than 4"),
   category:z.enum(categoryEnum,{message:"select one of the room categorye"}),
   attachments:z.array(z.string()).min(1, "Please select at least one image").max(4, "Exactly 4 images are required")
