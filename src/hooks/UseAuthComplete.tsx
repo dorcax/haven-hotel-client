@@ -46,15 +46,16 @@ const UseAuthComplete = () => {
       const res = await loginPromise; // original login mutation
 console.log("Initial login result:", res);
       // ✅ Wait for backend to confirm cookie
-      const meRes = await fetch(`${envUrl}/auth`, {
-        credentials: "include", // important
-      }).then((r) => r.json());
+        auth.set(res)
+      // const meRes = await fetch(`${envUrl}/auth`, {
+      //   credentials: "include", // important
+      // }).then((r) => r.json());
 
-      // Set auth state with confirmed data
-      auth.set(meRes);
+      // // Set auth state with confirmed data
+      // auth.set(meRes);
 
       // Navigate based on role
-      if (meRes.role === Role.GUEST) {
+      if (res.role === Role.GUEST) {
         navigate("/dashboard", { replace: true });
       } else {
         navigate("/", { replace: true });
