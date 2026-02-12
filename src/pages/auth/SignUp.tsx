@@ -50,13 +50,15 @@ const SignUp = () => {
     try {
       const { confirmPassword, ...payload } = values;
       const res = await signUp(payload).unwrap();
-      toast.success(res.message);
+      toast.success(res?.message || "Registration successful!");
       // directly open otpDialog
       // openDialog(<OtpDialog/>)
       navigate("/verify-otp");
     } catch (error: any) {
-      toast.error(error?.data.message);
-      console.log(error);
+      toast.error(
+        error?.data?.message || "Registration failed. Please try again.",
+      );
+      console.error("SignUp error:", error);
     }
   };
   // const handleGoogleLogin = () => {
@@ -302,19 +304,17 @@ const SignUp = () => {
                 </span>
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <button className="flex items-center justify-center gap-2 h-11 border border-slate-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer w-full px-2">
-                <img
-                  alt="Google Logo"
-                  className="size-5 shrink-0"
-                  data-alt="Google Logo"
-                  src="./google-icon.svg"
-                />
-                <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 truncate">
-                  Google
-                </span>
-              </button>
-            </div>
+            <button className="flex items-center justify-center gap-2 h-11 border border-slate-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer w-full px-2">
+              <img
+                alt="Google Logo"
+                className="size-5 shrink-0"
+                data-alt="Google Logo"
+                src="./google-icon.svg"
+              />
+              <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 truncate">
+                Google
+              </span>
+            </button>
             <p className="mt-8 text-center text-sm text-slate-500 dark:text-slate-400">
               Don't have an account?
               <Link
