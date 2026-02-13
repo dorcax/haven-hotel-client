@@ -22,7 +22,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import TagInput from "@/components/ui/TagsInput";
-import UploaderProvider from "../../../context/UploaderContext";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
@@ -38,29 +37,32 @@ const EditRoom = ({ room }: any) => {
     resolver: zodResolver(roomSchema),
     defaultValues: {
       attachments: room?.attachment?.uploads || [],  // ✅ MUST include this!
-      roomNumber: room?.roomNumber || "",
+      title: room?.title || "",
       description: room?.description || "",
       category: room?.category || "STANDARD",
       amenities: room?.amenities || [],
-      floor: room?.floor?.toString() || "",
+      // floor: room?.floor?.toString() || "",
       price: room?.price?.toString() || "",
       capacity: room?.capacity?.toString() || ""
     }
   });
 
   const onSubmit = async (values: z.infer<typeof roomSchema>) => {
-    console.log("Form submitted with values:", values); 
-    console.log("edit image",room?.attachment.uploads)
-    
+    console.log("Form submitted with values:", values);
+    console.log("edit image", room?.attachment.uploads)
+
     try {
       const payload = {
         ...values,
-        floor: parseInt(values.floor, 10),
+        // floor: parseInt(values.floor, 10),
         price: parseInt(values.price, 10),
         capacity: parseInt(values.capacity, 10),
+        attachments: {
+          uploads: values.attachments.map((url) => ({ url }))
+        }
       };
 
-      console.log("Sending payload:", payload); 
+      console.log("Sending payload:", payload);
 
       const response = await updateRoom({
         body: payload,
@@ -77,15 +79,14 @@ const EditRoom = ({ room }: any) => {
     }
   };
 
-  const defaultFiles = room.attachment.uploads.map((img:any) => ({
-  id: img.id,
-  url: img.url, 
-  type:img.type
-}));
-console.log("default files",defaultFiles)
+  const defaultFiles = room.attachment.uploads.map((img: any) => ({
+    id: img.id,
+    url: img.url,
+    type: img.type
+  }));
+  console.log("default files", defaultFiles)
   return (
-    <UploaderProvider>
-      <CustomInfoDialog
+    <CustomInfoDialog
         title="Edit Room"
         className="w-full md:max-w-4xl max-h-[500px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         loading={isLoading}
@@ -108,11 +109,11 @@ console.log("default files",defaultFiles)
                       <DropZoneImage
                         name={field.name}
                         maxCount={4}
-                        
+
                         type="image"
                         // onChange={field.onChange}
                         defaultFiles={defaultFiles}
-                   
+
                       />
                     </FormControl>
                     <FormMessage />
@@ -125,7 +126,7 @@ console.log("default files",defaultFiles)
               <h2 className="text-base font-semibold py-2">Room Details</h2>
 
               <FormField
-                name="roomNumber"
+                name="title"
                 control={form.control}
                 render={({ field }) => (
                   <FormItem className="my-2">
@@ -196,7 +197,7 @@ console.log("default files",defaultFiles)
               />
 
               <div className="flex flex-wrap gap-4 mt-3">
-                <FormField
+                {/* <FormField
                   name="floor"
                   control={form.control}
                   render={({ field }) => (
@@ -213,7 +214,7 @@ console.log("default files",defaultFiles)
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
                 <FormField
                   name="price"
                   control={form.control}
@@ -255,11 +256,11 @@ console.log("default files",defaultFiles)
                   )}
                 />
               </div>
-              
+
               <div className="flex justify-end mt-5">
-                <Button 
-                  type="submit" 
-                  disabled={isLoading} 
+                <Button
+                  type="submit"
+                  disabled={isLoading}
                   className="w-[140px] bg-[#E3B23C] hover:bg-[#d4a62e]"
                 >
                   {isLoading ? <Loader /> : "Update Room"}
@@ -269,7 +270,6 @@ console.log("default files",defaultFiles)
           </form>
         </Form>
       </CustomInfoDialog>
-    </UploaderProvider>
   );
 };
 

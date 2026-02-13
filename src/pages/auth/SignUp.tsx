@@ -26,6 +26,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Header from "@/components/common/Header";
+import { envUrl } from "@/api/data/base";
+import { EyeClosedIcon, EyeIcon } from "lucide-react";
+import { useState } from "react";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -40,6 +43,14 @@ const SignUp = () => {
       confirmPassword: "",
     },
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleShowPassword = () => setShowPassword(!showPassword);
+  const handleShowConfirmPassword = () =>
+    setShowConfirmPassword(!showConfirmPassword);
+
   // call the api function
   const [signUp, { isLoading }] = useSignUpMutation();
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -61,9 +72,14 @@ const SignUp = () => {
       console.error("SignUp error:", error);
     }
   };
-  // const handleGoogleLogin = () => {
-  //   window.location.href = "http://localhost:3000/auth/google/login";
-  // };
+  const handleGoogleLogin = () => {
+    // window.location.href = `${envUrl}/auth/google/login`;
+    window.location.href = "http://localhost:3000/auth/google";
+
+    console.log("envUrl:", envUrl);
+
+    console.log("hi google");
+  };
   return (
     <>
       <Header />
@@ -220,12 +236,25 @@ const SignUp = () => {
                       <FormItem className="flex flex-wrap flex-col px-4 py-1 md:py-2 w-full sm:w-1/2">
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <Input
-                            className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal"
-                            placeholder="••••••••"
-                            type="password"
-                            {...field}
-                          />
+                          <div className="relative">
+                            <Input
+                              className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal pr-12"
+                              placeholder="••••••••"
+                              type={showPassword ? "text" : "password"}
+                              {...field}
+                            />
+                            <button
+                              type="button"
+                              onClick={handleShowPassword}
+                              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                            >
+                              {showPassword ? (
+                                <EyeClosedIcon size={20} />
+                              ) : (
+                                <EyeIcon size={20} />
+                              )}
+                            </button>
+                          </div>
                         </FormControl>
 
                         <FormMessage />
@@ -240,12 +269,25 @@ const SignUp = () => {
                       <FormItem className="flex flex-wrap flex-col px-4 py-1 md:py-2 w-full sm:w-1/2">
                         <FormLabel>Confirm Password</FormLabel>
                         <FormControl>
-                          <Input
-                            className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal"
-                            placeholder="••••••••"
-                            type="password"
-                            {...field}
-                          />
+                          <div className="relative">
+                            <Input
+                              className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal pr-12"
+                              placeholder="••••••••"
+                              type={showConfirmPassword ? "text" : "password"}
+                              {...field}
+                            />
+                            <button
+                              type="button"
+                              onClick={handleShowConfirmPassword}
+                              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                            >
+                              {showConfirmPassword ? (
+                                <EyeClosedIcon size={20} />
+                              ) : (
+                                <EyeIcon size={20} />
+                              )}
+                            </button>
+                          </div>
                         </FormControl>
 
                         <FormMessage />
@@ -286,7 +328,7 @@ const SignUp = () => {
                     type="submit"
                   >
                     {isLoading ? (
-                      <Loader />
+                      <Loader size="sm" />
                     ) : (
                       <span className="truncate">Create Account</span>
                     )}
@@ -304,17 +346,22 @@ const SignUp = () => {
                 </span>
               </div>
             </div>
-            <button className="flex items-center justify-center gap-2 h-11 border border-slate-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer w-full px-2">
-              <img
-                alt="Google Logo"
-                className="size-5 shrink-0"
-                data-alt="Google Logo"
-                src="./google-icon.svg"
-              />
-              <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 truncate">
-                Google
-              </span>
-            </button>
+            <div className="">
+              <button
+                className="flex items-center justify-center gap-2 h-11 border border-slate-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer w-full px-2"
+                onClick={handleGoogleLogin}
+              >
+                <img
+                  alt="Google Logo"
+                  className="size-5 shrink-0"
+                  data-alt="Google Logo"
+                  src="./google-icon.svg"
+                />
+                <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 truncate">
+                  Google
+                </span>
+              </button>
+            </div>
             <p className="mt-8 text-center text-sm text-slate-500 dark:text-slate-400">
               Don't have an account?
               <Link

@@ -11,6 +11,7 @@ const SignUp = lazy(() => import("@/pages/auth/SignUp"));
 const PasswordVerification = lazy(
   () => import("@/pages/auth/PasswordVerification"),
 );
+const Discover = lazy(() => import("@/pages/discover/Discover"));
 const ForgotPassword = lazy(() => import("@/pages/auth/ForgotPassword"));
 const ResetPassword = lazy(() => import("@/pages/auth/ResetPassword"));
 const Upload = lazy(() => import("@/components/fileupload/Upload"));
@@ -25,6 +26,14 @@ const router = createBrowserRouter([
     element: (
       <Suspense fallback={<Loader />}>
         <HomePage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/discover",
+    element: (
+      <Suspense fallback={<Loader />}>
+        <Discover />
       </Suspense>
     ),
   },
@@ -102,7 +111,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/dashboard/hotel/:id",
+    path: "/dashboard",
     element: <ProtectedRoute />,
     children: [
       {

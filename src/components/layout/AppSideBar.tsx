@@ -1,6 +1,5 @@
-import { Calendar, Home, Inbox, Settings, User } from "lucide-react"
+import { Calendar, Home, Inbox, Settings, User, LogOut } from "lucide-react";
 
-import { useAuthState } from "@/api/data/auth"
 import {
   Sidebar,
   SidebarContent,
@@ -11,65 +10,91 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
-
-
+} from "@/components/ui/sidebar";
+import { Link } from "react-router-dom";
 
 export function AppSidebar() {
-
-const {auth} =useAuthState()
-
   const items = [
-  {
-    title: "Dashboard",
-    url: `/dashboard/hotel/${auth?.hotelId}`,
-    icon: Home,
-  },
-  {
-    title: "rooms",
-    url: `/dashboard/hotel/${auth?.hotelId}/room`,
-    icon: Inbox,
-  },
-  {
-    title: "reservations",
-    url:`/dashboard/hotel/${auth?.hotelId}/reservations`,
-    icon: Calendar,
-  },
-  {
-    title: "guest",
-    url: "#",
-    icon: User,
-  },
-  {
-    title: "report",
-    url: "#",
-    icon: User,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
-]
+    {
+      title: "Dashboard",
+      url: "/dashboard",
+      icon: Home,
+    },
+    {
+      title: "Rooms",
+      url: "/dashboard/room",
+      icon: Inbox,
+    },
+    {
+      title: "Bookings",
+      url: "/dashboard/reservations",
+      icon: Calendar,
+    },
+    {
+      title: "Customers",
+      url: "#",
+      icon: User,
+    },
+    {
+      title: "Analytics",
+      url: "#",
+      icon: User,
+    },
+    {
+      title: "Settings",
+      url: "#",
+      icon: Settings,
+    },
+  ];
+
   return (
-    <Sidebar>
+    <Sidebar className="w-64 border-r border-slate-200 bg-white flex flex-col">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>
-          <div className="flex items-center gap-4 mt-5">
-            <span className="w-[30px] h-[30px] flex justify-center items-center text-white rounded-full border bg-[#E3B23C]">HH</span>
-            <h2 className="capitalize text-lg text-gray-900">Haven Hotel</h2>
-          </div>
+            <div className="py-6 flex items-center gap-3 mt-4">
+              <div className="size-10 rounded-lg flex items-center justify-center text-primary">
+                <svg
+                  fill="none"
+                  viewBox="0 0 48 48"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g clip-path="url(#clip0_6_330)">
+                    <path
+                      clip-rule="evenodd"
+                      d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z"
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                    ></path>
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_6_330">
+                      <rect fill="white" height="48" width="48"></rect>
+                    </clipPath>
+                  </defs>
+                </svg>
+              </div>
+
+              <div>
+                <h1 className="text-lg font-bold leading-none">Haven Hotel</h1>
+                <p className="text-xs text-slate-500 mt-1">
+                  Property Management
+                </p>
+              </div>
+            </div>
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu className="pt-10">
+            <SidebarMenu className="flex-1 px-4 py-4 space-y-2 pt-10">
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild className="hover:bg-[#E3B23C]  hover:text-white">
-                    <a href={item.url}>
+                  <SidebarMenuButton
+                    asChild
+                    className="flex items-center gap-3 px-3 py-5 rounded-lg text-primary  hover:bg-primary hover:text-white transition-colors"
+                  >
+                    <Link to={item.url}>
                       <item.icon />
                       <span className="capitalize ">{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -78,36 +103,30 @@ const {auth} =useAuthState()
         </SidebarGroup>
       </SidebarContent>
 
-        <SidebarFooter>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              {/* <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <SidebarMenuButton>
-                    <User2 /> Username
-                    <ChevronUp className="ml-auto" />
-                  </SidebarMenuButton>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  side="top"
-                  className="w-[--radix-popper-anchor-width]"
-                >
-                  <DropdownMenuItem>
-                    <span>Account</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <span>Billing</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <span>Sign out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu> */}
-             <span> logout
-</span>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarFooter>
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <div className="p-4 border-t border-slate-200 dark:border-slate-800">
+              <div className="flex items-center gap-3 p-2">
+                <div
+                  className="size-9 rounded-full bg-slate-200 bg-cover bg-center"
+                  data-alt="Admin user profile picture"
+                  style={{
+                    backgroundImage: `url("https://lh3.googleusercontent.com/aida-public/AB6AXuAKQJnhPHorytmAfHcA-YtG1YeDqqPKtd6ZC80QbkgGUTgD9J6CeCmTUlWkQSv7GIdke6ceXPKCEcQ8dOKnOqv204zhh8HhQGFCyjamikz48nQ4wkhRefng1Mz-HcLn194Y6m6JDq0BwZ-HNzgYU9awgHnWl0tccpw2klIRO9xG8Hojsw9zMQbRL4D8_fNtuupZmOd1NBwjnpU-r7REaDyMV5cxHnVcoB52HuqLnKwhSK0-50fyWwxNY2FWPN2lKkNHXob9EEUClE6a")`,
+                  }}
+                ></div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium truncate">Alex Thompson</p>
+                  <p className="text-xs text-slate-500 truncate">
+                    General Manager
+                  </p>
+                </div>
+                <LogOut size={16} />
+              </div>
+            </div>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
-  )
+  );
 }

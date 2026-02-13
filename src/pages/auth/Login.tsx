@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import {
   Form,
   FormControl,
@@ -20,8 +22,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Header from "@/components/common/Header";
+import { envUrl } from "@/api/data/base";
+import { EyeClosedIcon, EyeIcon } from "lucide-react";
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -35,17 +41,25 @@ const Login = () => {
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
       const res = await authComplete(login(values).unwrap());
-      console.log("res", res);
       // localStorage.setItem("token", res.);
       toast.success("user login successfully");
 
       return res;
     } catch (error: any) {
+      console.log("error", error);
       toast.error(
         error?.data?.message || "Login failed. Please check your credentials.",
       );
       console.error("Login error:", error);
     }
+  };
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleGoogleLogin = () => {
+    window.location.href = `${envUrl}/auth/google`;
   };
 
   return (
@@ -123,12 +137,25 @@ const Login = () => {
                           </Link>
                         </div>
                         <FormControl>
-                          <Input
-                            className="form-input flex w-full rounded-lg text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-slate-400 pr-12"
-                            placeholder="••••••••"
-                            type="password"
-                            {...field}
-                          />
+                          <div className="relative">
+                            <Input
+                              className="form-input flex w-full rounded-lg text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 focus:border-primary focus:ring-1 focus:ring-primary h-12 px-4 text-base font-normal placeholder:text-slate-400 pr-12"
+                              placeholder="••••••••"
+                              type={showPassword ? "text" : "password"}
+                              {...field}
+                            />
+                            <button
+                              type="button"
+                              onClick={handleShowPassword}
+                              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                            >
+                              {showPassword ? (
+                                <EyeClosedIcon size={20} />
+                              ) : (
+                                <EyeIcon size={20} />
+                              )}
+                            </button>
+                          </div>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -152,7 +179,7 @@ const Login = () => {
                     className="flex w-full items-center justify-center rounded-lg h-12 px-5 bg-[#1A365D] text-white text-base font-bold tracking-tight hover:bg-[#1A365D]/90 cursor-pointer transition-all shadow-lg shadow-primary/20"
                     type="submit"
                   >
-                    {isLoading ? <Loader /> : "Sign In"}
+                    {isLoading ? <Loader size="sm" /> : "Sign In"}
                   </Button>
                 </form>
               </Form>
@@ -166,17 +193,22 @@ const Login = () => {
                   </span>
                 </div>
               </div>
-              <button className="flex items-center justify-center gap-2 h-11 border border-slate-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer w-full px-2">
-                <img
-                  alt="Google Logo"
-                  className="size-5 shrink-0"
-                  data-alt="Google Logo"
-                  src="./google-icon.svg"
-                />
-                <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 truncate">
-                  Google
-                </span>
-              </button>
+              <div className="">
+                <button
+                  className="flex items-center justify-center gap-2 h-11 border border-slate-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer w-full px-2"
+                  onClick={handleGoogleLogin}
+                >
+                  <img
+                    alt="Google Logo"
+                    className="size-5 shrink-0"
+                    data-alt="Google Logo"
+                    src="./google-icon.svg"
+                  />
+                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 truncate">
+                    Google
+                  </span>
+                </button>
+              </div>
               <p className="mt-8 text-center text-sm text-slate-500 dark:text-slate-400">
                 Don't have an account?
                 <Link

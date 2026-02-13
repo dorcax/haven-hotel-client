@@ -10,7 +10,7 @@ type UploadProps = {
   onProgress?: (percent: number) => void;
 };
 
-
+const envUrl = import.meta.env.VITE_API_URL;
 const uploads =api.injectEndpoints({
     endpoints:({mutation})=>({
         uploadFile:mutation<any,UploadProps>({
@@ -20,7 +20,7 @@ const uploads =api.injectEndpoints({
                     formData.append("file",file)
                     console.log("user token",localStorage.getItem("token"))
                     const response =await axios.post(
-                        `http://localhost:3000/upload`,formData,{
+                        `${envUrl}/upload`,formData,{
                             params:{order},
                             signal,
                             withCredentials:true,

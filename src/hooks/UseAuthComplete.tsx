@@ -1,4 +1,4 @@
-import type { AuthState } from '@/api/api.type'
+import { Role, type AuthState } from '@/api/api.type'
 import { useAuthState } from '@/api/data/auth'
 import { useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -10,12 +10,15 @@ const UseAuthComplete = () => {
   return useCallback(
     async(result:Promise<AuthState>)=>{
         const res =await result 
+        console.log("Logging in:", res);
         console.log("loginging",res)
         auth.set(res)
-        if(res.hotelId){
-            navigate(`/dashboard/hotel/${res.hotelId}`)
+          // CRITICAL FIX: Add a small delay to ensure cookie is stored
+            await new Promise(resolve => setTimeout(resolve, 300));
+        if(res.role ===Role.GUEST){
+            navigate('/dashboard',{replace:true})
         }else{
-            navigate("/addhotel",{replace:true})
+            navigate("/",{replace:true})
         }
         return res
      
@@ -28,43 +31,43 @@ export default UseAuthComplete
 
 
 
-
-
-// import type { AuthState } from '@/api/api.type'
-// import { useAuthState } from '@/api/data/auth'
-// import { useCallback } from 'react'
-// import { useLocation, useNavigate } from 'react-router-dom'
+// import { Role, type AuthState } from "@/api/api.type";
+// import { useAuthState } from "@/api/data/auth";
+// import { useCallback } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { envUrl } from "@/api/data/base";
 
 // const UseAuthComplete = () => {
-//   const auth = useAuthState() // should give you auth state + setter
-//   const navigate = useNavigate()
-//   const { search } = useLocation()
+//   const auth = useAuthState();
+//   const navigate = useNavigate();
 
 //   return useCallback(
-//     async (result: Promise<AuthState>) => {
-//       const res = await result
-//       console.log("Logging in:", res)
+//     async (loginPromise: Promise<AuthState>) => {
+//       const res = await loginPromise; // original login mutation
+// console.log("Initial login result:", res);
+// console.log("env",envUrl)
+//       // ✅ Wait for backend to confirm cookie
+//         auth.set(res)
+//       // const meRes = await fetch(`${envUrl}/auth`, {
+//       //   credentials: "include", // important
+//       // }).then((r) => r.json());
 
-//       // Update auth state
-//       auth.set(res) // make sure useAuthState returns {auth, set}
+//       // // Set auth state with confirmed data
+//       // auth.set(meRes);
 
-//       // Redirect based on role / hotel
-//       if (res.role === "customer") {
-//         navigate("/", { replace: true })
-//       } else if (res.role === "hotelOwner") {
-//         if (res.hotelId) {
-//           navigate(`/dashboard/hotel/${res.hotelId}`, { replace: true })
-//         } else {
-//           navigate("/addhotel", { replace: true })
-//         }
-//       } else if (res.role === "admin") {
-//         navigate("/dashboard/admin", { replace: true })
+//       // Navigate based on role
+//       if (res.role === Role.GUEST) {
+//         navigate("/dashboard", { replace: true });
+//       } else {
+//         navigate("/", { replace: true });
 //       }
 
-//       return res
+//       return res;
 //     },
-//     [auth, search, navigate]
-//   )
-// }
+//     [auth, navigate]
+//   );
+// };
 
-// export default UseAuthComplete
+// export default UseAuthComplete;
+
+

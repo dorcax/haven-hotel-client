@@ -3,16 +3,16 @@ import { api } from "./base"
 
 
 export type roomInputType ={
-    roomNumber:string
+    title:string
     description:string
-    floor:number
+    // floor:number
     capacity:number
     price:number
     category:categoryEnum
     amenities:string[]
-    attachments:string[]
+    // attachments:string[]
     isAvailable?:boolean
-    attachment?:{
+    attachments?:{
         uploads:{url:string}[]
     }
 
@@ -30,6 +30,7 @@ const rooms =api.injectEndpoints({
          }),
          invalidatesTags:["room"]
         }),
+
         listRooms:query<any,any>({
         query:(q)=>({
             url:"room",

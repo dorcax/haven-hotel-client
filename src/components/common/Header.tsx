@@ -27,9 +27,11 @@ const Header = () => {
               </defs>
             </svg>
           </div>
-          <h2 className="text-[#1A365D] dark:text-white text-xl font-extrabold leading-tight tracking-tight">
-            HavenHotel
-          </h2>
+          <Link to="/">
+            <h2 className="text-[#1A365D] dark:text-white text-xl font-extrabold leading-tight tracking-tight">
+              HavenHotel
+            </h2>
+          </Link>
         </div>
         <div className="hidden md:flex flex-1 justify-center gap-10">
           <Link

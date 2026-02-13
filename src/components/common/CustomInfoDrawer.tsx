@@ -17,14 +17,12 @@ type customInfoDrawerType = {
 }
 
 const CustomInfoDrawer = ({ children ,className}: customInfoDrawerType) => {
-    const { openDrawer, isDrawerOpen } = usePopUpContext()
-    // Convert category & image to arrays safely
-
-
- 
+    const { closeDrawer, isDrawerOpen } = usePopUpContext()
   
     return (
-        <Sheet open={isDrawerOpen} onOpenChange={openDrawer}>
+        <Sheet open={isDrawerOpen}  onOpenChange={(open) => {
+    if (!open) closeDrawer()
+  }}>
             <SheetTrigger asChild>
                 <Button variant="outline">Open</Button>
             </SheetTrigger>

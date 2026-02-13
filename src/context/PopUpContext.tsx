@@ -1,53 +1,116 @@
 
 
 
+
+
 import { createContext, useContext, useState, type ReactNode } from "react";
 
+// type PopUpContextType = {
+//   openDialog: (content: ReactNode) => void;
+//   closeDialog: () => void;
+//   openDrawer: (content: ReactNode) => void;
+//   closeDrawer: () => void;
+//   isDialogOpen: boolean;
+//   isDrawerOpen: boolean;
+//   dialogContent: ReactNode | null;
+//   drawerContent: ReactNode | null;
+// };
+
 type PopUpContextType = {
-  openDialog: (content: React.ReactNode) => void;
+  openDialog: (content: () => ReactNode) => void;
   closeDialog: () => void;
-  openDrawer: (content: ReactNode) => void;
+  openDrawer: (content: () => ReactNode) => void;
   closeDrawer: () => void;
   isDialogOpen: boolean;
   isDrawerOpen: boolean;
-  content: ReactNode | null;
+  dialogContent: ReactNode | null;
+  drawerContent: ReactNode | null;
 };
 
- const PopUpContext = createContext<PopUpContextType | undefined>(undefined);
+
+const PopUpContext = createContext<PopUpContextType | undefined>(undefined);
+
+export const usePopUpContext = () => {
+  const context = useContext(PopUpContext);
+  if (!context) throw new Error("usePopUpContext must be used within PopupProvider");
+  return context;
+};
+
+// export const PopupProvider = ({ children }: { children: ReactNode }) => {
+//   const [dialogContent, setDialogContent] = useState<() => ReactNode | null>(null);
+//   const [drawerContent, setDrawerContent] = useState<() => ReactNode | null>(null);
+//   const [isDialogOpen, setIsDialogOpen] = useState(false);
+//   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+//   const openDialog = (content: ReactNode) => {
+//     setDialogContent(()=>content);
+//     setIsDialogOpen(true);
+//   };
+
+//   const closeDialog = () => {
+//     setIsDialogOpen(false);
+//     setDialogContent(null);
+//   };
+
+//   const openDrawer = (content: ReactNode) => {
+//     setDrawerContent(()=>content);
+//     setIsDrawerOpen(true);
+//   };
+
+//   const closeDrawer = () => {
+//     setIsDrawerOpen(false);
+//     setDrawerContent(null);
+//   };
+
+//   return (
+//     <PopUpContext.Provider
+//       value={{
+//         openDialog,
+//         closeDialog,
+//         isDialogOpen,
+//         dialogContent,
+//         openDrawer,
+//         closeDrawer,
+//         isDrawerOpen,
+//         drawerContent,
+//       }}
+//     >
+//       {children}
+
+//       {/* Render dialog and drawer separately */}
+//       {isDialogOpen && dialogContent  && dialogContent()}
+//       {isDrawerOpen && drawerContent}
+//     </PopUpContext.Provider>
+//   );
+// };
 
 
-export  const usePopUpContext =()=>{
-  const context =useContext(PopUpContext)
-  if(!context){
-    throw new Error("usePopUpContext must be use within popUpContext provider")
-  }
-  return context
 
-}
 
 export const PopupProvider = ({ children }: { children: ReactNode }) => {
-  const [popupContent, setContent] = useState<ReactNode | null>(null);
+  const [dialogContent, setDialogContent] = useState<(() => ReactNode) | null>(null);
+  const [drawerContent, setDrawerContent] = useState<(() => ReactNode) | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const openDialog = (content: ReactNode) => {
+  const openDialog = (content: () => ReactNode) => {
+    setDialogContent(() => content);
     setIsDialogOpen(true);
-    setContent(content);
   };
 
   const closeDialog = () => {
     setIsDialogOpen(false);
-    setContent(null);
+    setDialogContent(null);
   };
 
-  const openDrawer = (content: ReactNode) => {
+  const openDrawer = (content: () => ReactNode) => {
+    setDrawerContent(() => content);
     setIsDrawerOpen(true);
-    setContent(content);
   };
 
   const closeDrawer = () => {
     setIsDrawerOpen(false);
-    setContent(null);
+    setDrawerContent(null);
   };
 
   return (
@@ -56,14 +119,16 @@ export const PopupProvider = ({ children }: { children: ReactNode }) => {
         openDialog,
         closeDialog,
         isDialogOpen,
+        dialogContent: dialogContent ? dialogContent() : null,
         openDrawer,
         closeDrawer,
         isDrawerOpen,
-        content: popupContent,
+        drawerContent: drawerContent ? drawerContent() : null,
       }}
     >
       {children}
-      {popupContent}
+      {isDialogOpen && dialogContent && dialogContent()}
+      {isDrawerOpen && drawerContent && drawerContent()}
     </PopUpContext.Provider>
   );
 };

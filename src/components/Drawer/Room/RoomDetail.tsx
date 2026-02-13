@@ -18,9 +18,9 @@ const RoomDetail = ({ room }: props) => {
     const categoryText = Array.isArray(room.category)
         ? room.category.join(", ")
         : room.category;
-    const attachments =
-        room?.attachment?.uploads || [];
-    // const attachment =room?.attachment?.uploads?.map((u)=>u) ||[]
+    // const attachments =
+        // room?.attachments || [];
+    const attachments =room?.attachments?.uploads?.map((u:any)=>u) ||[]
     console.log("room detail", attachments)
     const images = Array.isArray(attachments) ? attachments : attachments ? [attachments] : [];
     const attachment = images.map((u) => u)

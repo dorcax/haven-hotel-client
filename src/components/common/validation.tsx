@@ -55,16 +55,25 @@ export const addHostelSchema = z.object({
   amenities: z.array(z.string()).min(1, "Please select at least one amenity"),
   features: z.array(z.string()).min(1, "Please select at least one feature"),
   attachments: z.array(z.string()).min(1, "Please select at least one image").max(4, "Exactly 4 images are required"), // Changed to require exactly 4
-  contactPhone: z
+  phoneNumber: z
     .string()
     .min(11, "phone number must be at least 11 digits")
-    .max(15, "phone number too long"),
+    .max(11, "phone number too long"),
+    location:z.string(),
+   
 
+    type:z.string(),
+    price:z.number().optional()
+    ,
+    capacity:z.number().min(1, "capacity must be at least 1").optional(),
+    
   email: z.email(),
+ 
   rule: z
-    .array(z.string())
-    .min(1, "Please upload at least one image")
-    .max(1, "Cannot upload more than 1 images"),
+  .array(z.string()) // array from DropZone
+  .min(1, "Please upload at least one file")
+  .max(1, "Cannot upload more than 1 file")
+
 });
 
 
@@ -99,11 +108,11 @@ export enum categoryEnum {
 
 }
  export const roomSchema =z.object({
-  roomNumber:z.string().min(3,"name must be atleast 3 character").max(5,"name must not be more than 5 character"),
+  title:z.string().min(3,"name must be atleast 3 character").max(5,"name must not be more than 5 character"),
   description:z.string().min(50,"description must be atleast 20 characters").max(1000,"description must not be more than 1000 character "),
   price:z.string().min(0),
   amenities:z.array(z.string()).min(1,"please add atleast one amenities"),
-  floor:z.string().min(1).max(9),
+  // floor:z.string().min(1).max(9),
   capacity:z.string().min(1,"capacity must be atleast 1 character").max(4,"capacity must not be more than 4"),
   category:z.enum(categoryEnum,{message:"select one of the room categorye"}),
   attachments:z.array(z.string()).min(1, "Please select at least one image").max(4, "Exactly 4 images are required")

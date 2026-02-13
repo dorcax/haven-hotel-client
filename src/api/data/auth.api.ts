@@ -51,6 +51,7 @@ export const authApi = api.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    
     authUser: query<AuthState, void>({
       query: () => "auth",
       providesTags: ["user"],

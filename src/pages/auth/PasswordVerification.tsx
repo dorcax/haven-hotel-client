@@ -81,7 +81,7 @@ const PasswordVerification = () => {
               type="submit"
               className="w-full bg-[#E3B23C] hover:bg-[#d4a62e]"
             >
-              {isLoading ? <Loader /> : "submit"}
+              {isLoading ? <Loader size="sm" /> : "submit"}
             </Button>
             <span className="flex justify-center items-center text-sm text-gray-500">
               Didn&apos;t receive the code?{" "}
