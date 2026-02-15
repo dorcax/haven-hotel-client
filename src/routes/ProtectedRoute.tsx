@@ -8,7 +8,6 @@
 //    const [hasCookie, setHasCookie] = useState(false);
 //   const navigate = useNavigate();
 
-
 //     // Wait a bit before checking auth to allow cookie to be set
 //   useEffect(() => {
 //     const timer = setTimeout(() => {
@@ -34,7 +33,6 @@
 // };
 
 // export default ProtectedRoute;
-
 
 import { useAuthUserQuery } from "@/api/data/auth.api";
 import Loader from "@/components/common/Loader";
@@ -66,11 +64,7 @@ const ProtectedRoute = () => {
 
   // Show loader while waiting to check auth
   if (!shouldFetch || isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Loader />
-      </div>
-    );
+    return <Loader fullPage />;
   }
 
   return <Outlet />;

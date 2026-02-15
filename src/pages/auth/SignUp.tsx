@@ -27,6 +27,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Header from "@/components/common/Header";
 import { envUrl } from "@/api/data/base";
+import { EyeClosedIcon, EyeIcon } from "lucide-react";
+import { useState } from "react";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -41,6 +43,14 @@ const SignUp = () => {
       confirmPassword: "",
     },
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleShowPassword = () => setShowPassword(!showPassword);
+  const handleShowConfirmPassword = () =>
+    setShowConfirmPassword(!showConfirmPassword);
+
   // call the api function
   const [signUp, { isLoading }] = useSignUpMutation();
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -51,13 +61,15 @@ const SignUp = () => {
     try {
       const { confirmPassword, ...payload } = values;
       const res = await signUp(payload).unwrap();
-      toast.success(res.message);
+      toast.success(res?.message || "Registration successful!");
       // directly open otpDialog
       // openDialog(<OtpDialog/>)
       navigate("/verify-otp");
     } catch (error: any) {
-      toast.error(error?.data.message);
-      console.log(error);
+      toast.error(
+        error?.data?.message || "Registration failed. Please try again.",
+      );
+      console.error("SignUp error:", error);
     }
   };
   const handleGoogleLogin = () => {
@@ -66,7 +78,7 @@ const SignUp = () => {
 
     console.log("envUrl:", envUrl);
 
-    console.log("hi google")
+    console.log("hi google");
   };
   return (
     <>
@@ -224,12 +236,25 @@ const SignUp = () => {
                       <FormItem className="flex flex-wrap flex-col px-4 py-1 md:py-2 w-full sm:w-1/2">
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <Input
-                            className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal"
-                            placeholder="••••••••"
-                            type="password"
-                            {...field}
-                          />
+                          <div className="relative">
+                            <Input
+                              className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal pr-12"
+                              placeholder="••••••••"
+                              type={showPassword ? "text" : "password"}
+                              {...field}
+                            />
+                            <button
+                              type="button"
+                              onClick={handleShowPassword}
+                              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                            >
+                              {showPassword ? (
+                                <EyeClosedIcon size={20} />
+                              ) : (
+                                <EyeIcon size={20} />
+                              )}
+                            </button>
+                          </div>
                         </FormControl>
 
                         <FormMessage />
@@ -244,12 +269,25 @@ const SignUp = () => {
                       <FormItem className="flex flex-wrap flex-col px-4 py-1 md:py-2 w-full sm:w-1/2">
                         <FormLabel>Confirm Password</FormLabel>
                         <FormControl>
-                          <Input
-                            className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal"
-                            placeholder="••••••••"
-                            type="password"
-                            {...field}
-                          />
+                          <div className="relative">
+                            <Input
+                              className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal pr-12"
+                              placeholder="••••••••"
+                              type={showConfirmPassword ? "text" : "password"}
+                              {...field}
+                            />
+                            <button
+                              type="button"
+                              onClick={handleShowConfirmPassword}
+                              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                            >
+                              {showConfirmPassword ? (
+                                <EyeClosedIcon size={20} />
+                              ) : (
+                                <EyeIcon size={20} />
+                              )}
+                            </button>
+                          </div>
                         </FormControl>
 
                         <FormMessage />
@@ -290,7 +328,7 @@ const SignUp = () => {
                     type="submit"
                   >
                     {isLoading ? (
-                      <Loader />
+                      <Loader size="sm" />
                     ) : (
                       <span className="truncate">Create Account</span>
                     )}
@@ -309,7 +347,10 @@ const SignUp = () => {
               </div>
             </div>
             <div className="">
-              <button className="flex items-center justify-center gap-2 h-11 border border-slate-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer w-full px-2" onClick={handleGoogleLogin}>
+              <button
+                className="flex items-center justify-center gap-2 h-11 border border-slate-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer w-full px-2"
+                onClick={handleGoogleLogin}
+              >
                 <img
                   alt="Google Logo"
                   className="size-5 shrink-0"

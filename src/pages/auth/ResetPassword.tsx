@@ -58,22 +58,17 @@
 //                   )}
 //                 />
 
-
 //               <Button className="w-full bg-[#E3B23C] hover:bg-[#d4a62e]">
 //                 Sign up
 //               </Button>
 //             </form>
 //           </Form>
 
-
 //     </AuthLayout>
 //   )
 // }
 
 // export default ResetPassword
-
-
-
 
 import {
   Form,
@@ -90,6 +85,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Header from "@/components/common/Header";
+import { EyeClosedIcon, EyeIcon } from "lucide-react";
+import { useState } from "react";
 
 const resetSchema = z
   .object({
@@ -109,6 +106,13 @@ const ResetPassword = () => {
       confirmPassword: "",
     },
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleShowPassword = () => setShowPassword(!showPassword);
+  const handleShowConfirmPassword = () =>
+    setShowConfirmPassword(!showConfirmPassword);
 
   const onSubmit = (values: z.infer<typeof resetSchema>) => {
     console.log(values);
@@ -139,8 +143,8 @@ const ResetPassword = () => {
             </div>
 
             <p className="text-xl opacity-90 max-w-md">
-              Update your password securely and regain full access to your dashboard.
-              Your account security is our top priority.
+              Update your password securely and regain full access to your
+              dashboard. Your account security is our top priority.
             </p>
           </div>
         </div>
@@ -171,17 +175,30 @@ const ResetPassword = () => {
                     <FormItem className="px-4 py-2">
                       <FormLabel>Password</FormLabel>
                       <FormControl>
-                        <Input
-                          type="password"
-                          placeholder="••••••••"
-                          className="form-input flex w-full resize-none overflow-hidden rounded-lg
-                          text-[#0d141b] dark:text-white focus:outline-0
-                          focus:ring-2 focus:ring-primary/50
-                          border border-[#cfdbe7] dark:border-slate-700
-                          bg-white dark:bg-slate-800
-                          focus:border-primary h-12 p-[15px] text-base"
-                          {...field}
-                        />
+                        <div className="relative">
+                          <Input
+                            type={showPassword ? "text" : "password"}
+                            placeholder="••••••••"
+                            className="form-input flex w-full resize-none overflow-hidden rounded-lg
+                            text-[#0d141b] dark:text-white focus:outline-0
+                            focus:ring-2 focus:ring-primary/50
+                            border border-[#cfdbe7] dark:border-slate-700
+                            bg-white dark:bg-slate-800
+                            focus:border-primary h-12 p-[15px] text-base pr-12"
+                            {...field}
+                          />
+                          <button
+                            type="button"
+                            onClick={handleShowPassword}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                          >
+                            {showPassword ? (
+                              <EyeClosedIcon size={20} />
+                            ) : (
+                              <EyeIcon size={20} />
+                            )}
+                          </button>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -196,17 +213,30 @@ const ResetPassword = () => {
                     <FormItem className="px-4 py-2">
                       <FormLabel>Confirm Password</FormLabel>
                       <FormControl>
-                        <Input
-                          type="password"
-                          placeholder="••••••••"
-                          className="form-input flex w-full resize-none overflow-hidden rounded-lg
-                          text-[#0d141b] dark:text-white focus:outline-0
-                          focus:ring-2 focus:ring-primary/50
-                          border border-[#cfdbe7] dark:border-slate-700
-                          bg-white dark:bg-slate-800
-                          focus:border-primary h-12 p-[15px] text-base"
-                          {...field}
-                        />
+                        <div className="relative">
+                          <Input
+                            type={showConfirmPassword ? "text" : "password"}
+                            placeholder="••••••••"
+                            className="form-input flex w-full resize-none overflow-hidden rounded-lg
+                            text-[#0d141b] dark:text-white focus:outline-0
+                            focus:ring-2 focus:ring-primary/50
+                            border border-[#cfdbe7] dark:border-slate-700
+                            bg-white dark:bg-slate-800
+                            focus:border-primary h-12 p-[15px] text-base pr-12"
+                            {...field}
+                          />
+                          <button
+                            type="button"
+                            onClick={handleShowConfirmPassword}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                          >
+                            {showConfirmPassword ? (
+                              <EyeClosedIcon size={20} />
+                            ) : (
+                              <EyeIcon size={20} />
+                            )}
+                          </button>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>

@@ -28,12 +28,14 @@ const PasswordVerification = () => {
   const onSubmit = async (value: z.infer<typeof verifySchema>) => {
     try {
       const res = await verifyOtp(value).unwrap();
-      console.log(res)
+      console.log(res);
       toast.success("user verified successfully");
       navigate("/login");
     } catch (error: any) {
-      toast.error(error?.data?.message);
-      console.log("error", error);
+      toast.error(
+        error?.data?.message || "Verification failed. Please check your code.",
+      );
+      console.error("Verification error:", error);
     }
   };
   return (
@@ -55,8 +57,8 @@ const PasswordVerification = () => {
                     Verification code
                   </FormLabel>
                   {/* <FormLabel className='text-cente'></FormLabel> */}
-                  <FormControl >
-                    <InputOTP maxLength={6} {...field} >
+                  <FormControl>
+                    <InputOTP maxLength={6} {...field}>
                       <InputOTPGroup className=" gap-2.5 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border">
                         <InputOTPSlot index={0} />
                         <InputOTPSlot index={1} />
@@ -79,11 +81,13 @@ const PasswordVerification = () => {
               type="submit"
               className="w-full bg-[#E3B23C] hover:bg-[#d4a62e]"
             >
-              {isLoading ? <Loader /> : "submit"}
+              {isLoading ? <Loader size="sm" /> : "submit"}
             </Button>
             <span className="flex justify-center items-center text-sm text-gray-500">
-            
-              Didn&apos;t receive the code? <a href="#" className="underline">Resend</a>
+              Didn&apos;t receive the code?{" "}
+              <a href="#" className="underline">
+                Resend
+              </a>
             </span>
           </form>
         </Form>

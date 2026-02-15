@@ -3,6 +3,10 @@ import { AppLayout } from "@/components/layout/AppLayout";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import Loader from "@/components/common/Loader";
+import Bookings from "@/pages/dashboard/Bookings";
+import { Settings } from "lucide-react";
+import Analytics from "@/pages/dashboard/Analytics";
+import Guests from "@/pages/dashboard/Guests";
 
 // Lazy load components
 const HomePage = lazy(() => import("@/pages/main-pages/HomePage"));
@@ -11,6 +15,7 @@ const SignUp = lazy(() => import("@/pages/auth/SignUp"));
 const PasswordVerification = lazy(
   () => import("@/pages/auth/PasswordVerification"),
 );
+const Discover = lazy(() => import("@/pages/discover/Discover"));
 const ForgotPassword = lazy(() => import("@/pages/auth/ForgotPassword"));
 const ResetPassword = lazy(() => import("@/pages/auth/ResetPassword"));
 const Upload = lazy(() => import("@/components/fileupload/Upload"));
@@ -25,6 +30,14 @@ const router = createBrowserRouter([
     element: (
       <Suspense fallback={<Loader />}>
         <HomePage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/discover",
+    element: (
+      <Suspense fallback={<Loader />}>
+        <Discover />
       </Suspense>
     ),
   },
@@ -121,6 +134,38 @@ const router = createBrowserRouter([
             element: (
               <Suspense fallback={<Loader />}>
                 <RoomList />
+              </Suspense>
+            ),
+          },
+          {
+            path: "bookings",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <Bookings />
+              </Suspense>
+            ),
+          },
+          {
+            path: "guests",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <Guests />
+              </Suspense>
+            ),
+          },
+          {
+            path: "analytics",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <Analytics />
+              </Suspense>
+            ),
+          },
+          {
+            path: "settings",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <Settings />
               </Suspense>
             ),
           },
