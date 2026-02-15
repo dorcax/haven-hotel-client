@@ -9,7 +9,7 @@ export type SummaryCardItem = {
 interface SummaryCardProps {
   cards: SummaryCardItem[];
 }
-const SummaryCard = ({ cards }:SummaryCardProps) => {
+const SummaryCard = ({ cards }: SummaryCardProps) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {cards.map((c: any, i) => (
@@ -25,7 +25,7 @@ const SummaryCard = ({ cards }:SummaryCardProps) => {
               {c.value}
             </p>
           </div>
-          <div className="text-white bg-[#E3B23C] p-0.5 rounded-full">
+          <div className="text-white bg-primary p-0.5 rounded-full">
             {c.icon}
           </div>
         </div>

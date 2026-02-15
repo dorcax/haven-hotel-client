@@ -3,7 +3,7 @@ import { ChevronRight, Search, Plus, Bell } from "lucide-react";
 
 const AppHeader = () => {
   return (
-    <header className="h-16 border-b border-slate-200backdrop-blur-md sticky top-0 z-10 flex items-center justify-between">
+    <header className="h-12 border-b border-slate-200backdrop-blur-md flex items-center justify-between">
       <div className="flex items-center gap-4">
         <SidebarTrigger className="text-primary cursor-pointer" />
         <div className="flex items-center gap-2 text-sm text-slate-500">
@@ -31,7 +31,7 @@ const AppHeader = () => {
           </button>
           <button className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
             <Plus size={16} />
-            Create New Booking
+            Create New Property
           </button>
         </div>
       </div>

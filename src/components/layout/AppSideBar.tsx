@@ -1,4 +1,12 @@
-import { Calendar, Home, Inbox, Settings, User, LogOut } from "lucide-react";
+import {
+  Calendar,
+  Home,
+  Inbox,
+  Settings,
+  LogOut,
+  Users,
+  BarChart3,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -27,22 +35,22 @@ export function AppSidebar() {
     },
     {
       title: "Bookings",
-      url: "/dashboard/reservations",
+      url: "/dashboard/bookings",
       icon: Calendar,
     },
     {
-      title: "Customers",
-      url: "#",
-      icon: User,
+      title: "Guests",
+      url: "/dashboard/guests",
+      icon: Users,
     },
     {
       title: "Analytics",
-      url: "#",
-      icon: User,
+      url: "/dashboard/analytics",
+      icon: BarChart3,
     },
     {
       title: "Settings",
-      url: "#",
+      url: "/dashboard/settings",
       icon: Settings,
     },
   ];
