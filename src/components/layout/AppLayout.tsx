@@ -7,7 +7,7 @@ export function AppLayout() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="flex-1 p-4 flex flex-col overflow-y-auto bg-[#F5F6FA] w-full gap-2">
+      <main className="flex-1 p-2 sm:p-4 flex flex-col overflow-y-auto bg-[#F5F6FA] w-full gap-2">
         <AppHeader />
         <Outlet />
         <footer className="mt-auto py-6 px-10 border-t border-[#e7edf3] dark:border-slate-800 text-center">

@@ -19,6 +19,7 @@ import {
   PencilIcon,
   Search,
   TrashIcon,
+  TrendingUp,
 } from "lucide-react";
 import { bookingsData } from "@/data/bookings";
 import type { Booking } from "@/data/bookings";
@@ -76,24 +77,24 @@ const Bookings = () => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
         <div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
             Booking Management
           </h2>
-          <p className="text-slate-500 text-sm">
+          <p className="text-slate-500 text-xs sm:text-sm">
             Manage and monitor all hotel reservations
           </p>
         </div>
       </div>
 
       <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-4 mb-6">
-        <div className="flex flex-col lg:flex-row lg:items-center gap-6">
+        <div className="flex flex-col md:flex-row md:items-center gap-4">
           <div className="relative flex-1">
             <Search className="absolute w-4 h-4 left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               className="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border-none rounded-lg focus:ring-2 focus:ring-primary/50 text-sm"
-              placeholder="Search by Booking ID, Customer, or Room..."
+              placeholder="Search bookings..."
               type="text"
               value={searchQuery}
               onChange={(e) => {
@@ -103,7 +104,7 @@ const Bookings = () => {
             />
           </div>
 
-          <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl overflow-x-auto">
+          <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl overflow-x-auto no-scrollbar">
             {(
               [
                 "All",
@@ -119,7 +120,7 @@ const Bookings = () => {
                   setActiveFilter(filter);
                   setCurrentPage(1);
                 }}
-                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
+                className={`px-3 sm:px-4 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
                   activeFilter === filter
                     ? "bg-white dark:bg-slate-700 shadow-sm text-primary"
                     : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
@@ -130,9 +131,9 @@ const Bookings = () => {
             ))}
           </div>
 
-          <button className="flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 hover:bg-slate-50 transition-colors">
+          <button className="flex items-center justify-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 hover:bg-slate-50 transition-colors w-full md:w-auto">
             <FunnelIcon className="w-4 h-4" />
-            More Filters
+            <span className="md:hidden lg:inline">Filters</span>
           </button>
         </div>
       </div>
@@ -166,70 +167,91 @@ const Bookings = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-              {paginatedBookings.map((booking) => (
-                <tr
-                  key={booking.id}
-                  className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors group"
-                >
-                  <td className="px-6 py-4 text-sm font-bold text-slate-900 dark:text-white">
-                    {booking.id}
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`w-8 h-8 rounded-full ${booking.avatarColor} flex items-center justify-center font-semibold text-xs`}
-                        data-alt={`Avatar of ${booking.customerName}`}
-                      >
-                        {booking.customerInitials}
+              {paginatedBookings.length > 0 ? (
+                paginatedBookings.map((booking) => (
+                  <tr
+                    key={booking.id}
+                    className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors group"
+                  >
+                    <td className="px-6 py-4 text-sm font-bold text-slate-900 dark:text-white">
+                      {booking.id}
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={`w-8 h-8 rounded-full ${booking.avatarColor} flex items-center justify-center font-semibold text-xs`}
+                          data-alt={`Avatar of ${booking.customerName}`}
+                        >
+                          {booking.customerInitials}
+                        </div>
+                        <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                          {booking.customerName}
+                        </span>
                       </div>
-                      <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                        {booking.customerName}
+                    </td>
+                    <td className="px-6 py-4">
+                      <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                        {booking.roomName}
+                      </p>
+                      <p className="text-xs text-slate-500">
+                        {booking.roomDetails}
+                      </p>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex flex-col">
+                        <span className="text-sm text-slate-700 dark:text-slate-300">
+                          {booking.checkIn} - {booking.checkOut}
+                        </span>
+                        <span className="text-[10px] text-slate-500 uppercase font-medium">
+                          {booking.nights} Nights
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-white text-right">
+                      ${booking.price.toFixed(2)}
+                    </td>
+                    <td className="px-6 py-4">
+                      <span
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusStyles(booking.status)}`}
+                      >
+                        {booking.status}
                       </span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                      {booking.roomName}
-                    </p>
-                    <p className="text-xs text-slate-500">
-                      {booking.roomDetails}
-                    </p>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex flex-col">
-                      <span className="text-sm text-slate-700 dark:text-slate-300">
-                        {booking.checkIn} - {booking.checkOut}
-                      </span>
-                      <span className="text-[10px] text-slate-500 uppercase font-medium">
-                        {booking.nights} Nights
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-white text-right">
-                    ${booking.price.toFixed(2)}
-                  </td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusStyles(booking.status)}`}
-                    >
-                      {booking.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center justify-center gap-1">
-                      <button className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-slate-400 hover:text-primary transition-colors">
-                        <EyeIcon className="w-4 h-4" />
-                      </button>
-                      <button className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-slate-400 hover:text-primary transition-colors">
-                        <PencilIcon className="w-4 h-4" />
-                      </button>
-                      <button className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-slate-400 hover:text-red-500 transition-colors">
-                        <TrashIcon className="w-4 h-4" />
-                      </button>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center justify-center gap-1">
+                        <button className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-slate-400 hover:text-primary transition-colors">
+                          <EyeIcon className="w-4 h-4" />
+                        </button>
+                        <button className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-slate-400 hover:text-primary transition-colors">
+                          <PencilIcon className="w-4 h-4" />
+                        </button>
+                        <button className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-slate-400 hover:text-red-500 transition-colors">
+                          <TrashIcon className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={7} className="px-6 py-12 text-center">
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-full text-slate-400">
+                        <Search className="w-8 h-8" />
+                      </div>
+                      <div>
+                        <p className="text-slate-900 dark:text-white font-bold">
+                          No bookings found
+                        </p>
+                        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                          We couldn't find any bookings matching your current
+                          criteria.
+                        </p>
+                      </div>
                     </div>
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>
@@ -313,7 +335,7 @@ const Bookings = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
         <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
@@ -360,9 +382,7 @@ const Bookings = () => {
             $42,850
           </p>
           <p className="text-xs text-green-600 font-medium mt-1 flex items-center gap-1">
-            <span className="material-symbols-outlined text-[14px]">
-              trending_up
-            </span>
+            <TrendingUp size={14} />
             8% growth
           </p>
         </div>

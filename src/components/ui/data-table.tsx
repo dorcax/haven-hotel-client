@@ -78,16 +78,16 @@ const DataTable = <TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center justify-between py-4">
+      <div className="flex flex-col sm:flex-row items-center justify-between py-4 gap-4">
         <Input
           placeholder="Filter..."
           value={searchQuery ?? ""}
           onChange={(e) => search?.(e.target.value)}
-          className="max-w-sm"
+          className="w-full sm:max-w-sm"
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
+            <Button variant="outline" className="w-full sm:w-auto sm:ml-auto">
               Columns <ChevronDown />
             </Button>
           </DropdownMenuTrigger>
@@ -109,7 +109,7 @@ const DataTable = <TData, TValue>({
         </DropdownMenu>
       </div>
 
-      <div>
+      <div className="rounded-md border overflow-x-auto">
         {loading ? (
           <TableSkeleton columns={columns.length} />
         ) : (
@@ -120,7 +120,7 @@ const DataTable = <TData, TValue>({
                   {headerGroup.headers.map((header) => (
                     <TableHead
                       key={header.id}
-                      className="text-center font-semibold whitespace-nowrap"
+                      className="text-center font-semibold whitespace-nowrap px-4 py-3"
                     >
                       {header.isPlaceholder
                         ? null
@@ -143,7 +143,7 @@ const DataTable = <TData, TValue>({
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
                         key={cell.id}
-                        className="text-center whitespace-nowrap"
+                        className="text-center whitespace-nowrap px-4 py-3"
                       >
                         {flexRender(
                           cell.column.columnDef.cell,

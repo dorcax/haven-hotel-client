@@ -69,19 +69,19 @@ const DashboardApp = () => {
 
   return (
     <>
-      <div className="flex flex-wrap justify-between items-end gap-3 my-5">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-3 my-5">
         <div>
-          <p className="text-primary text-3xl font-black leading-tight tracking-[-0.033em]">
+          <p className="text-primary text-2xl sm:text-3xl font-black leading-tight tracking-[-0.033em]">
             Booking Management
           </p>
-          <p className="text-[#4c739a] text-sm mt-1">
+          <p className="text-[#4c739a] text-xs sm:text-sm mt-1">
             Manage and track all hotel reservations from one central dashboard.
           </p>
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-4 mb-8">
-        <div className="flex min-w-[200px] flex-1 flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 border border-[#cfdbe7] dark:border-slate-800 shadow-sm">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 border border-[#cfdbe7] dark:border-slate-800 shadow-sm">
           <div className="flex justify-between items-start">
             <p className="text-[#4c739a] dark:text-slate-400 text-sm font-medium leading-normal">
               Total Bookings
@@ -99,7 +99,7 @@ const DashboardApp = () => {
             +12.5% vs last month
           </p>
         </div>
-        <div className="flex min-w-[200px] flex-1 flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 border border-[#cfdbe7] dark:border-slate-800 shadow-sm">
+        <div className="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 border border-[#cfdbe7] dark:border-slate-800 shadow-sm">
           <div className="flex justify-between items-start">
             <p className="text-[#4c739a] dark:text-slate-400 text-sm font-medium leading-normal">
               Today's Check-ins
@@ -117,7 +117,7 @@ const DashboardApp = () => {
             +5.2% vs yesterday
           </p>
         </div>
-        <div className="flex min-w-[200px] flex-1 flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 border border-[#cfdbe7] dark:border-slate-800 shadow-sm">
+        <div className="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 border border-[#cfdbe7] dark:border-slate-800 shadow-sm">
           <div className="flex justify-between items-start">
             <p className="text-[#4c739a] dark:text-slate-400 text-sm font-medium leading-normal">
               Pending Approvals
@@ -135,7 +135,7 @@ const DashboardApp = () => {
             Needs attention
           </p>
         </div>
-        <div className="flex min-w-[200px] flex-1 flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 border border-[#cfdbe7] dark:border-slate-800 shadow-sm">
+        <div className="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 border border-[#cfdbe7] dark:border-slate-800 shadow-sm">
           <div className="flex justify-between items-start">
             <p className="text-[#4c739a] dark:text-slate-400 text-sm font-medium leading-normal">
               Revenue (MTD)
@@ -232,72 +232,95 @@ const DashboardApp = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-[#e7edf3] dark:divide-slate-800">
-              {paginatedBookings.map((booking) => (
-                <tr
-                  key={booking.id}
-                  className="hover:bg-background-light/30 dark:hover:bg-slate-800/30 transition-colors"
-                >
-                  <td className="px-6 py-4 font-mono text-sm font-bold text-primary">
-                    {booking.id}
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`h-8 w-8 rounded-full ${booking.avatarColor} flex items-center justify-center font-bold text-[10px]`}
+              {paginatedBookings.length > 0 ? (
+                paginatedBookings.map((booking) => (
+                  <tr
+                    key={booking.id}
+                    className="hover:bg-background-light/30 dark:hover:bg-slate-800/30 transition-colors"
+                  >
+                    <td className="px-6 py-4 font-mono text-sm font-bold text-primary">
+                      {booking.id}
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={`h-8 w-8 rounded-full ${booking.avatarColor} flex items-center justify-center font-bold text-[10px]`}
+                        >
+                          {booking.customerInitials}
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-[#0d141b] dark:text-white">
+                            {booking.customerName}
+                          </p>
+                          <p className="text-xs text-[#4c739a] dark:text-slate-400">
+                            {booking.customerName
+                              .toLowerCase()
+                              .replace(" ", ".")}
+                            @email.com
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <p className="text-sm font-medium text-[#0d141b] dark:text-white">
+                        {booking.roomName}
+                      </p>
+                      <p className="text-xs text-[#4c739a] dark:text-slate-400">
+                        {booking.roomDetails}
+                      </p>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-[#0d141b] dark:text-slate-300 whitespace-nowrap">
+                      {booking.checkIn} - {booking.checkOut}
+                    </td>
+                    <td className="px-6 py-4 text-sm font-bold text-right text-[#0d141b] dark:text-white">
+                      ${booking.price.toFixed(2)}
+                    </td>
+                    <td className="px-6 py-4 text-center">
+                      <span
+                        className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold ${getStatusStyles(booking.status)}`}
                       >
-                        {booking.customerInitials}
+                        {booking.status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <div className="flex justify-end gap-2">
+                        <button className="p-1.5 rounded-lg bg-background-light dark:bg-slate-800 text-[#4c739a] hover:text-primary border border-transparent hover:border-primary/20 transition-all">
+                          <EditIcon size={20} />
+                        </button>
+                        <button className="p-1.5 rounded-lg bg-background-light dark:bg-slate-800 text-[#4c739a] hover:text-primary border border-transparent hover:border-primary/20 transition-all">
+                          <EllipsisVertical size={20} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={7} className="px-6 py-12 text-center">
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="p-4 bg-background-light dark:bg-slate-800/50 rounded-full text-[#4c739a]">
+                        <SearchIcon size={32} />
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-[#0d141b] dark:text-white">
-                          {booking.customerName}
+                        <p className="text-[#0d141b] dark:text-white font-bold text-lg">
+                          No bookings found
                         </p>
-                        <p className="text-xs text-[#4c739a] dark:text-slate-400">
-                          {booking.customerName.toLowerCase().replace(" ", ".")}
-                          @email.com
+                        <p className="text-sm text-[#4c739a] dark:text-slate-400 mt-1 max-w-xs mx-auto">
+                          Try searching for something else or adjust your
+                          filters to view more bookings.
                         </p>
                       </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <p className="text-sm font-medium text-[#0d141b] dark:text-white">
-                      {booking.roomName}
-                    </p>
-                    <p className="text-xs text-[#4c739a] dark:text-slate-400">
-                      {booking.roomDetails}
-                    </p>
-                  </td>
-                  <td className="px-6 py-4 text-sm text-[#0d141b] dark:text-slate-300 whitespace-nowrap">
-                    {booking.checkIn} - {booking.checkOut}
-                  </td>
-                  <td className="px-6 py-4 text-sm font-bold text-right text-[#0d141b] dark:text-white">
-                    ${booking.price.toFixed(2)}
-                  </td>
-                  <td className="px-6 py-4 text-center">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold ${getStatusStyles(booking.status)}`}
-                    >
-                      {booking.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <div className="flex justify-end gap-2">
-                      <button className="p-1.5 rounded-lg bg-background-light dark:bg-slate-800 text-[#4c739a] hover:text-primary border border-transparent hover:border-primary/20 transition-all">
-                        <EditIcon size={20} />
-                      </button>
-                      <button className="p-1.5 rounded-lg bg-background-light dark:bg-slate-800 text-[#4c739a] hover:text-primary border border-transparent hover:border-primary/20 transition-all">
-                        <EllipsisVertical size={20} />
-                      </button>
                     </div>
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>
 
         {/* Pagination */}
-        <div className="px-6 py-4 border-t border-[#e7edf3] dark:border-slate-800 bg-background-light/20 dark:bg-slate-900/50 flex flex-wrap justify-between items-center gap-4">
-          <p className="text-sm text-[#4c739a] dark:text-slate-400">
+        <div className="px-6 py-4 border-t border-[#e7edf3] dark:border-slate-800 bg-background-light/20 dark:bg-slate-900/50 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-[#4c739a] dark:text-slate-400 text-center md:text-left">
             Showing
             <span className="font-bold text-[#0d141b] dark:text-white mx-1">
               {(currentPage - 1) * itemsPerPage + 1}

@@ -97,10 +97,10 @@ export function RoomList() {
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className="capitalize"
+            className="capitalize px-0 sm:px-4"
           >
             Property Image
-            <ArrowUpDown className="ml-2 h-4 w-4" />
+            <ArrowUpDown className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
           </Button>
         ),
         cell: ({ row }) => {
@@ -133,7 +133,8 @@ export function RoomList() {
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Title / Number <ArrowUpDown className="ml-2 h-4 w-4" />
+            Title / Number{" "}
+            <ArrowUpDown className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
           </Button>
         ),
         cell: ({ row }) => (
