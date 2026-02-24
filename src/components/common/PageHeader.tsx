@@ -37,12 +37,12 @@ const PageHeader = ({
           >
             Refresh {refresh?.isLoading ? <Loader2 /> : <RefreshCcw />}{" "}
           </Button>
-          <Button
+        {primary?.title ?  <Button
             className="bg-primary hover:bg-primary/90 capitalize text-sm"
             onClick={primary?.action}
           >
             {primary?.title}
-          </Button>
+          </Button>:""}
         </div>
       </div>
     </section>

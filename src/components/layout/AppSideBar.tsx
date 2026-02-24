@@ -1,11 +1,10 @@
 import {
+  BarChart3,
   Calendar,
   Home,
-  Inbox,
-  Settings,
   LogOut,
-  Users,
-  BarChart3,
+  Settings,
+  Users
 } from "lucide-react";
 
 import {
@@ -29,10 +28,15 @@ export function AppSidebar() {
       icon: Home,
     },
     {
-      title: "Rooms",
-      url: "/dashboard/room",
-      icon: Inbox,
+      title: "All properties",
+      url: "/dashboard/properties",
+      icon: Home,
     },
+    // {
+    //   title: "Rooms",
+    //   url: "/dashboard/room",
+    //   icon: Inbox,
+    // },
     {
       title: "Bookings",
       url: "/dashboard/bookings",

@@ -1,7 +1,10 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { ChevronRight, Search, Plus, Bell } from "lucide-react";
+import { usePopUpContext } from "@/context/PopUpContext";
+import { Bell, ChevronRight, Plus, Search } from "lucide-react";
+import PropertyModal from "../Dialog/hotel/PropertyModal";
 
 const AppHeader = () => {
+  const {openDialog} =usePopUpContext()
   return (
     <header className="h-12 border-b border-slate-200backdrop-blur-md flex items-center justify-between">
       <div className="flex items-center gap-4">
@@ -29,7 +32,9 @@ const AppHeader = () => {
             <Bell size={20} />
             <span className="absolute top-2 right-2 size-2 bg-red-500 border-2 border-white rounded-full"></span>
           </button>
-          <button className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+          <button className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all"   onClick={() =>
+                  openDialog(() => <PropertyModal />)
+                }>
             <Plus size={16} />
             Create New Property
           </button>

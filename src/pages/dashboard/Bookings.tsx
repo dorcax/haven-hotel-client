@@ -87,7 +87,78 @@ const Bookings = () => {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-3">
+        <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Today's Check-ins
+            </span>
+            <div className="p-2 bg-green-50 dark:bg-green-900/20 text-green-600 rounded-lg">
+              <LogIn className="w-4 h-4" />
+            </div>
+          </div>
+          <p className="text-2xl font-bold text-slate-900 dark:text-white">
+            14
+          </p>
+          <p className="text-xs text-green-600 font-medium mt-1 flex items-center gap-1">
+            <ArrowUp className="w-3 h-3" />
+            +2 from yesterday
+          </p>
+        </div>
+        <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Available Rooms
+            </span>
+            <div className="p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded-lg">
+              <DoorOpen className="w-4 h-4" />
+            </div>
+          </div>
+          <p className="text-2xl font-bold text-slate-900 dark:text-white">
+            28
+          </p>
+          <p className="text-xs text-slate-500 font-medium mt-1">
+            Total: 120 rooms
+          </p>
+        </div>
+        <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Monthly Revenue
+            </span>
+            <div className="p-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 rounded-lg">
+              <DollarSign className="w-4 h-4" />
+            </div>
+          </div>
+          <p className="text-2xl font-bold text-slate-900 dark:text-white">
+            $42,850
+          </p>
+          <p className="text-xs text-green-600 font-medium mt-1 flex items-center gap-1">
+            <span className="material-symbols-outlined text-[14px]">
+              trending_up
+            </span>
+            8% growth
+          </p>
+        </div>
+        <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Pending Tasks
+            </span>
+            <div className="p-2 bg-amber-50 dark:bg-amber-900/20 text-amber-600 rounded-lg">
+              <AlertCircle className="w-4 h-4" />
+            </div>
+          </div>
+          <p className="text-2xl font-bold text-slate-900 dark:text-white">
+            05
+          </p>
+          <p className="text-xs text-amber-600 font-medium mt-1">
+            Needs attention
+          </p>
+        </div>
+      </div>
+
+      <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-4  my-5">
         <div className="flex flex-col lg:flex-row lg:items-center gap-6">
           <div className="relative flex-1">
             <Search className="absolute w-4 h-4 left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -210,7 +281,7 @@ const Bookings = () => {
                   </td>
                   <td className="px-6 py-4">
                     <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusStyles(booking.status)}`}
+                      className={`inline-flex items-center whitespace-nowrap px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusStyles(booking.status)}`}
                     >
                       {booking.status}
                     </span>
@@ -313,76 +384,7 @@ const Bookings = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
-        <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              Today's Check-ins
-            </span>
-            <div className="p-2 bg-green-50 dark:bg-green-900/20 text-green-600 rounded-lg">
-              <LogIn className="w-4 h-4" />
-            </div>
-          </div>
-          <p className="text-2xl font-bold text-slate-900 dark:text-white">
-            14
-          </p>
-          <p className="text-xs text-green-600 font-medium mt-1 flex items-center gap-1">
-            <ArrowUp className="w-3 h-3" />
-            +2 from yesterday
-          </p>
-        </div>
-        <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              Available Rooms
-            </span>
-            <div className="p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded-lg">
-              <DoorOpen className="w-4 h-4" />
-            </div>
-          </div>
-          <p className="text-2xl font-bold text-slate-900 dark:text-white">
-            28
-          </p>
-          <p className="text-xs text-slate-500 font-medium mt-1">
-            Total: 120 rooms
-          </p>
-        </div>
-        <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              Monthly Revenue
-            </span>
-            <div className="p-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 rounded-lg">
-              <DollarSign className="w-4 h-4" />
-            </div>
-          </div>
-          <p className="text-2xl font-bold text-slate-900 dark:text-white">
-            $42,850
-          </p>
-          <p className="text-xs text-green-600 font-medium mt-1 flex items-center gap-1">
-            <span className="material-symbols-outlined text-[14px]">
-              trending_up
-            </span>
-            8% growth
-          </p>
-        </div>
-        <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              Pending Tasks
-            </span>
-            <div className="p-2 bg-amber-50 dark:bg-amber-900/20 text-amber-600 rounded-lg">
-              <AlertCircle className="w-4 h-4" />
-            </div>
-          </div>
-          <p className="text-2xl font-bold text-slate-900 dark:text-white">
-            05
-          </p>
-          <p className="text-xs text-amber-600 font-medium mt-1">
-            Needs attention
-          </p>
-        </div>
-      </div>
+    
     </>
   );
 };

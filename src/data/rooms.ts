@@ -8,9 +8,7 @@ export interface Room {
   category: categoryEnum;
   amenities: string[];
   isAvailable: boolean;
-  attachments: {
-    uploads: { url: string }[];
-  };
+  attachments: string[];
   description: string;
 }
 
@@ -383,3 +381,65 @@ export const roomsData: Room[] = [
       "Our most exclusive penthouse with a private elevator and jacuzzi.",
   },
 ];
+
+
+
+export interface Booking {
+  bookingId: string;
+  customerName: string;
+  roomType: string;
+  checkInDate: string; 
+  checkOutDate: string; 
+  stayDuration: number;
+  status: string;
+
+ 
+}
+
+export const bookingData:Booking[]=[
+  {
+    "bookingId": "#BK-1001",
+    "customerName": "James Anderson",
+    "roomType": "Deluxe Suite",
+    "checkInDate": "2024-03-15",
+    "checkOutDate": "2024-03-18",
+    "stayDuration": 3,
+    "status": "Confirmed",
+    // "totalPrice": 945,
+    // "specialRequests": "Late check-out, Rose petals on bed"
+  },
+  {
+    "bookingId": "#BK-1002",
+    "customerName": "Sarah Chen",
+    "roomType": "Standard King",
+    "checkInDate": "2024-03-16",
+    "checkOutDate": "2024-03-20",
+    "stayDuration": 4,
+    "status": "Checked-in",
+    // "totalPrice": 680,
+    // "specialRequests": "Extra pillows, High floor"
+  },
+  {
+    "bookingId": "#BK-1003",
+    "customerName": "Michael Okafor",
+    "roomType": "Executive Suite",
+    "checkInDate": "2024-03-14",
+    "checkOutDate": "2024-03-17",
+    "stayDuration": 3,
+    "status": "Completed",
+    // "totalPrice": 1050,
+    // "specialRequests": "Airport pickup, Allergen-free room"
+  },
+  {
+    "bookingId":"#BK-1004",
+    "customerName": "Elena Rodriguez",
+    "roomType": "Family Room",
+    "checkInDate": "2024-03-18",
+    "checkOutDate": "2024-03-22",
+    "stayDuration": 4,
+    "status": "Confirmed",
+    // "totalPrice": 920,
+    // "specialRequests": "Crib for infant, Connecting rooms"
+  },
+
+]

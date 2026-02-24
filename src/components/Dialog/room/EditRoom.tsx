@@ -36,7 +36,7 @@ const EditRoom = ({ room }: any) => {
   const form = useForm<z.infer<typeof roomSchema>>({
     resolver: zodResolver(roomSchema),
     defaultValues: {
-      attachments: room?.attachment?.uploads || [],  // ✅ MUST include this!
+      attachments: room?.attachment?.uploads || [], 
       title: room?.title || "",
       description: room?.description || "",
       category: room?.category || "STANDARD",
@@ -54,12 +54,10 @@ const EditRoom = ({ room }: any) => {
     try {
       const payload = {
         ...values,
-        // floor: parseInt(values.floor, 10),
+    
         price: parseInt(values.price, 10),
         capacity: parseInt(values.capacity, 10),
-        attachments: {
-          uploads: values.attachments.map((url) => ({ url }))
-        }
+        attachments:values.attachments.map((item) => (item))
       };
 
       console.log("Sending payload:", payload);

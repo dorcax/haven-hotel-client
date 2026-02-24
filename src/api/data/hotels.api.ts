@@ -18,7 +18,7 @@ type hotelInputTypes = {
 };
 
 const hotels = api.injectEndpoints({
-  endpoints: ({ mutation }) => ({
+  endpoints: ({ mutation,query }) => ({
     addHotel: mutation<any,hotelInputTypes>({
         query:(body)=>({
             url:"/property",
@@ -29,7 +29,24 @@ const hotels = api.injectEndpoints({
 
     }),
 
+    getHostProperty:query<any,void>({
+       query:(q)=>({
+                  url:"/property/host",
+                  params: q ?? undefined
+              }),
+              providesTags:["property"]
+    }),
+    
+   deleteProperty:mutation<{message:string},string>({
+            query:(propertyId:string)=>({
+                url:`property/${propertyId}`,
+                method:"Delete"
+
+            }),
+            invalidatesTags:["property"]
+
+        })
   }),
 });
 
-export const {useAddHotelMutation} =hotels
+export const {useAddHotelMutation,useGetHostPropertyQuery,useDeletePropertyMutation} =hotels

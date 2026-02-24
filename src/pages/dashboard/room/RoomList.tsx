@@ -35,10 +35,31 @@ import {
 
 import { usePopUpContext } from "@/context/PopUpContext";
 import useSearch from "@/hooks/useSearch";
-import { roomsData, type Room } from "@/data/rooms";
+import { useListRoomsQuery } from "@/api/data/rooms.api";
+import { useAuthState } from "@/api/data/auth";
+import type { Room } from "@/data/rooms";
+// import { roomsData, type Room } from "@/data/rooms";
+import {useParams} from "react-router-dom"
 
 export function RoomList() {
+   const { auth } = useAuthState();
+   console.log("auth",auth)
   const { openDialog, openDrawer } = usePopUpContext();
+
+  // const propertyId = auth?.hotelId ?? "";
+  const {id} =useParams()
+const propertyId =id
+  console.log("room property id",id)
+  const { data: listRoom, isLoading} =
+    useListRoomsQuery(
+      { propertyId, page: 0, count: 100 },
+      { skip: !propertyId }
+    );
+
+  const roomsData = listRoom?.list ?? [];
+
+  console.log("roomdata",roomsData)
+  
 
   // Search state
   const { query } = useSearch("", 500);
@@ -50,19 +71,21 @@ export function RoomList() {
     } else {
       setFilteredRooms(
         roomsData.filter(
-          (r) =>
+          (r:any) =>
             (r.title ?? "").toLowerCase().includes(value.toLowerCase()) ||
             (r.category ?? "").toLowerCase().includes(value.toLowerCase()) ||
             (r.id ?? "").toLowerCase().includes(value.toLowerCase()),
         ),
       );
     }
-  }, []);
+  }, [roomsData]);
 
   // Sync rooms data with filteredRooms when roomsData might change or on initial load
   React.useEffect(() => {
     handleSearch(query);
   }, [query, handleSearch]);
+
+
 
   // Columns
   const columns = React.useMemo<ColumnDef<Room>[]>(
@@ -97,7 +120,7 @@ export function RoomList() {
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className="capitalize"
+            className="capitalize "
           >
             Property Image
             <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -108,12 +131,12 @@ export function RoomList() {
           return (
             <Carousel className="w-full max-w-[120px]">
               <CarouselContent>
-                {attachments?.uploads?.map((att, i) => (
+                {attachments?.map((att, i) => (
                   <CarouselItem key={i}>
                     <div className="p-1 flex justify-center">
                       <img
-                        src={att.url}
-                        className="w-full rounded-md h-20 object-cover"
+                        src={att}
+                        className="w-full   rounded-md h-20 object-cover"
                         alt="Property"
                       />
                     </div>
@@ -239,12 +262,12 @@ export function RoomList() {
     },
     {
       title: "Available",
-      value: roomsData.filter((r) => r.isAvailable).length,
+      value: roomsData.filter((r:any) => r.isAvailable).length,
       icon: <CircleCheck className="text-green-500" />,
     },
     {
       title: "Booked",
-      value: roomsData.filter((r) => !r.isAvailable).length,
+      value: roomsData.filter((r:any) => !r.isAvailable).length,
       icon: <Ban className="text-red-500" />,
     },
   ];
@@ -255,7 +278,7 @@ export function RoomList() {
         title="Properties & Accommodations"
         description="Manage your collection of hotel rooms and luxury apartments."
         primary={{
-          title: "Add New Property",
+          title: "create room",
           action: () => openDialog(() => <AddRoom />),
         }}
         refresh={{ action: () => {}, isLoading: false }}
@@ -266,7 +289,7 @@ export function RoomList() {
       <DataTable
         data={filteredRooms}
         columns={columns}
-        loading={false}
+        loading={isLoading}
         search={handleSearch}
         searchQuery={query}
       />

@@ -25,10 +25,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import type z from "zod";
+import {useParams} from "react-router-dom"
+import { usePopUpContext } from "@/context/PopUpContext";
 
 const AddRoom = () => {
   const [addRoom, { isLoading }] = useAddRoomMutation();
- 
+ const {id} =useParams()
+ console.log("AddRoom received propertyId:",id);
+  const { closeDialog } = usePopUpContext()
   
   const form = useForm<z.infer<typeof roomSchema>>({
     resolver: zodResolver(roomSchema),
@@ -37,6 +41,7 @@ const AddRoom = () => {
       description: "",
       price: "",
       // floor: "",
+      propertyId:"",
       capacity: "",
       amenities: [],
       attachments: [],
@@ -45,21 +50,25 @@ const AddRoom = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof roomSchema>) => {
+    
     try {
       const payload = {
         ...values,
+       propertyId:"d7c97b13-e03a-44bf-afad-303cdeea3d38",
         // floor: parseInt(values.floor),
         price: parseInt(values.price),
         capacity: parseInt(values.capacity),
-         attachments: {
-         uploads: values.attachments.map((url) => ({ url }))
-  }
+        
+         attachments:values.attachments.map((item) => (item))
+  
       };
+      console.log("attachment",payload.attachments)
 
       const res = await addRoom(payload).unwrap();
       console.log("creating room", res);
       toast.success(res.message);
       
+      closeDialog()
       
       
     } catch (error: any) {
@@ -71,8 +80,8 @@ const AddRoom = () => {
   return (
  <CustomInfoDialog
         title="create room"
-        className="w-full md:max-w-4xl max-h-[500px] overflow-y-auto overflow [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
-        loading={isLoading} // Use actual loading state
+        className="w-full  md:max-w-4xl max-h-[500px] overflow-y-auto overflow [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+        loading={isLoading} 
       >
         <Form {...form}>
           <form
@@ -247,7 +256,7 @@ const AddRoom = () => {
               <div className="flex justify-end mt-5">
                 <Button 
                   disabled={isLoading} 
-                  className="w-[140px] bg-[#E3B23C] hover:bg-[#d4a62e]"
+                  className="w-[180px] capitalize shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all "
                   type="submit"
                 >
                   {isLoading ? <Loader /> : "create room"}

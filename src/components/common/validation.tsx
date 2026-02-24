@@ -108,13 +108,14 @@ export enum categoryEnum {
 export const roomSchema = z.object({
   title: z
     .string()
-    .min(3, "name must be atleast 3 character")
-    .max(5, "name must not be more than 5 character"),
+    .min(10, "name must be atleast 3 character")
+    .max(30, "name must not be more than 5 character"),
   description: z
     .string()
     .min(50, "description must be atleast 20 characters")
     .max(1000, "description must not be more than 1000 character "),
   price: z.string().min(0),
+  propertyId:z.string(),
   amenities: z.array(z.string()).min(1, "please add atleast one amenities"),
   // floor:z.string().min(1).max(9),
   capacity: z

@@ -1,26 +1,24 @@
-import { type roomInputType } from '@/api/data/rooms.api'
 import CustomInfoDrawer from '@/components/common/CustomInfoDrawer'
-import { Badge } from '@/components/ui/badge'
-import { hotelFacilities, hotelFeatures } from '@/constant/roomdata'
+import type { Property } from '@/pages/property/Property'
 import { CircleCheck } from 'lucide-react'
 
 
 
 
 type props = {
-    room: roomInputType
+    property: Property
 
 }
 
 
-const RoomDetail = ({ room }: props) => {
-    console.log("atachment", room)
-    const categoryText = Array.isArray(room.category)
-        ? room.category.join(", ")
-        : room.category;
+const PropertyDetail = ({ property }: props) => {
+    console.log("atachment", property)
+    // const categoryText = Array.isArray(room.category)
+    //     ? room.category.join(", ")
+    //     : room.category;
     // const attachments =
         // room?.attachments || [];
-    const attachments =room?.attachments?.map((u:any)=>u) ||[]
+    const attachments =property?.attachments?.uploads?.map((u:any)=>u) ||[]
     console.log("room detail", attachments)
     const images = Array.isArray(attachments) ? attachments : attachments ? [attachments] : [];
     const attachment = images.map((u) => u)
@@ -37,8 +35,11 @@ const RoomDetail = ({ room }: props) => {
         >
             {/* room header */}
             <div className='text-base capitalize text-gray-900 font-semibold pt-6'>
-                <h2>{categoryText.toLowerCase()} room
-                    {room.isAvailable && <Badge className='bg-[#E3B23C] mx-2 text-xs'>Available</Badge>}</h2>
+                <h2>
+                    property
+                    {/* {categoryText.toLowerCase()} room
+                    {room.isAvailable && <Badge className='bg-[#E3B23C] mx-2 text-xs'>Available</Badge>} */}
+                    </h2>
             </div>
             {/* room images */}
             {attachment.length === 1 ? <img src={firstImage} className=' h-60 w-full object-cover rounded-md' /> : (
@@ -62,32 +63,24 @@ const RoomDetail = ({ room }: props) => {
 
 
             <div>
-                <p className='text-sm text-gray-600 '> {room.description}</p>
+                <p className='text-sm text-gray-600 '> {property.description}</p>
             </div>
             {/* feature */}
             <div>
                 <h3 className='text-base capitalize font-medium text-gray-900 mb-2'>feature:</h3>
                 <div className='grid grid-cols-2 gap-3 w-full text-gray-600'>
 
-                    {hotelFeatures.map((f) => (
-                        <span className='flex gap-2 text-sm py-1 '><CircleCheck className='text-[#E3B23C]' />{f.title}</span>
+                    {property.features?.map((f) => (
+                        <span className='flex gap-2 text-sm py-1 '><CircleCheck className='text-[#E3B23C]' />{f}</span>
                     ))}
                 </div>
             </div>
-            <div>
-                <h3 className='text-base capitalize font-medium text-gray-900 mb-2'>facilities:</h3>
-                <div className='grid grid-cols-2 gap-3 w-full text-gray-600'>
-
-                    {hotelFacilities.map((f) => (
-                        <span className='flex gap-2 text-sm py-1'>{f.icon} {f.title}</span>
-                    ))}
-                </div>
-            </div>
+         
             <div>
                 <h3 className='text-base capitalize font-medium text-gray-900 mb-2'>Amenities:</h3>
                 <div className='grid grid-cols-2 gap-3 w-full text-gray-600'>
 
-                    {room.amenities.map((f) => (
+                    {property.amenities?.map((f) => (
                         <span className='flex gap-2 text-sm pt-1 mb-6 capitalize'>{f}</span>
                     ))}
                 </div>
@@ -96,4 +89,4 @@ const RoomDetail = ({ room }: props) => {
     )
 }
 
-export default RoomDetail
+export default PropertyDetail
