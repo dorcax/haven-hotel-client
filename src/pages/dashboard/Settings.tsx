@@ -47,15 +47,13 @@ const Settings = () => {
         {settingsSections.map((section, i) => (
           <button
             key={i}
-            className="flex items-start gap-4 bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm transition-all hover:border-primary/50 hover:shadow-md text-left"
+            className="flex items-start gap-4 bg-white p-6 rounded-xl border border-slate-100 shadow-sm transition-all hover:border-primary/50 hover:shadow-md text-left"
           >
-            <div className="p-3 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg">
+            <div className="p-3 bg-slate-50 text-slate-600 rounded-lg">
               {section.icon}
             </div>
             <div>
-              <h3 className="font-bold text-slate-900 dark:text-white">
-                {section.title}
-              </h3>
+              <h3 className="font-bold text-slate-900">{section.title}</h3>
               <p className="text-sm text-slate-500 mt-1">{section.desc}</p>
             </div>
           </button>

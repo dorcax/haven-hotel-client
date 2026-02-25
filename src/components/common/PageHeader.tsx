@@ -23,7 +23,7 @@ const PageHeader = ({
     <section className="w-full">
       <div className="my-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="capitalize text-xl sm:text-2xl font-bold text-gray-800 dark:text-white">
+          <h1 className="capitalize text-xl sm:text-2xl font-bold text-gray-800">
             {title}
           </h1>
           {description && (

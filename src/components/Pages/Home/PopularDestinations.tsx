@@ -21,7 +21,7 @@ const PopularDestinations = ({
 }: popularData) => {
   return (
     <section
-      className={`py-16 ${theme === "light" ? "bg-white" : "bg-[#1A365D]"} dark:bg-slate-900/50`}
+      className={`py-16 ${theme === "light" ? "bg-white" : "bg-[#1A365D]"}`}
     >
       <div className="max-w-[1200px] mx-auto px-6 md:px-8">
         <div className="flex justify-between items-end mb-10">
@@ -29,7 +29,7 @@ const PopularDestinations = ({
             className={`${theme === "light" ? "text-primary" : "text-white"}`}
           >
             <h3 className="text-3xl font-bold mb-2">{title}</h3>
-            <p className=" dark:text-slate-400">{subtitle}</p>
+            <p>{subtitle}</p>
           </div>
           <Link to={link}>
             <button

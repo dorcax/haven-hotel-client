@@ -12,8 +12,8 @@ const DiscoverHero = () => {
           experiences.
         </p>
       </div>
-      <div className="bg-white dark:bg-slate-900 p-2 rounded-xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center gap-2">
-        <div className="flex-none w-full md:w-auto flex items-center px-4 py-3 gap-3 border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800">
+      <div className="bg-white p-2 rounded-xl shadow-xl shadow-slate-200/50 border border-slate-200 flex flex-col md:flex-row items-center gap-2">
+        <div className="flex-none w-full md:w-auto flex items-center px-4 py-3 gap-3 border-b md:border-b-0 md:border-r border-slate-100">
           <Home className="text-slate-400" />
           <select className="bg-transparent border-none focus:ring-0 text-slate-900  text-sm font-medium pr-8 cursor-pointer">
             <option value="all">All Stays</option>
@@ -21,7 +21,7 @@ const DiscoverHero = () => {
             <option value="apartments">Apartments</option>
           </select>
         </div>
-        <div className="flex-1 w-full flex items-center px-4 py-3 gap-3 border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800">
+        <div className="flex-1 w-full flex items-center px-4 py-3 gap-3 border-b md:border-b-0 md:border-r border-slate-100">
           <Search className="text-slate-400" />
           <input
             className="w-full bg-transparent border-none focus:ring-0 text-slate-900  placeholder:text-slate-400"
@@ -29,7 +29,7 @@ const DiscoverHero = () => {
             type="text"
           />
         </div>
-        <div className="flex-1 w-full flex items-center px-4 py-3 gap-3 border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800">
+        <div className="flex-1 w-full flex items-center px-4 py-3 gap-3 border-b md:border-b-0 md:border-r border-slate-100">
           <Calendar className="text-slate-400" />
           <input
             className="w-full bg-transparent border-none focus:ring-0 text-slate-900  placeholder:text-slate-400"
@@ -37,7 +37,7 @@ const DiscoverHero = () => {
             type="text"
           />
         </div>
-        <div className="flex-1 w-full flex items-center px-4 py-3 gap-3">
+        <div className="flex-1 w-full flex items-center px-4 py-3 gap-3 border-b md:border-b-0 md:border-r border-slate-100">
           <User2 className="text-slate-400" />
           <input
             className="w-full bg-transparent border-none focus:ring-0 text-slate-900  placeholder:text-slate-400"

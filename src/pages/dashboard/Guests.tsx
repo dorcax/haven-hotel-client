@@ -15,7 +15,7 @@ const Guests = () => {
         refresh={{ action: () => {}, isLoading: false }}
       />
 
-      <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm">
+      <div className="bg-white rounded-xl border border-slate-100 overflow-hidden shadow-sm">
         <Metrics />
         <Tables />
       </div>

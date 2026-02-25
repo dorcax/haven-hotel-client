@@ -2,7 +2,7 @@ import { BadgeDollarSign, Languages } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 pt-16 pb-8">
+    <footer className="bg-white border-t border-slate-200 pt-16 pb-8">
       <div className="max-w-[1200px] mx-auto px-6 md:px-20">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="space-y-6">
@@ -21,18 +21,16 @@ const Footer = () => {
                   ></path>
                 </svg>
               </div>
-              <h2 className="text-[#1A365D] dark:text-white text-lg font-bold">
-                HavenHotel
-              </h2>
+              <h2 className="text-[#1A365D] text-lg font-bold">HavenHotel</h2>
             </div>
-            <p className="text-[#1A365D] dark:text-slate-400 text-sm leading-relaxed">
+            <p className="text-[#1A365D] text-sm leading-relaxed">
               Defining the next generation of luxury apartments, hotels, and
               effortless bookings.
             </p>
           </div>
           <div>
             <h6 className="font-bold mb-6">Quick Links</h6>
-            <ul className="space-y-4 text-[#1A365D] dark:text-slate-400 text-sm">
+            <ul className="space-y-4 text-[#1A365D] text-sm">
               <li>
                 <a className="hover:text-primary" href="#">
                   Search Hotels
@@ -57,7 +55,7 @@ const Footer = () => {
           </div>
           <div>
             <h6 className="font-bold mb-6">Company</h6>
-            <ul className="space-y-4 text-[#1A365D] dark:text-slate-400 text-sm">
+            <ul className="space-y-4 text-[#1A365D] text-sm">
               <li>
                 <a className="hover:text-primary" href="#">
                   About Us
@@ -82,7 +80,7 @@ const Footer = () => {
           </div>
           <div>
             <h6 className="font-bold mb-6">Admin &amp; Support</h6>
-            <ul className="space-y-4 text-[#1A365D] dark:text-slate-400 text-sm">
+            <ul className="space-y-4 text-[#1A365D] text-sm">
               <li>
                 <a className="hover:text-primary" href="#">
                   Partner Portal
@@ -106,17 +104,17 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className="border-t border-slate-100 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-[#1A365D] dark:text-slate-500">
+        <div className="border-t border-slate-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-[#1A365D]">
             © {new Date().getFullYear()} HavenHotel International. All rights
             reserved.
           </p>
           <div className="flex gap-6">
-            <div className="flex items-center gap-1 text-[#1A365D] dark:text-slate-500 text-xs cursor-pointer">
+            <div className="flex items-center gap-1 text-[#1A365D] text-xs cursor-pointer">
               <Languages size={15} />
               English (US)
             </div>
-            <div className="flex items-center gap-1 text-[#1A365D] dark:text-slate-500 text-xs cursor-pointer">
+            <div className="flex items-center gap-1 text-[#1A365D] text-xs cursor-pointer">
               <BadgeDollarSign size={15} />
               USD ($)
             </div>

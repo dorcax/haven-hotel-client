@@ -63,15 +63,15 @@ const Bookings = () => {
   const getStatusStyles = (status: Booking["status"]) => {
     switch (status) {
       case "Confirmed":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300";
+        return "bg-blue-100 text-blue-800";
       case "Pending":
-        return "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300";
+        return "bg-amber-100 text-amber-800";
       case "Checked-in":
-        return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300";
+        return "bg-green-100 text-green-800";
       case "Cancelled":
-        return "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300";
+        return "bg-red-100 text-red-800";
       default:
-        return "bg-slate-100 text-slate-800 dark:bg-slate-900/30 dark:text-slate-300";
+        return "bg-slate-100 text-slate-800";
     }
   };
 
@@ -79,7 +79,7 @@ const Bookings = () => {
     <>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
         <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
             Booking Management
           </h2>
           <p className="text-slate-500 text-xs sm:text-sm">
@@ -88,12 +88,12 @@ const Bookings = () => {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-4 mb-6">
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-6">
         <div className="flex flex-col md:flex-row md:items-center gap-4">
           <div className="relative flex-1">
             <Search className="absolute w-4 h-4 left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
-              className="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border-none rounded-lg focus:ring-2 focus:ring-primary/50 text-sm"
+              className="w-full pl-10 pr-4 py-2 bg-slate-50 border-none rounded-lg focus:ring-2 focus:ring-primary/50 text-sm"
               placeholder="Search bookings..."
               type="text"
               value={searchQuery}
@@ -104,7 +104,7 @@ const Bookings = () => {
             />
           </div>
 
-          <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl overflow-x-auto no-scrollbar">
             {(
               [
                 "All",
@@ -122,8 +122,8 @@ const Bookings = () => {
                 }}
                 className={`px-3 sm:px-4 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
                   activeFilter === filter
-                    ? "bg-white dark:bg-slate-700 shadow-sm text-primary"
-                    : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
+                    ? "bg-white shadow-sm text-primary"
+                    : "text-slate-500 hover:text-slate-700"
                 }`}
               >
                 {filter} ({counts[filter]})
@@ -131,18 +131,18 @@ const Bookings = () => {
             ))}
           </div>
 
-          <button className="flex items-center justify-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 hover:bg-slate-50 transition-colors w-full md:w-auto">
+          <button className="flex items-center justify-center gap-2 text-sm font-medium text-slate-600 border border-slate-200 rounded-lg px-4 py-2 hover:bg-slate-50 transition-colors w-full md:w-auto">
             <FunnelIcon className="w-4 h-4" />
             <span className="md:hidden lg:inline">Filters</span>
           </button>
         </div>
       </div>
 
-      <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-50 dark:bg-slate-800/50 border-bottom border-slate-200 dark:border-slate-800">
+              <tr className="bg-slate-50 border-bottom border-slate-200">
                 <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
                   Booking ID
                 </th>
@@ -166,14 +166,14 @@ const Bookings = () => {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+            <tbody className="divide-y divide-slate-100">
               {paginatedBookings.length > 0 ? (
                 paginatedBookings.map((booking) => (
                   <tr
                     key={booking.id}
-                    className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors group"
+                    className="hover:bg-slate-50/80 transition-colors group"
                   >
-                    <td className="px-6 py-4 text-sm font-bold text-slate-900 dark:text-white">
+                    <td className="px-6 py-4 text-sm font-bold text-slate-900">
                       {booking.id}
                     </td>
                     <td className="px-6 py-4">
@@ -184,13 +184,13 @@ const Bookings = () => {
                         >
                           {booking.customerInitials}
                         </div>
-                        <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                        <span className="text-sm text-slate-700">
                           {booking.customerName}
                         </span>
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                      <p className="text-sm font-medium text-slate-700">
                         {booking.roomName}
                       </p>
                       <p className="text-xs text-slate-500">
@@ -199,7 +199,7 @@ const Bookings = () => {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex flex-col">
-                        <span className="text-sm text-slate-700 dark:text-slate-300">
+                        <span className="text-sm text-slate-700">
                           {booking.checkIn} - {booking.checkOut}
                         </span>
                         <span className="text-[10px] text-slate-500 uppercase font-medium">
@@ -207,7 +207,7 @@ const Bookings = () => {
                         </span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-white text-right">
+                    <td className="px-6 py-4 text-sm font-semibold text-slate-900 text-right">
                       ${booking.price.toFixed(2)}
                     </td>
                     <td className="px-6 py-4">
@@ -219,13 +219,13 @@ const Bookings = () => {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center justify-center gap-1">
-                        <button className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-slate-400 hover:text-primary transition-colors">
+                        <button className="p-1.5 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-primary transition-colors">
                           <EyeIcon className="w-4 h-4" />
                         </button>
-                        <button className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-slate-400 hover:text-primary transition-colors">
+                        <button className="p-1.5 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-primary transition-colors">
                           <PencilIcon className="w-4 h-4" />
                         </button>
-                        <button className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-slate-400 hover:text-red-500 transition-colors">
+                        <button className="p-1.5 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-red-500 transition-colors">
                           <TrashIcon className="w-4 h-4" />
                         </button>
                       </div>
@@ -236,14 +236,14 @@ const Bookings = () => {
                 <tr>
                   <td colSpan={7} className="px-6 py-12 text-center">
                     <div className="flex flex-col items-center gap-3">
-                      <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-full text-slate-400">
+                      <div className="p-4 bg-slate-50 rounded-full text-slate-400">
                         <Search className="w-8 h-8" />
                       </div>
                       <div>
-                        <p className="text-slate-900 dark:text-white font-bold">
+                        <p className="text-slate-900 font-bold">
                           No bookings found
                         </p>
-                        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                        <p className="text-sm text-slate-500 mt-1">
                           We couldn't find any bookings matching your current
                           criteria.
                         </p>
@@ -256,18 +256,18 @@ const Bookings = () => {
           </table>
         </div>
 
-        <div className="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+        <div className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
           <p className="text-sm text-slate-500">
             Showing
-            <span className="font-semibold text-slate-900 dark:text-white mx-1">
+            <span className="font-semibold text-slate-900 mx-1">
               {(currentPage - 1) * itemsPerPage + 1}
             </span>
             to
-            <span className="font-semibold text-slate-900 dark:text-white mx-1">
+            <span className="font-semibold text-slate-900 mx-1">
               {Math.min(currentPage * itemsPerPage, totalItems)}
             </span>
             of
-            <span className="font-semibold text-slate-900 dark:text-white mx-1">
+            <span className="font-semibold text-slate-900 mx-1">
               {totalItems}
             </span>
             results
@@ -336,68 +336,60 @@ const Bookings = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-        <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
               Today's Check-ins
             </span>
-            <div className="p-2 bg-green-50 dark:bg-green-900/20 text-green-600 rounded-lg">
+            <div className="p-2 bg-green-50 text-green-600 rounded-lg">
               <LogIn className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-2xl font-bold text-slate-900 dark:text-white">
-            14
-          </p>
+          <p className="text-2xl font-bold text-slate-900">14</p>
           <p className="text-xs text-green-600 font-medium mt-1 flex items-center gap-1">
             <ArrowUp className="w-3 h-3" />
             +2 from yesterday
           </p>
         </div>
-        <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
               Available Rooms
             </span>
-            <div className="p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded-lg">
+            <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
               <DoorOpen className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-2xl font-bold text-slate-900 dark:text-white">
-            28
-          </p>
+          <p className="text-2xl font-bold text-slate-900">28</p>
           <p className="text-xs text-slate-500 font-medium mt-1">
             Total: 120 rooms
           </p>
         </div>
-        <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
               Monthly Revenue
             </span>
-            <div className="p-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 rounded-lg">
+            <div className="p-2 bg-purple-50 text-purple-600 rounded-lg">
               <DollarSign className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-2xl font-bold text-slate-900 dark:text-white">
-            $42,850
-          </p>
+          <p className="text-2xl font-bold text-slate-900">$42,850</p>
           <p className="text-xs text-green-600 font-medium mt-1 flex items-center gap-1">
             <TrendingUp size={14} />
             8% growth
           </p>
         </div>
-        <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
               Pending Tasks
             </span>
-            <div className="p-2 bg-amber-50 dark:bg-amber-900/20 text-amber-600 rounded-lg">
+            <div className="p-2 bg-amber-50 text-amber-600 rounded-lg">
               <AlertCircle className="w-4 h-4" />
             </div>
           </div>
-          <p className="text-2xl font-bold text-slate-900 dark:text-white">
-            05
-          </p>
+          <p className="text-2xl font-bold text-slate-900">05</p>
           <p className="text-xs text-amber-600 font-medium mt-1">
             Needs attention
           </p>

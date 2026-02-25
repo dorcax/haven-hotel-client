@@ -120,8 +120,8 @@ export function RoomList() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="left-0 size-[25px] mx-1 bg-white/80 dark:bg-slate-800/80" />
-              <CarouselNext className="right-0 size-[25px] mx-1 bg-white/80 dark:bg-slate-800/80" />
+              <CarouselPrevious className="left-0 size-[25px] mx-1 bg-white/80" />
+              <CarouselNext className="right-0 size-[25px] mx-1 bg-white/80" />
             </Carousel>
           );
         },
@@ -184,8 +184,8 @@ export function RoomList() {
           <Badge
             className={
               row.original.isAvailable
-                ? "bg-green-100 text-green-800 hover:bg-green-100 dark:bg-green-900/30 dark:text-green-400"
-                : "bg-red-100 text-red-800 hover:bg-red-100 dark:bg-red-900/30 dark:text-red-400"
+                ? "bg-green-100 text-green-800 hover:bg-green-100"
+                : "bg-red-100 text-red-800 hover:bg-red-100"
             }
           >
             {row.getValue("isAvailable") ? "Available" : "Booked"}

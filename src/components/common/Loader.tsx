@@ -17,7 +17,7 @@ const Loader = ({ className, size = "md", fullPage = false }: LoaderProps) => {
   const loaderContent = (
     <div
       className={cn(
-        "animate-spin rounded-full border-slate-200/50 dark:border-slate-800/50 border-t-primary dark:border-t-primary shadow-[0_0_15px_rgba(19,127,236,0.15)]",
+        "animate-spin rounded-full border-slate-200/50 border-t-primary shadow-[0_0_15px_rgba(19,127,236,0.15)]",
         sizeClasses[size],
       )}
     />
@@ -27,7 +27,7 @@ const Loader = ({ className, size = "md", fullPage = false }: LoaderProps) => {
     return (
       <div
         className={cn(
-          "fixed inset-0 z-50 flex items-center justify-center bg-white/80 dark:bg-background-dark/80 backdrop-blur-sm",
+          "fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm",
           className,
         )}
       >

@@ -55,15 +55,15 @@ const DashboardApp = () => {
   const getStatusStyles = (status: Booking["status"]) => {
     switch (status) {
       case "Confirmed":
-        return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400";
+        return "bg-green-100 text-green-800";
       case "Pending":
-        return "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400";
+        return "bg-amber-100 text-amber-800";
       case "Checked-in":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400";
+        return "bg-blue-100 text-blue-800";
       case "Cancelled":
-        return "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400";
+        return "bg-red-100 text-red-800";
       default:
-        return "bg-slate-100 text-slate-800 dark:bg-slate-900/30 dark:text-slate-300";
+        return "bg-slate-100 text-slate-800";
     }
   };
 
@@ -81,9 +81,9 @@ const DashboardApp = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 border border-[#cfdbe7] dark:border-slate-800 shadow-sm">
+        <div className="flex flex-col gap-2 rounded-xl p-6 bg-white border border-[#cfdbe7] shadow-sm">
           <div className="flex justify-between items-start">
-            <p className="text-[#4c739a] dark:text-slate-400 text-sm font-medium leading-normal">
+            <p className="text-[#4c739a] text-sm font-medium leading-normal">
               Total Bookings
             </p>
             <BookCheck
@@ -91,7 +91,7 @@ const DashboardApp = () => {
               size={24}
             />
           </div>
-          <p className="text-[#0d141b] dark:text-white tracking-tight text-2xl font-bold leading-tight">
+          <p className="text-[#0d141b] tracking-tight text-2xl font-bold leading-tight">
             {bookingsData.length.toLocaleString()}
           </p>
           <p className="text-[#078838] text-xs font-bold leading-normal flex items-center gap-1">
@@ -99,9 +99,9 @@ const DashboardApp = () => {
             +12.5% vs last month
           </p>
         </div>
-        <div className="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 border border-[#cfdbe7] dark:border-slate-800 shadow-sm">
+        <div className="flex flex-col gap-2 rounded-xl p-6 bg-white border border-[#cfdbe7] shadow-sm">
           <div className="flex justify-between items-start">
-            <p className="text-[#4c739a] dark:text-slate-400 text-sm font-medium leading-normal">
+            <p className="text-[#4c739a] text-sm font-medium leading-normal">
               Today's Check-ins
             </p>
             <LogIn
@@ -109,7 +109,7 @@ const DashboardApp = () => {
               size={24}
             />
           </div>
-          <p className="text-[#0d141b] dark:text-white tracking-tight text-2xl font-bold leading-tight">
+          <p className="text-[#0d141b] tracking-tight text-2xl font-bold leading-tight">
             {bookingsData.filter((b) => b.status === "Checked-in").length}
           </p>
           <p className="text-[#078838] text-xs font-bold leading-normal flex items-center gap-1">
@@ -117,9 +117,9 @@ const DashboardApp = () => {
             +5.2% vs yesterday
           </p>
         </div>
-        <div className="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 border border-[#cfdbe7] dark:border-slate-800 shadow-sm">
+        <div className="flex flex-col gap-2 rounded-xl p-6 bg-white border border-[#cfdbe7] shadow-sm">
           <div className="flex justify-between items-start">
-            <p className="text-[#4c739a] dark:text-slate-400 text-sm font-medium leading-normal">
+            <p className="text-[#4c739a] text-sm font-medium leading-normal">
               Pending Approvals
             </p>
             <CalendarClock
@@ -127,7 +127,7 @@ const DashboardApp = () => {
               size={24}
             />
           </div>
-          <p className="text-[#0d141b] dark:text-white tracking-tight text-2xl font-bold leading-tight">
+          <p className="text-[#0d141b] tracking-tight text-2xl font-bold leading-tight">
             {bookingsData.filter((b) => b.status === "Pending").length}
           </p>
           <p className="text-[#e73908] text-xs font-bold leading-normal flex items-center gap-1">
@@ -135,9 +135,9 @@ const DashboardApp = () => {
             Needs attention
           </p>
         </div>
-        <div className="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 border border-[#cfdbe7] dark:border-slate-800 shadow-sm">
+        <div className="flex flex-col gap-2 rounded-xl p-6 bg-white border border-[#cfdbe7] shadow-sm">
           <div className="flex justify-between items-start">
-            <p className="text-[#4c739a] dark:text-slate-400 text-sm font-medium leading-normal">
+            <p className="text-[#4c739a] text-sm font-medium leading-normal">
               Revenue (MTD)
             </p>
             <Banknote
@@ -145,7 +145,7 @@ const DashboardApp = () => {
               size={24}
             />
           </div>
-          <p className="text-[#0d141b] dark:text-white tracking-tight text-2xl font-bold leading-tight">
+          <p className="text-[#0d141b] tracking-tight text-2xl font-bold leading-tight">
             $
             {bookingsData.reduce((acc, b) => acc + b.price, 0).toLocaleString()}
           </p>
@@ -156,15 +156,15 @@ const DashboardApp = () => {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-slate-900 rounded-xl border border-[#cfdbe7] dark:border-slate-800 shadow-sm overflow-hidden mb-6">
-        <div className="p-4 border-b border-[#e7edf3] dark:border-slate-800 flex flex-col md:flex-row gap-4 items-center">
+      <div className="bg-white rounded-xl border border-[#cfdbe7] shadow-sm overflow-hidden mb-6">
+        <div className="p-4 border-b border-[#e7edf3] flex flex-col md:flex-row gap-4 items-center">
           <div className="flex-1 w-full">
             <label className="flex flex-col min-w-40 h-10 w-full relative">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-[#4c739a]">
                 <SearchIcon size={20} />
               </div>
               <input
-                className="w-full h-full pl-10 pr-4 bg-background-light dark:bg-slate-800 border-none rounded-lg text-sm focus:ring-2 focus:ring-primary/50 text-[#0d141b] dark:text-white placeholder:text-[#4c739a]"
+                className="w-full h-full pl-10 pr-4 bg-background-light border-none rounded-lg text-sm focus:ring-2 focus:ring-primary/50 text-[#0d141b] placeholder:text-[#4c739a]"
                 placeholder="Search by Booking ID, Customer Name, or Room..."
                 type="text"
                 value={searchQuery}
@@ -196,7 +196,7 @@ const DashboardApp = () => {
                     (filter === "Checked-in" ? "Checked-in" : filter) ||
                   (activeFilter === "All" && filter === "All")
                     ? "bg-primary text-white font-bold"
-                    : "bg-[#e7edf3] dark:bg-slate-800 text-[#0d141b] dark:text-slate-300 font-medium hover:bg-primary/10"
+                    : "bg-[#e7edf3] text-[#0d141b] font-medium hover:bg-primary/10"
                 }`}
               >
                 {filter === "All" ? "All Bookings" : filter}
@@ -207,36 +207,36 @@ const DashboardApp = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-background-light/50 dark:bg-slate-800/50">
-                <th className="px-6 py-4 text-xs font-bold text-[#4c739a] dark:text-slate-400 uppercase tracking-wider">
+              <tr className="bg-background-light/50">
+                <th className="px-6 py-4 text-xs font-bold text-[#4c739a] uppercase tracking-wider">
                   Booking ID
                 </th>
-                <th className="px-6 py-4 text-xs font-bold text-[#4c739a] dark:text-slate-400 uppercase tracking-wider">
+                <th className="px-6 py-4 text-xs font-bold text-[#4c739a] uppercase tracking-wider">
                   Customer
                 </th>
-                <th className="px-6 py-4 text-xs font-bold text-[#4c739a] dark:text-slate-400 uppercase tracking-wider">
+                <th className="px-6 py-4 text-xs font-bold text-[#4c739a] uppercase tracking-wider">
                   Room Details
                 </th>
-                <th className="px-6 py-4 text-xs font-bold text-[#4c739a] dark:text-slate-400 uppercase tracking-wider">
+                <th className="px-6 py-4 text-xs font-bold text-[#4c739a] uppercase tracking-wider">
                   Stay Dates
                 </th>
-                <th className="px-6 py-4 text-xs font-bold text-[#4c739a] dark:text-slate-400 uppercase tracking-wider text-right">
+                <th className="px-6 py-4 text-xs font-bold text-[#4c739a] uppercase tracking-wider text-right">
                   Total
                 </th>
-                <th className="px-6 py-4 text-xs font-bold text-[#4c739a] dark:text-slate-400 uppercase tracking-wider text-center">
+                <th className="px-6 py-4 text-xs font-bold text-[#4c739a] uppercase tracking-wider text-center">
                   Status
                 </th>
-                <th className="px-6 py-4 text-xs font-bold text-[#4c739a] dark:text-slate-400 uppercase tracking-wider text-right">
+                <th className="px-6 py-4 text-xs font-bold text-[#4c739a] uppercase tracking-wider text-right">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#e7edf3] dark:divide-slate-800">
+            <tbody className="divide-y divide-[#e7edf3]">
               {paginatedBookings.length > 0 ? (
                 paginatedBookings.map((booking) => (
                   <tr
                     key={booking.id}
-                    className="hover:bg-background-light/30 dark:hover:bg-slate-800/30 transition-colors"
+                    className="hover:bg-background-light/30 transition-colors"
                   >
                     <td className="px-6 py-4 font-mono text-sm font-bold text-primary">
                       {booking.id}
@@ -249,10 +249,10 @@ const DashboardApp = () => {
                           {booking.customerInitials}
                         </div>
                         <div>
-                          <p className="text-sm font-bold text-[#0d141b] dark:text-white">
+                          <p className="text-sm font-bold text-[#0d141b]">
                             {booking.customerName}
                           </p>
-                          <p className="text-xs text-[#4c739a] dark:text-slate-400">
+                          <p className="text-xs text-[#4c739a]">
                             {booking.customerName
                               .toLowerCase()
                               .replace(" ", ".")}
@@ -262,17 +262,17 @@ const DashboardApp = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <p className="text-sm font-medium text-[#0d141b] dark:text-white">
+                      <p className="text-sm font-medium text-[#0d141b]">
                         {booking.roomName}
                       </p>
-                      <p className="text-xs text-[#4c739a] dark:text-slate-400">
+                      <p className="text-xs text-[#4c739a]">
                         {booking.roomDetails}
                       </p>
                     </td>
-                    <td className="px-6 py-4 text-sm text-[#0d141b] dark:text-slate-300 whitespace-nowrap">
+                    <td className="px-6 py-4 text-sm text-[#0d141b] whitespace-nowrap">
                       {booking.checkIn} - {booking.checkOut}
                     </td>
-                    <td className="px-6 py-4 text-sm font-bold text-right text-[#0d141b] dark:text-white">
+                    <td className="px-6 py-4 text-sm font-bold text-right text-[#0d141b]">
                       ${booking.price.toFixed(2)}
                     </td>
                     <td className="px-6 py-4 text-center">
@@ -284,10 +284,10 @@ const DashboardApp = () => {
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex justify-end gap-2">
-                        <button className="p-1.5 rounded-lg bg-background-light dark:bg-slate-800 text-[#4c739a] hover:text-primary border border-transparent hover:border-primary/20 transition-all">
+                        <button className="p-1.5 rounded-lg bg-background-light text-[#4c739a] hover:text-primary border border-transparent hover:border-primary/20 transition-all">
                           <EditIcon size={20} />
                         </button>
-                        <button className="p-1.5 rounded-lg bg-background-light dark:bg-slate-800 text-[#4c739a] hover:text-primary border border-transparent hover:border-primary/20 transition-all">
+                        <button className="p-1.5 rounded-lg bg-background-light text-[#4c739a] hover:text-primary border border-transparent hover:border-primary/20 transition-all">
                           <EllipsisVertical size={20} />
                         </button>
                       </div>
@@ -298,14 +298,14 @@ const DashboardApp = () => {
                 <tr>
                   <td colSpan={7} className="px-6 py-12 text-center">
                     <div className="flex flex-col items-center gap-3">
-                      <div className="p-4 bg-background-light dark:bg-slate-800/50 rounded-full text-[#4c739a]">
+                      <div className="p-4 bg-background-light rounded-full text-[#4c739a]">
                         <SearchIcon size={32} />
                       </div>
                       <div>
-                        <p className="text-[#0d141b] dark:text-white font-bold text-lg">
+                        <p className="text-[#0d141b] font-bold text-lg">
                           No bookings found
                         </p>
-                        <p className="text-sm text-[#4c739a] dark:text-slate-400 mt-1 max-w-xs mx-auto">
+                        <p className="text-sm text-[#4c739a] mt-1 max-w-xs mx-auto">
                           Try searching for something else or adjust your
                           filters to view more bookings.
                         </p>
@@ -319,20 +319,18 @@ const DashboardApp = () => {
         </div>
 
         {/* Pagination */}
-        <div className="px-6 py-4 border-t border-[#e7edf3] dark:border-slate-800 bg-background-light/20 dark:bg-slate-900/50 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-[#4c739a] dark:text-slate-400 text-center md:text-left">
+        <div className="px-6 py-4 border-t border-[#e7edf3] bg-background-light/20 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-[#4c739a] text-center md:text-left">
             Showing
-            <span className="font-bold text-[#0d141b] dark:text-white mx-1">
+            <span className="font-bold text-[#0d141b] mx-1">
               {(currentPage - 1) * itemsPerPage + 1}
             </span>
             to
-            <span className="font-bold text-[#0d141b] dark:text-white mx-1">
+            <span className="font-bold text-[#0d141b] mx-1">
               {Math.min(currentPage * itemsPerPage, totalItems)}
             </span>
             of
-            <span className="font-bold text-[#0d141b] dark:text-white mx-1">
-              {totalItems}
-            </span>
+            <span className="font-bold text-[#0d141b] mx-1">{totalItems}</span>
             bookings
           </p>
           <Pagination className="mx-0 w-auto">
@@ -382,14 +380,14 @@ const DashboardApp = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-xl border border-[#cfdbe7] dark:border-slate-800 p-6">
+        <div className="lg:col-span-2 bg-white rounded-xl border border-[#cfdbe7] p-6">
           <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
             <History className="text-primary" size={20} />
             Recent Activity
           </h3>
           <div className="space-y-4">
-            <div className="flex items-start gap-4 pb-4 border-b border-[#e7edf3] dark:border-slate-800">
-              <div className="bg-green-100 dark:bg-green-900/30 p-2 rounded-full">
+            <div className="flex items-start gap-4 pb-4 border-b border-[#e7edf3]">
+              <div className="bg-green-100 p-2 rounded-full">
                 <CheckCircle2 className="text-green-600" size={20} />
               </div>
               <div>
@@ -400,8 +398,8 @@ const DashboardApp = () => {
                 <p className="text-xs text-[#4c739a] mt-0.5">2 minutes ago</p>
               </div>
             </div>
-            <div className="flex items-start gap-4 pb-4 border-b border-[#e7edf3] dark:border-slate-800">
-              <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-full">
+            <div className="flex items-start gap-4 pb-4 border-b border-[#e7edf3]">
+              <div className="bg-blue-100 p-2 rounded-full">
                 <UserPlus className="text-blue-600" size={20} />
               </div>
               <div>
@@ -413,7 +411,7 @@ const DashboardApp = () => {
               </div>
             </div>
             <div className="flex items-start gap-4">
-              <div className="bg-red-100 dark:bg-red-900/30 p-2 rounded-full">
+              <div className="bg-red-100 p-2 rounded-full">
                 <X className="text-red-600" size={20} />
               </div>
               <div>
