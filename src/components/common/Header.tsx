@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Role } from "@/api/api.type";
 
 const Header = () => {
   return (
@@ -60,7 +61,7 @@ const Header = () => {
           </Link>
         </div>
         <div className="flex items-center justify-between gap-4">
-          <Link to="/register">
+          <Link to={`/register?role=${Role.HOST}`}>
             <Button className="bg-[#1A365D] hover:bg-[#1A365D]/90 font-bold hover:cursor-pointer rounded-full text-xs">
               become a host
             </Button>

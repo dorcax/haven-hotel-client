@@ -36,7 +36,12 @@ const hotels = api.injectEndpoints({
               }),
               providesTags:["property"]
     }),
-    
+    getAllProperty:query<any,void>({
+      query:()=>({
+        url:"/property"
+      }),
+      providesTags:["property"]
+    }),
    deleteProperty:mutation<{message:string},string>({
             query:(propertyId:string)=>({
                 url:`property/${propertyId}`,
@@ -49,4 +54,4 @@ const hotels = api.injectEndpoints({
   }),
 });
 
-export const {useAddHotelMutation,useGetHostPropertyQuery,useDeletePropertyMutation} =hotels
+export const {useAddHotelMutation,useGetHostPropertyQuery,useGetAllPropertyQuery,useDeletePropertyMutation} =hotels

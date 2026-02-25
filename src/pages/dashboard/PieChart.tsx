@@ -58,10 +58,10 @@ export default function BookingPieChart() {
   return (
     <Card className="flex flex-col ">
       <CardHeader className=" flex justify-between items-center pb-0">
-        <CardTitle>Booking summary</CardTitle>
+        <CardTitle className="border ">Booking summary</CardTitle>
         <CardDescription>...</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0  ">
+      <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
           className="mx-auto aspect-square  max-h-[250px] "

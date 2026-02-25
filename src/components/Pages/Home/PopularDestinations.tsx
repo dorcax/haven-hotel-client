@@ -1,8 +1,8 @@
-import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
 import type { popularDestinations } from "@/data/dummyData";
+import { ArrowRight } from "lucide-react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { Link } from "react-router-dom";
 
 interface popularData {
   title: string;
@@ -19,6 +19,8 @@ const PopularDestinations = ({
   data,
   link,
 }: popularData) => {
+
+
   return (
     <section
       className={`py-16 ${theme === "light" ? "bg-white" : "bg-[#1A365D]"} dark:bg-slate-900/50`}
@@ -42,16 +44,19 @@ const PopularDestinations = ({
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {data.map(
-            ({ id, type, location, price, dataAlt, name, features, image }) => (
-              <Link
+            ({ id, type, location, price, name, features,attachments }) => {
+                const firstImage = attachments?.uploads?.[0]?.url
+                console.log("ids",id)
+              return (
+                  <Link
                 to={`/${type}/${id}`}
                 key={id}
                 className="group cursor-pointer"
               >
                 <div className="relative aspect-[3/4] overflow-hidden rounded-xl mb-3 shadow-md">
                   <LazyLoadImage
-                    src={image}
-                    alt={dataAlt || name}
+                    src={firstImage}
+                    alt={firstImage}
                     effect="blur"
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     wrapperClassName="w-full h-full"
@@ -69,7 +74,8 @@ const PopularDestinations = ({
                   <p className="font-semibold">Starting at {price}</p>
                 </div>
               </Link>
-            ),
+              )
+            },
           )}
         </div>
       </div>

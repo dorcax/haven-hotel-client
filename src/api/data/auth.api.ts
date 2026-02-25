@@ -7,6 +7,12 @@ export enum genderRole {
   OTHER = "OTHER",
 }
 
+export enum Role {
+  GUEST = "GUEST",
+  HOST = "HOST",
+  ADMIN= "ADMIN",
+}
+
 type SignInput = {
   name: string;
   phoneNumber: string;

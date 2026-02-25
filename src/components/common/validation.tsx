@@ -1,3 +1,4 @@
+import { Role } from "@/api/api.type";
 import { genderRole } from "@/api/data/auth.api";
 import { z } from "zod";
 
@@ -5,6 +6,7 @@ export const formSchema = z
   .object({
     name: z.string().min(13),
     email: z.email("invalid email"),
+    role:z.enum(Role),
     phoneNumber: z
       .string()
       .min(11, { message: "phone number must be 11 characters" }),
