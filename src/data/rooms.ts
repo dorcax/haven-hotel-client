@@ -8,7 +8,9 @@ export interface Room {
   category: categoryEnum;
   amenities: string[];
   isAvailable: boolean;
-  attachments: string[];
+  attachments: {
+    uploads:{url:string}[]
+  };
   description: string;
 }
 

@@ -8,6 +8,9 @@ const HomePage = () => {
   const {data:propertyList} =useGetAllPropertyQuery()
   const properties = propertyList ?? []; 
   console.log("properties",properties)
+  const popularHotels =properties.filter((item:any)=>item.type ==="HOTEL")
+  const popularApartments =properties.filter((item:any)=>item.type==="APARTMENT")
+
   return (
     <>
       <div className="font-inter">
@@ -17,15 +20,15 @@ const HomePage = () => {
           title="Featured Luxury Hotels"
           subtitle="Experience premium comfort and world-class hospitality in Nigeria’s most prestigious locations."
           theme="light"
-          data={properties}
+          data={popularHotels}
           link="/hotels"
         />
         <PopularDestinations
           title="Exclusive Serviced Apartments"
           subtitle="Find your home away from home with our curated selection of luxury short-let apartments."
           theme="dark"
-          // data={popularApartments}
-            data={properties}
+          data={popularApartments}
+            // data={properties}
           link="/apartments"
         />
         <Footer />

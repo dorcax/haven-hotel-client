@@ -1,14 +1,13 @@
-import { type roomInputType } from '@/api/data/rooms.api'
 import CustomInfoDrawer from '@/components/common/CustomInfoDrawer'
 import { Badge } from '@/components/ui/badge'
 import { hotelFacilities, hotelFeatures } from '@/constant/roomdata'
+import type { Room } from "@/data/rooms"
 import { CircleCheck } from 'lucide-react'
 
 
 
-
 type props = {
-    room: roomInputType
+    room: Room
 
 }
 
@@ -20,7 +19,7 @@ const RoomDetail = ({ room }: props) => {
         : room.category;
     // const attachments =
         // room?.attachments || [];
-    const attachments =room?.attachments?.map((u:any)=>u) ||[]
+    const attachments =room?.attachments?.uploads?.map((u:any)=>u) ||[]
     console.log("room detail", attachments)
     const images = Array.isArray(attachments) ? attachments : attachments ? [attachments] : [];
     const attachment = images.map((u) => u)

@@ -127,7 +127,8 @@ const propertyId =id
           </Button>
         ),
         cell: ({ row }) => {
-          const attachments = row.original.attachments;
+          const attachments = row.original.attachments?.uploads;
+          console.log("room list attachment",attachments)
           return (
             <Carousel className="w-full max-w-[120px]">
               <CarouselContent>
@@ -135,7 +136,7 @@ const propertyId =id
                   <CarouselItem key={i}>
                     <div className="p-1 flex justify-center">
                       <img
-                        src={att}
+                        src={att.url}
                         className="w-full   rounded-md h-20 object-cover"
                         alt="Property"
                       />
