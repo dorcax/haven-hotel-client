@@ -8,7 +8,7 @@ const useSearch = (initialQuery:string="",delay:number =1000) => {
 // useRef doesn’t trigger re-renders, so it’s efficient
 // reason of useCallback:Memoizes the function — React won’t recreate it on every render.
 // Prevents re-rendering of child components that depend on it.
-const onSearch =useCallback((value:string,callback:(value:string)=>void)=>{
+const onSearch =useCallback((value:string,callback?:(value:string)=>void)=>{
   console.log("kkkk",value)
    setQuery(value);
     if(timeOutRef.current){

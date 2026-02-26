@@ -8,6 +8,7 @@ import { Settings } from "lucide-react";
 import Analytics from "@/pages/dashboard/Analytics";
 import Guests from "@/pages/dashboard/Guests";
 
+
 // Lazy load components
 const HomePage = lazy(() => import("@/pages/main-pages/HomePage"));
 const Login = lazy(() => import("@/pages/auth/Login"));
@@ -19,10 +20,11 @@ const Discover = lazy(() => import("@/pages/discover/Discover"));
 const ForgotPassword = lazy(() => import("@/pages/auth/ForgotPassword"));
 const ResetPassword = lazy(() => import("@/pages/auth/ResetPassword"));
 const Upload = lazy(() => import("@/components/fileupload/Upload"));
-const AddHotel = lazy(() => import("@/components/Dialog/hotel/AddHotel"));
+// const AddHotel = lazy(() => import("@/components/Dialog/room/AddHotel"));
 const DetailsPage = lazy(() => import("@/pages/main-pages/DetailsPage"));
 const DashboardApp = lazy(() => import("@/pages/dashboard/DashboardApp"));
 const RoomList = lazy(() => import("@/pages/dashboard/room/RoomList"));
+const AllProperties=lazy(() => import("@/pages/property/Property"));
 
 const router = createBrowserRouter([
   {
@@ -89,14 +91,7 @@ const router = createBrowserRouter([
       </Suspense>
     ),
   },
-  {
-    path: "/addhotel",
-    element: (
-      <Suspense fallback={<Loader />}>
-        <AddHotel />
-      </Suspense>
-    ),
-  },
+
   {
     path: "/apartment/:id",
     element: (
@@ -129,8 +124,16 @@ const router = createBrowserRouter([
               </Suspense>
             ),
           },
+           {
+            path: "properties",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <AllProperties />
+              </Suspense>
+            ),
+          },
           {
-            path: "room",
+            path: ":id/room",
             element: (
               <Suspense fallback={<Loader />}>
                 <RoomList />

@@ -5,16 +5,15 @@ import { api } from "./base"
 export type roomInputType ={
     title:string
     description:string
-    // floor:number
     capacity:number
+    propertyId?:string
     price:number
     category:categoryEnum
     amenities:string[]
-    // attachments:string[]
+    attachments:string[]
     isAvailable?:boolean
-    attachments?:{
-        uploads:{url:string}[]
-    }
+
+ 
 
 }
 type roomInputResponse ={

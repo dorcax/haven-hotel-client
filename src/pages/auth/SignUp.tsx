@@ -17,13 +17,13 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { genderRole, useSignUpMutation } from "@/api/data/auth.api";
+import { genderRole, Role, useSignUpMutation } from "@/api/data/auth.api";
 import Loader from "@/components/common/Loader";
 import { formSchema } from "@/components/common/validation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Header from "@/components/common/Header";
 import { envUrl } from "@/api/data/base";
@@ -32,7 +32,7 @@ import { useState } from "react";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  // const { openDialog } = usePopUpContext();
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,6 +41,7 @@ const SignUp = () => {
       gender: genderRole.FEMALE,
       password: "",
       confirmPassword: "",
+      role:Role.GUEST
     },
   });
 
@@ -53,17 +54,21 @@ const SignUp = () => {
 
   // call the api function
   const [signUp, { isLoading }] = useSignUpMutation();
+  const [searchParams] = useSearchParams()
+  const role = searchParams.get("role")
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // const payload={
-    //   ...values,
-    //   role:"CUSTOMER"
-    // }
+
+
     try {
-      const { confirmPassword, ...payload } = values;
+      const { confirmPassword, ...rest } = values;
+
+      const payload = {
+        ...rest,
+        role
+      }
       const res = await signUp(payload).unwrap();
       toast.success(res?.message || "Registration successful!");
-      // directly open otpDialog
-      // openDialog(<OtpDialog/>)
+
       navigate("/verify-otp");
     } catch (error: any) {
       toast.error(

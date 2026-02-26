@@ -1,35 +1,39 @@
-import { useParams, Link } from "react-router-dom";
-import {
-  MapPin,
-  Star,
-  Share,
-  Heart,
-  Grid,
-  Wifi,
-  Waves,
-  Wind,
-  Car,
-  Shield,
-  Utensils,
-  Zap,
-  Monitor,
-  Dumbbell,
-  Lock,
-  Map,
-  Home,
-  UserCheck,
-  Smile,
-  Trees,
-  Briefcase,
-  Coffee,
-  Smartphone,
-  ChevronLeft,
-  ChevronRight,
-  ShieldCheck,
-} from "lucide-react";
+import { useState } from "react";
+import { useGetAllPropertyQuery } from "@/api/data/hotels.api";
 import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
-import { popularHotels, popularApartments } from "@/data/dummyData";
+import {
+  Briefcase,
+  Car,
+  ChevronRight,
+  Coffee,
+  Dumbbell,
+  Grid,
+  Heart,
+  Home,
+  Lock,
+  Map,
+  MapPin,
+  Monitor,
+  Share,
+  Shield,
+  ShieldCheck,
+  Smartphone,
+  Smile,
+  Star,
+  Trees,
+  UserCheck,
+  Utensils,
+  Waves,
+  Wifi,
+  Wind,
+  Zap,
+} from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { Card, CardContent } from "@/components/ui/card";
+import { addDays, differenceInDays } from "date-fns";
+import { type DateRange } from "react-day-picker";
+import { Link, useParams } from "react-router-dom";
 
 // Helper function to map amenity labels to icons
 const getAmenityIcon = (label: string) => {
@@ -72,11 +76,40 @@ const getAmenityIcon = (label: string) => {
 
 const DetailsPage = () => {
   const { id } = useParams();
+  const { data: propertyList } = useGetAllPropertyQuery();
 
-  const property = [...popularHotels, ...popularApartments].find(
-    (item) => item.id === id,
-  );
+  const property = propertyList?.find((item: any) => item.id === id);
+  console.log("properties details", property);
 
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: new Date(new Date().getFullYear(), 0, 12),
+    to: addDays(new Date(new Date().getFullYear(), 0, 12), 30),
+  });
+
+  const getBookingNights = (
+    from: Date | undefined,
+    to: Date | undefined,
+  ): number => {
+    if (!from || !to) return 0;
+
+    const nights = differenceInDays(to, from);
+
+    // Ensure check-out is after check-in
+    if (nights < 0) return 0;
+
+    // Optional: Set minimum nights (e.g., minimum 1 night)
+    if (nights < 1) return 0;
+
+    return nights;
+  };
+
+  const numberOfNights = getBookingNights(dateRange?.from, dateRange?.to);
+
+  const serviceCharge = 15000;
+
+  const totalPrice = numberOfNights * property?.price;
+
+  console.log("dateRange", dateRange);
   if (!property) {
     return (
       <div className="flex flex-col min-h-screen font-inter">
@@ -106,7 +139,8 @@ const DetailsPage = () => {
     );
   }
 
-  const { details } = property;
+  // const { details } = property;
+  console.log("detailswwww", property?.attachments?.uploads?.[0]?.url);
 
   return (
     <>
@@ -142,9 +176,10 @@ const DetailsPage = () => {
               <span className="hidden md:inline text-slate-300">•</span>
               <span className="flex items-center gap-1.5 font-semibold text-slate-900">
                 <Star className="text-yellow-500 fill-yellow-500" size={16} />
-                {details.rating}
+                {/* {details.rating} */} 2
                 <span className="font-normal text-slate-600 underline">
-                  ({details.reviewCount} reviews)
+                  {/* ({details.reviewCount} reviews) */}
+                  20 reviews
                 </span>
               </span>
             </div>
@@ -166,7 +201,7 @@ const DetailsPage = () => {
           {/* Main Large Image */}
           <div className="md:col-span-2 md:row-span-2 relative overflow-hidden rounded-xl bg-slate-100 group">
             <img
-              src={details.gallery[0]}
+              src={property?.attachments?.uploads?.[0]?.url}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               alt={`${property.name} facade`}
             />
@@ -174,7 +209,7 @@ const DetailsPage = () => {
           {/* Smaller Images */}
           <div className="hidden md:block relative overflow-hidden rounded-xl bg-slate-100 group">
             <img
-              src={details.gallery[1]}
+              src={property?.attachments?.uploads?.[1]?.url}
               loading="lazy"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               alt={`${property.name} interior`}
@@ -182,7 +217,7 @@ const DetailsPage = () => {
           </div>
           <div className="hidden md:block relative overflow-hidden rounded-xl bg-slate-100 group">
             <img
-              src={details.gallery[2]}
+              src={property?.attachments?.uploads?.[2]?.url}
               loading="lazy"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               alt={`${property.name} view`}
@@ -190,7 +225,7 @@ const DetailsPage = () => {
           </div>
           <div className="hidden md:block relative overflow-hidden rounded-xl bg-slate-100 group">
             <img
-              src={details.gallery[3]}
+              src={property?.attachments?.uploads?.[1]?.url}
               loading="lazy"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               alt={`${property.name} detail`}
@@ -198,7 +233,7 @@ const DetailsPage = () => {
           </div>
           <div className="hidden md:block relative overflow-hidden rounded-xl bg-slate-100 group">
             <img
-              src={details.gallery[2]}
+              src={property?.attachments?.uploads?.[1]?.url}
               loading="lazy"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 blur-[2px] opacity-70"
               alt={`${property.name} more`}
@@ -216,7 +251,7 @@ const DetailsPage = () => {
           <div className="md:hidden">
             <button className="w-full mt-2 py-3 bg-slate-100 rounded-lg font-bold flex items-center justify-center gap-2">
               <Grid size={18} />
-              View all {details.gallery.length} photos
+              View all {property.attachments.uploads.length} photos
             </button>
           </div>
         </div>
@@ -225,21 +260,22 @@ const DetailsPage = () => {
           {/* Left Column: Info */}
           <div className="flex-1 min-w-0 space-y-12">
             {/* Hosted By Section (mainly for apartments) */}
-            {details.hostInfo && (
+            {property?.hostInfo && (
               <section className="flex items-center justify-between pb-8 border-b border-slate-100">
                 <div className="space-y-1">
                   <h2 className="text-2xl font-bold text-slate-900 leading-tight">
-                    Entire {property.type} hosted by {details.hostInfo.name}
+                    Entire {property.type} hosted by {property?.hostInfo.name}
                   </h2>
                   <p className="text-slate-600">
-                    Joined in {details.hostInfo.joinedDate}
+                    {/* Joined in {details.hostInfo.joinedDate} */}
+                    just in
                   </p>
                 </div>
                 <div className="relative">
                   <img
-                    src={details.hostInfo.image}
+                    src={property?.attachments?.uploads?.[0]?.url}
                     className="w-14 h-14 rounded-full object-cover border-2 border-white shadow-md"
-                    alt={details.hostInfo.name}
+                    alt={property.hostInfo.name}
                   />
                   <div className="absolute -bottom-1 -right-1 bg-primary text-white p-1 rounded-full shadow-sm">
                     <ShieldCheck size={14} />
@@ -254,19 +290,19 @@ const DetailsPage = () => {
                 About this {property.type}
               </h2>
               <p className="text-slate-600 leading-loose text-lg font-medium">
-                {details.description}
+                {property?.description}
               </p>
             </section>
 
             <hr className="border-slate-100" />
 
             {/* Amenities Section */}
-            <section className="space-y-8">
+            <section className="space-y-4">
               <h2 className="text-2xl font-bold text-slate-900">
                 What this place offers
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-12">
-                {details.amenities.map((item, index) => {
+                {property.amenities.map((item: any, index: any) => {
                   const Icon = getAmenityIcon(item.label);
                   return (
                     <div
@@ -277,15 +313,14 @@ const DetailsPage = () => {
                         <Icon size={24} strokeWidth={1.5} />
                       </div>
                       <span className="text-lg text-slate-700 font-medium">
-                        {item.label}
+                        {item}
                       </span>
                     </div>
                   );
                 })}
               </div>
               <button className="px-8 py-3.5 border-2 border-slate-900 rounded-xl font-black hover:bg-slate-900 hover:text-white transition-all transform active:scale-95">
-                Show all{" "}
-                {details.featuresList.length + details.amenities.length}{" "}
+                Show all {property.features.length + property.amenities.length}{" "}
                 features
               </button>
             </section>
@@ -298,7 +333,7 @@ const DetailsPage = () => {
                 Key Features
               </h2>
               <div className="inline-flex flex-wrap gap-2">
-                {details.featuresList.map((feature, index) => (
+                {property.features.map((feature: any, index: any) => (
                   <span
                     key={index}
                     className="px-4 py-2 bg-slate-50 border border-slate-200 text-slate-700 rounded-full text-sm font-semibold hover:bg-primary/5 hover:border-primary/20 transition-colors"
@@ -311,83 +346,22 @@ const DetailsPage = () => {
 
             <hr className="border-slate-100" />
 
-            {/* Calendar Section (Still Static Visual but Styled) */}
-            <section className="space-y-8">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-2xl font-bold text-slate-900">
-                    Select Dates
-                  </h2>
-                  <p className="text-slate-500 mt-1">Minimum stay: 2 nights</p>
-                </div>
-                <button className="text-primary font-black text-sm uppercase tracking-wider hover:underline underline-offset-4 decoration-2">
-                  Clear dates
-                </button>
-              </div>
-
-              {/* Responsive Calendar Wrapper */}
-              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 md:p-8 overflow-x-auto">
-                <div className="flex gap-12 min-w-[700px] md:min-w-0 md:grid md:grid-cols-2">
-                  {/* Calendar 1 */}
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-6">
-                      <button className="p-2 hover:bg-white rounded-full transition-colors">
-                        <ChevronLeft size={20} />
-                      </button>
-                      <span className="font-extrabold text-slate-900">
-                        March 2026
-                      </span>
-                      <div className="w-9" />
-                    </div>
-                    <div className="grid grid-cols-7 text-center text-xs font-black text-slate-400 mb-4 uppercase tracking-tighter">
-                      {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) => (
-                        <span key={day}>{day}</span>
-                      ))}
-                    </div>
-                    <div className="grid grid-cols-7 text-center gap-y-1">
-                      {[...Array(31)].map((_, i) => (
-                        <span
-                          key={i}
-                          className={`py-2 rounded-lg text-sm font-bold transition-all cursor-pointer hover:bg-white
-                          ${i + 1 === 12 ? "bg-primary text-white shadow-md scale-110" : ""}
-                          ${i + 1 > 12 && i + 1 < 17 ? "bg-primary/10 text-primary" : ""}
-                        `}
-                        >
-                          {i + 1}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Calendar 2 */}
-                  <div className="flex-1 hidden md:block">
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="w-9" />
-                      <span className="font-extrabold text-slate-900">
-                        April 2026
-                      </span>
-                      <button className="p-2 hover:bg-white rounded-full transition-colors">
-                        <ChevronRight size={20} />
-                      </button>
-                    </div>
-                    <div className="grid grid-cols-7 text-center text-xs font-black text-slate-400 mb-4 uppercase tracking-tighter">
-                      {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) => (
-                        <span key={day}>{day}</span>
-                      ))}
-                    </div>
-                    <div className="grid grid-cols-7 text-center gap-y-1">
-                      {[...Array(30)].map((_, i) => (
-                        <span
-                          key={i}
-                          className="py-2 rounded-lg text-sm font-bold transition-all cursor-pointer hover:bg-white"
-                        >
-                          {i + 1}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <section className="space-y-4">
+              <Card className="w-full p-0">
+                <CardContent className="p-0">
+                  <Calendar
+                    mode="range"
+                    defaultMonth={dateRange?.from}
+                    selected={dateRange}
+                    onSelect={setDateRange}
+                    numberOfMonths={2}
+                    disabled={(date) =>
+                      date > new Date() || date < new Date("1900-01-01")
+                    }
+                    className="w-full"
+                  />
+                </CardContent>
+              </Card>
             </section>
           </div>
 
@@ -398,10 +372,9 @@ const DetailsPage = () => {
                 <div className="flex items-baseline justify-between mb-8">
                   <div className="space-y-1">
                     <span className="text-3xl font-black text-slate-900">
-                      {property.price.split("/")[0]}
+                      {property?.price}
                     </span>
                     <span className="text-slate-500 font-bold text-lg">
-                      {" "}
                       / night
                     </span>
                   </div>
@@ -411,15 +384,14 @@ const DetailsPage = () => {
                         className="text-yellow-500 fill-yellow-500"
                         size={16}
                       />
-                      {details.rating}
+                      {/* {details.rating} */}3
                     </div>
                     <span className="text-xs text-slate-400 font-bold underline cursor-pointer decoration-2 underline-offset-2">
-                      {details.reviewCount} reviews
+                      {/* {details.reviewCount} */}24 reviews
                     </span>
                   </div>
                 </div>
 
-                {/* Booking Form Mockup */}
                 <div className="space-y-px rounded-2xl overflow-hidden border border-slate-200 bg-slate-200 mb-8">
                   <div className="grid grid-cols-2 gap-px">
                     <div className="bg-white p-4 group cursor-pointer hover:bg-slate-50 transition-colors">
@@ -427,7 +399,7 @@ const DetailsPage = () => {
                         Check-in
                       </label>
                       <span className="text-sm font-bold text-slate-900">
-                        03/12/2026
+                        {dateRange?.from?.toLocaleDateString()}
                       </span>
                     </div>
                     <div className="bg-white p-4 group cursor-pointer hover:bg-slate-50 transition-colors">
@@ -435,7 +407,7 @@ const DetailsPage = () => {
                         Checkout
                       </label>
                       <span className="text-sm font-bold text-slate-900">
-                        03/17/2026
+                        {dateRange?.to?.toLocaleDateString()}
                       </span>
                     </div>
                   </div>
@@ -463,24 +435,29 @@ const DetailsPage = () => {
                   * No payment required at this step
                 </p>
 
-                {/* Pricing Breakdown Mockup */}
                 <div className="mt-8 space-y-4 pt-6 border-t border-slate-100">
                   <div className="flex justify-between text-slate-600 font-medium tracking-tight">
                     <span className="underline decoration-slate-300 underline-offset-4">
-                      5 nights total
+                      {numberOfNights} Night(s)
                     </span>
-                    <span className="text-slate-900 font-bold">₦750,000</span>
+                    <span className="text-slate-900 font-bold">
+                      ₦{totalPrice}
+                    </span>
                   </div>
                   <div className="flex justify-between text-slate-600 font-medium tracking-tight">
                     <span className="underline decoration-slate-300 underline-offset-4">
                       Service charges
                     </span>
-                    <span className="text-slate-900 font-bold">₦15,000</span>
+                    <span className="text-slate-900 font-bold">
+                      ₦{serviceCharge}
+                    </span>
                   </div>
                   <hr className="border-slate-100" />
                   <div className="flex justify-between text-xl font-black text-slate-900 mt-2">
                     <span>Total Tax Inc.</span>
-                    <span className="text-primary">₦765,000</span>
+                    <span className="text-primary">
+                      ₦{totalPrice + serviceCharge}
+                    </span>
                   </div>
                 </div>
               </div>

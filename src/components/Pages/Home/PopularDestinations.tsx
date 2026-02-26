@@ -1,8 +1,8 @@
-import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
 import type { popularDestinations } from "@/data/dummyData";
+import { ArrowRight } from "lucide-react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { Link } from "react-router-dom";
 
 interface popularData {
   title: string;
@@ -42,34 +42,45 @@ const PopularDestinations = ({
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {data.map(
-            ({ id, type, location, price, dataAlt, name, features, image }) => (
-              <Link
-                to={`/${type}/${id}`}
-                key={id}
-                className="group cursor-pointer"
-              >
-                <div className="relative aspect-[3/4] overflow-hidden rounded-xl mb-3 shadow-md">
-                  <LazyLoadImage
-                    src={image}
-                    alt={dataAlt || name}
-                    effect="blur"
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    wrapperClassName="w-full h-full"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0">
-                    <p className="font-bold">{name}</p>
-                    <p className="text-xs opacity-80">{features}</p>
-                  </div>
-                </div>
-                <div
-                  className={`${theme === "light" ? "text-primary" : "text-white"}`}
+            ({ id, type, location, price, name, features, attachments }) => {
+              const firstImage = attachments?.uploads?.[0]?.url;
+              const getFeaturesList = (features: string | any[]) => {
+                if (!features) return "";
+                if (typeof features === "string") return features;
+                if (Array.isArray(features)) return features.join(", ");
+                return "";
+              };
+
+              const featuresList = getFeaturesList(features);
+              return (
+                <Link
+                  to={`/${type.toLocaleLowerCase()}/${id}`}
+                  key={id}
+                  className="group cursor-pointer"
                 >
-                  <h5 className="font-bold text-lg">{location}</h5>
-                  <p className="font-semibold">Starting at {price}</p>
-                </div>
-              </Link>
-            ),
+                  <div className="relative aspect-[3/4] overflow-hidden rounded-xl mb-3 shadow-md">
+                    <LazyLoadImage
+                      src={firstImage}
+                      alt={firstImage}
+                      effect="blur"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      wrapperClassName="w-full h-full"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0">
+                      <p className="font-bold">{name}</p>
+                      <p className="text-xs opacity-80">{featuresList}</p>
+                    </div>
+                  </div>
+                  <div
+                    className={`${theme === "light" ? "text-primary" : "text-white"}`}
+                  >
+                    <h5 className="font-bold text-lg">{location}</h5>
+                    <p className="font-semibold">Starting at {price}</p>
+                  </div>
+                </Link>
+              );
+            },
           )}
         </div>
       </div>

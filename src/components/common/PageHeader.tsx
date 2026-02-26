@@ -46,12 +46,16 @@ const PageHeader = ({
             )}
             Refresh
           </Button>
-          <Button
-            className="bg-primary hover:bg-primary/90 capitalize text-xs sm:text-sm h-9 flex-1 sm:flex-none"
-            onClick={primary?.action}
-          >
-            {primary?.title}
-          </Button>
+          {primary?.title ? (
+            <Button
+              className="bg-primary hover:bg-primary/90 capitalize text-sm"
+              onClick={primary?.action}
+            >
+              {primary?.title}
+            </Button>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </section>
