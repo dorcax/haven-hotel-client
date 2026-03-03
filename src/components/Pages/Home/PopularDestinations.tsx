@@ -4,12 +4,15 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { Link } from "react-router-dom";
 
+import PropertyCardSkeleton from "@/components/ui/property-card-skeleton";
+
 interface popularData {
   title: string;
   subtitle: string;
   theme: string;
   data: popularDestinations[];
   link: string;
+  isLoading?: boolean;
 }
 
 const PopularDestinations = ({
@@ -18,12 +21,11 @@ const PopularDestinations = ({
   theme,
   data,
   link,
+  isLoading,
 }: popularData) => {
-
-
   return (
     <section
-      className={`py-16 ${theme === "light" ? "bg-white" : "bg-[#1A365D]"} dark:bg-slate-900/50`}
+      className={`py-16 ${theme === "light" ? "bg-white" : "bg-[#1A365D]"}`}
     >
       <div className="max-w-[1200px] mx-auto px-6 md:px-8">
         <div className="flex justify-between items-end mb-10">
@@ -31,7 +33,7 @@ const PopularDestinations = ({
             className={`${theme === "light" ? "text-primary" : "text-white"}`}
           >
             <h3 className="text-3xl font-bold mb-2">{title}</h3>
-            <p className=" dark:text-slate-400">{subtitle}</p>
+            <p>{subtitle}</p>
           </div>
           <Link to={link}>
             <button
@@ -43,40 +45,61 @@ const PopularDestinations = ({
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {data.map(
-            ({ id, type, location, price, name, features,attachments }) => {
-                const firstImage = attachments?.uploads?.[0]?.url
-                console.log("ids",id)
-              return (
-                  <Link
-                to={`/${type}/${id}`}
-                key={id}
-                className="group cursor-pointer"
-              >
-                <div className="relative aspect-[3/4] overflow-hidden rounded-xl mb-3 shadow-md">
-                  <LazyLoadImage
-                    src={firstImage}
-                    alt={firstImage}
-                    effect="blur"
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    wrapperClassName="w-full h-full"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0">
-                    <p className="font-bold">{name}</p>
-                    <p className="text-xs opacity-80">{features}</p>
-                  </div>
-                </div>
-                <div
-                  className={`${theme === "light" ? "text-primary" : "text-white"}`}
-                >
-                  <h5 className="font-bold text-lg">{location}</h5>
-                  <p className="font-semibold">Starting at {price}</p>
-                </div>
-              </Link>
-              )
-            },
-          )}
+          {isLoading
+            ? [...Array(4)].map((_, i) => <PropertyCardSkeleton key={i} />)
+            : data.map(
+                ({
+                  id,
+                  type,
+                  location,
+                  price,
+                  name,
+                  features,
+                  attachments,
+                }) => {
+                  const firstImage = attachments?.uploads?.[0]?.url;
+                  const getFeaturesList = (features: string | any[]) => {
+                    if (!features) return "";
+                    if (typeof features === "string") return features;
+                    if (Array.isArray(features)) return features.join(", ");
+                    return "";
+                  };
+
+                  const featuresList = getFeaturesList(features);
+                  return (
+                    <Link
+                      to={`/${type.toLocaleLowerCase()}/${id}`}
+                      key={id}
+                      className="group cursor-pointer"
+                    >
+                      <div className="relative aspect-[3/4] overflow-hidden rounded-xl mb-3 shadow-md">
+                        <LazyLoadImage
+                          src={firstImage}
+                          alt={firstImage}
+                          effect="blur"
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          wrapperClassName="w-full h-full"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0">
+                          <p className="font-bold">{name}</p>
+                          <p className="text-xs opacity-80 capitalize">
+                            {featuresList}
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        className={`${theme === "light" ? "text-primary" : "text-white"}`}
+                      >
+                        <h5 className="font-bold text-lg capitalize">
+                          {location}
+                        </h5>
+                        <p className="font-semibold">Starting at ₦{price}</p>
+                      </div>
+                    </Link>
+                  );
+                },
+              )}
         </div>
       </div>
     </section>

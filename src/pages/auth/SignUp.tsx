@@ -131,13 +131,13 @@ const SignUp = () => {
           </div>
         </div>
 
-        <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white dark:bg-background-dark">
+        <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
           <div className="max-w-[480px] w-full flex flex-col">
             <div className="mb-4 md:mb-8 px-4">
-              <h2 className="text-[#1A365D] dark:text-white text-[32px] font-bold leading-tight">
+              <h2 className="text-[#1A365D] text-[32px] font-bold leading-tight">
                 Create your account
               </h2>
-              <p className="text-[#4c739a] dark:text-slate-400 text-base font-normal">
+              <p className="text-[#4c739a] text-base font-normal">
                 Start managing your bookings with ease.
               </p>
             </div>
@@ -154,7 +154,7 @@ const SignUp = () => {
                       <FormLabel>Full Name</FormLabel>
                       <FormControl>
                         <Input
-                          className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal"
+                          className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] bg-white focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal"
                           placeholder="John Doe"
                           required
                           type="text"
@@ -173,7 +173,7 @@ const SignUp = () => {
                       <FormLabel>Email Address</FormLabel>
                       <FormControl>
                         <Input
-                          className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal"
+                          className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] bg-white focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal"
                           placeholder="john@example.com"
                           required
                           type="email"
@@ -193,7 +193,7 @@ const SignUp = () => {
                         <FormLabel>Phone Number</FormLabel>
                         <FormControl>
                           <Input
-                            className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal"
+                            className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] bg-white focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal"
                             placeholder="+2349031059173"
                             required
                             type="tel"
@@ -217,7 +217,7 @@ const SignUp = () => {
                           required
                         >
                           <FormControl>
-                            <SelectTrigger className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal">
+                            <SelectTrigger className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] bg-white focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal">
                               <SelectValue placeholder="gender" />
                             </SelectTrigger>
                           </FormControl>
@@ -243,7 +243,7 @@ const SignUp = () => {
                         <FormControl>
                           <div className="relative">
                             <Input
-                              className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal pr-12"
+                              className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] bg-white focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal pr-12"
                               placeholder="••••••••"
                               type={showPassword ? "text" : "password"}
                               {...field}
@@ -251,7 +251,7 @@ const SignUp = () => {
                             <button
                               type="button"
                               onClick={handleShowPassword}
-                              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
                             >
                               {showPassword ? (
                                 <EyeClosedIcon size={20} />
@@ -276,7 +276,7 @@ const SignUp = () => {
                         <FormControl>
                           <div className="relative">
                             <Input
-                              className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal pr-12"
+                              className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] bg-white focus:border-primary h-12 placeholder:text-[#4c739a] p-[15px] text-base font-normal leading-normal pr-12"
                               placeholder="••••••••"
                               type={showConfirmPassword ? "text" : "password"}
                               {...field}
@@ -284,7 +284,7 @@ const SignUp = () => {
                             <button
                               type="button"
                               onClick={handleShowConfirmPassword}
-                              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
                             >
                               {showConfirmPassword ? (
                                 <EyeClosedIcon size={20} />
@@ -307,7 +307,7 @@ const SignUp = () => {
                       className="h-5 w-5 rounded border-slate-300 text-[#1A365D] focus:ring-primary cursor-pointer"
                       type="checkbox"
                     />
-                    <span className="text-sm text-slate-600 dark:text-slate-400 leading-tight">
+                    <span className="text-sm text-slate-600 leading-tight">
                       I agree to the
                       <Link
                         className="text-[#1A365D] mx-1 font-semibold hover:underline"
@@ -343,17 +343,17 @@ const SignUp = () => {
             </Form>
             <div className="relative my-2 md:my-8">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-slate-200 dark:border-slate-800"></div>
+                <div className="w-full border-t border-slate-200"></div>
               </div>
               <div className="relative flex justify-center text-xs font-medium uppercase">
-                <span className="bg-white dark:bg-background-dark px-3 text-slate-400">
+                <span className="bg-white px-3 text-slate-400">
                   Or continue with
                 </span>
               </div>
             </div>
             <div className="">
               <button
-                className="flex items-center justify-center gap-2 h-11 border border-slate-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer w-full px-2"
+                className="flex items-center justify-center gap-2 h-11 border border-slate-200 rounded-lg bg-white hover:bg-slate-50 transition-colors cursor-pointer w-full px-2"
                 onClick={handleGoogleLogin}
               >
                 <img
@@ -362,12 +362,12 @@ const SignUp = () => {
                   data-alt="Google Logo"
                   src="./google-icon.svg"
                 />
-                <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 truncate">
+                <span className="text-sm font-semibold text-slate-700 truncate">
                   Google
                 </span>
               </button>
             </div>
-            <p className="mt-8 text-center text-sm text-slate-500 dark:text-slate-400">
+            <p className="mt-8 text-center text-sm text-slate-500">
               Don't have an account?
               <Link
                 className="ml-2 text-[#1A365D] font-bold hover:underline"

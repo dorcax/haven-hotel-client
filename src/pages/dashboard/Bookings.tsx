@@ -62,33 +62,33 @@ const Bookings = () => {
   const getStatusStyles = (status: Booking["status"]) => {
     switch (status) {
       case "Confirmed":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300";
+        return "bg-blue-100 text-blue-800";
       case "Pending":
-        return "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300";
+        return "bg-amber-100 text-amber-800";
       case "Checked-in":
-        return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300";
+        return "bg-green-100 text-green-800";
       case "Cancelled":
-        return "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300";
+        return "bg-red-100 text-red-800";
       default:
-        return "bg-slate-100 text-slate-800 dark:bg-slate-900/30 dark:text-slate-300";
+        return "bg-slate-100 text-slate-800";
     }
   };
 
   return (
     <>
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
         <div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
             Booking Management
           </h2>
-          <p className="text-slate-500 text-sm">
+          <p className="text-slate-500 text-xs sm:text-sm">
             Manage and monitor all hotel reservations
           </p>
         </div>
       </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-3">
-        <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-3">
+        <div className="bg-white p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
               Today's Check-ins
@@ -105,7 +105,7 @@ const Bookings = () => {
             +2 from yesterday
           </p>
         </div>
-        <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
               Available Rooms
@@ -159,12 +159,12 @@ const Bookings = () => {
       </div>
 
       <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-4  my-5">
-        <div className="flex flex-col lg:flex-row lg:items-center gap-6">
+        <div className="flex flex-col md:flex-row md:items-center gap-4">
           <div className="relative flex-1">
             <Search className="absolute w-4 h-4 left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
-              className="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border-none rounded-lg focus:ring-2 focus:ring-primary/50 text-sm"
-              placeholder="Search by Booking ID, Customer, or Room..."
+              className="w-full pl-10 pr-4 py-2 bg-slate-50 border-none rounded-lg focus:ring-2 focus:ring-primary/50 text-sm"
+              placeholder="Search bookings..."
               type="text"
               value={searchQuery}
               onChange={(e) => {
@@ -174,7 +174,7 @@ const Bookings = () => {
             />
           </div>
 
-          <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl overflow-x-auto">
+          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl overflow-x-auto no-scrollbar">
             {(
               [
                 "All",
@@ -190,10 +190,10 @@ const Bookings = () => {
                   setActiveFilter(filter);
                   setCurrentPage(1);
                 }}
-                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
+                className={`px-3 sm:px-4 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
                   activeFilter === filter
-                    ? "bg-white dark:bg-slate-700 shadow-sm text-primary"
-                    : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
+                    ? "bg-white shadow-sm text-primary"
+                    : "text-slate-500 hover:text-slate-700"
                 }`}
               >
                 {filter} ({counts[filter]})
@@ -201,18 +201,18 @@ const Bookings = () => {
             ))}
           </div>
 
-          <button className="flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 hover:bg-slate-50 transition-colors">
+          <button className="flex items-center justify-center gap-2 text-sm font-medium text-slate-600 border border-slate-200 rounded-lg px-4 py-2 hover:bg-slate-50 transition-colors w-full md:w-auto">
             <FunnelIcon className="w-4 h-4" />
-            More Filters
+            <span className="md:hidden lg:inline">Filters</span>
           </button>
         </div>
       </div>
 
-      <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-50 dark:bg-slate-800/50 border-bottom border-slate-200 dark:border-slate-800">
+              <tr className="bg-slate-50 border-bottom border-slate-200">
                 <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
                   Booking ID
                 </th>
@@ -305,18 +305,18 @@ const Bookings = () => {
           </table>
         </div>
 
-        <div className="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+        <div className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
           <p className="text-sm text-slate-500">
             Showing
-            <span className="font-semibold text-slate-900 dark:text-white mx-1">
+            <span className="font-semibold text-slate-900 mx-1">
               {(currentPage - 1) * itemsPerPage + 1}
             </span>
             to
-            <span className="font-semibold text-slate-900 dark:text-white mx-1">
+            <span className="font-semibold text-slate-900 mx-1">
               {Math.min(currentPage * itemsPerPage, totalItems)}
             </span>
             of
-            <span className="font-semibold text-slate-900 dark:text-white mx-1">
+            <span className="font-semibold text-slate-900 mx-1">
               {totalItems}
             </span>
             results
@@ -383,8 +383,6 @@ const Bookings = () => {
           </Pagination>
         </div>
       </div>
-
-    
     </>
   );
 };

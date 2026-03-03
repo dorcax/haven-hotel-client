@@ -31,14 +31,14 @@ const HeroSection = () => {
       </div>
       {/* Floating Search Card */}
       <div className="max-w-[1100px] mx-auto -mt-24 relative z-10 px-4">
-        <div className="bg-white dark:bg-background-dark rounded-xl shadow-2xl p-6 md:p-8 flex flex-col md:flex-row gap-4 items-end border border-slate-100 dark:border-slate-800">
+        <div className="bg-white rounded-xl shadow-2xl p-6 md:p-8 flex flex-col md:flex-row gap-4 items-end border border-slate-100">
           <div className="flex-1 w-full space-y-2">
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#1A365D] dark:text-slate-400">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#1A365D]">
               Location
             </label>
             <div className="relative">
               <MapPin className="absolute left-3 top-3.5 text-[#1A365D]" />
-              <select className="w-full h-14 pl-10 pr-4 rounded-lg border border-[#cfdbe7] dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-[#0d141b] dark:text-white focus:ring-2 focus:ring-primary focus:outline-none appearance-none">
+              <select className="w-full h-14 pl-10 pr-4 rounded-lg border border-[#cfdbe7] bg-slate-50 text-[#0d141b] focus:ring-2 focus:ring-primary focus:outline-none appearance-none">
                 <option>Where are you going?</option>
                 <option>Maldives, South Asia</option>
                 <option>Paris, France</option>
@@ -49,23 +49,23 @@ const HeroSection = () => {
             </div>
           </div>
           <div className="flex-1 w-full space-y-2">
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#1A365D] dark:text-slate-400">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#1A365D]">
               Check-In / Out
             </label>
             <div className="relative">
               <Calendar className="absolute left-3 top-3.5 text-[#1A365D]" />
-              <button className="w-full h-14 pl-10 pr-4 flex items-center text-left rounded-lg border border-[#cfdbe7] dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-[#0d141b] dark:text-white">
+              <button className="w-full h-14 pl-10 pr-4 flex items-center text-left rounded-lg border border-[#cfdbe7] bg-slate-50 text-[#0d141b]">
                 Oct 24 - Oct 31, 2023
               </button>
             </div>
           </div>
           <div className="w-full md:w-48 space-y-2">
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#1A365D] dark:text-slate-400">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#1A365D]">
               Guests
             </label>
             <div className="relative">
               <Users className="absolute left-3 top-3.5 text-[#1A365D]" />
-              <select className="w-full h-14 pl-10 pr-4 rounded-lg border border-[#cfdbe7] dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-[#0d141b] dark:text-white focus:ring-2 focus:ring-primary focus:outline-none appearance-none">
+              <select className="w-full h-14 pl-10 pr-4 rounded-lg border border-[#cfdbe7] bg-slate-50 text-[#0d141b] focus:ring-2 focus:ring-primary focus:outline-none appearance-none">
                 <option>2 Adults, 1 Room</option>
                 <option>1 Adult, 1 Room</option>
                 <option>2 Adults, 2 Rooms</option>

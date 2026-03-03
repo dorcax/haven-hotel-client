@@ -39,8 +39,8 @@ type DataTableProps<TData, TValue> = {
   onRowClick?: (row: TData) => void;
   search?: (arg: string) => void;
   searchQuery?: string;
-  thclassName?:string
-  tbclassName?:string
+  thclassName?: string;
+  tbclassName?: string;
 };
 
 const DataTable = <TData, TValue>({
@@ -50,7 +50,7 @@ const DataTable = <TData, TValue>({
   search,
   searchQuery,
   thclassName,
-  tbclassName
+  tbclassName,
 }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -59,7 +59,7 @@ const DataTable = <TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-   const { query, onSearch } = useSearch(searchQuery);
+  const { query, onSearch } = useSearch(searchQuery);
 
   // Memoize the table config so table instance isn't recreated unnecessarily
   const table = useReactTable({
@@ -83,38 +83,42 @@ const DataTable = <TData, TValue>({
 
   return (
     <div>
-    {search &&   <div className="flex items-center justify-between py-4">
-        <Input
-          placeholder="Filter..."
-           value={query}
+      {search && (
+        <div className="flex items-center justify-between py-4">
+          <Input
+            placeholder="Filter..."
+            value={query}
             onChange={(e) => onSearch(e.target.value, search)}
-          className="max-w-sm"
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => (
-                <DropdownMenuCheckboxItem
-                  key={column.id}
-                  className="capitalize"
-                  checked={column.getIsVisible()}
-                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                >
-                  {column.id}
-                </DropdownMenuCheckboxItem>
-              ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>}
+            className="max-w-sm"
+          />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="w-full sm:w-auto sm:ml-auto">
+                Columns <ChevronDown />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
+                ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      )}
 
-      <div>
+      <div className="rounded-md border overflow-x-auto">
         {loading ? (
           <TableSkeleton columns={columns.length} />
         ) : (

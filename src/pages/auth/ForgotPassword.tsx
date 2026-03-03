@@ -66,20 +66,22 @@ const ForgotPassword = () => {
                 <div className="w-10 h-10 rounded-full border-2 border-white bg-slate-300"></div>
                 <div className="w-10 h-10 rounded-full border-2 border-white bg-slate-400"></div>
               </div>
-              <p className="text-sm self-center">Trusted by 5,000+ hotel owners</p>
+              <p className="text-sm self-center">
+                Trusted by 5,000+ hotel owners
+              </p>
             </div>
           </div>
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white dark:bg-background-dark">
+        <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
           <div className="max-w-[480px] w-full flex flex-col">
             {/* Title */}
             <div className="mb-6 px-4">
-              <h2 className="text-[#1A365D] dark:text-white text-[32px] font-bold leading-tight">
+              <h2 className="text-[#1A365D] text-[32px] font-bold leading-tight">
                 Forgot Password
               </h2>
-              <p className="text-[#4c739a] dark:text-slate-400 text-base">
+              <p className="text-[#4c739a] text-base">
                 Enter your email to receive an OTP and reset your password.
               </p>
             </div>
@@ -101,10 +103,10 @@ const ForgotPassword = () => {
                           type="email"
                           placeholder="john@example.com"
                           className="form-input flex w-full resize-none overflow-hidden rounded-lg
-                          text-[#0d141b] dark:text-white focus:outline-0
+                          text-[#0d141b] focus:outline-0
                           focus:ring-2 focus:ring-primary/50
-                          border border-[#cfdbe7] dark:border-slate-700
-                          bg-white dark:bg-slate-800
+                          border border-[#cfdbe7]
+                          bg-white
                           focus:border-primary h-12 p-[15px] text-base"
                           {...field}
                         />

@@ -150,14 +150,14 @@ const ResetPassword = () => {
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white dark:bg-background-dark">
+        <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
           <div className="max-w-[480px] w-full flex flex-col">
             {/* Title */}
             <div className="mb-6 px-4">
-              <h2 className="text-[#1A365D] dark:text-white text-[32px] font-bold leading-tight">
+              <h2 className="text-[#1A365D] text-[32px] font-bold leading-tight">
                 Reset Password
               </h2>
-              <p className="text-[#4c739a] dark:text-slate-400 text-base">
+              <p className="text-[#4c739a] text-base">
                 Enter your new password below.
               </p>
             </div>
@@ -180,17 +180,17 @@ const ResetPassword = () => {
                             type={showPassword ? "text" : "password"}
                             placeholder="••••••••"
                             className="form-input flex w-full resize-none overflow-hidden rounded-lg
-                            text-[#0d141b] dark:text-white focus:outline-0
+                            text-[#0d141b] focus:outline-0
                             focus:ring-2 focus:ring-primary/50
-                            border border-[#cfdbe7] dark:border-slate-700
-                            bg-white dark:bg-slate-800
+                            border border-[#cfdbe7]
+                            bg-white
                             focus:border-primary h-12 p-[15px] text-base pr-12"
                             {...field}
                           />
                           <button
                             type="button"
                             onClick={handleShowPassword}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
                           >
                             {showPassword ? (
                               <EyeClosedIcon size={20} />
@@ -218,17 +218,17 @@ const ResetPassword = () => {
                             type={showConfirmPassword ? "text" : "password"}
                             placeholder="••••••••"
                             className="form-input flex w-full resize-none overflow-hidden rounded-lg
-                            text-[#0d141b] dark:text-white focus:outline-0
+                            text-[#0d141b] focus:outline-0
                             focus:ring-2 focus:ring-primary/50
-                            border border-[#cfdbe7] dark:border-slate-700
-                            bg-white dark:bg-slate-800
+                            border border-[#cfdbe7]
+                            bg-white
                             focus:border-primary h-12 p-[15px] text-base pr-12"
                             {...field}
                           />
                           <button
                             type="button"
                             onClick={handleShowConfirmPassword}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
                           >
                             {showConfirmPassword ? (
                               <EyeClosedIcon size={20} />

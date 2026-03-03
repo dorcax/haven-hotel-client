@@ -39,53 +39,52 @@ import { useListRoomsQuery } from "@/api/data/rooms.api";
 import { useAuthState } from "@/api/data/auth";
 import type { Room } from "@/data/rooms";
 // import { roomsData, type Room } from "@/data/rooms";
-import {useParams} from "react-router-dom"
+import { useParams } from "react-router-dom";
 
 export function RoomList() {
-   const { auth } = useAuthState();
-   console.log("auth",auth)
+  const { auth } = useAuthState();
+  console.log("auth", auth);
   const { openDialog, openDrawer } = usePopUpContext();
 
   // const propertyId = auth?.hotelId ?? "";
-  const {id} =useParams()
-const propertyId =id
-  console.log("room property id",id)
-  const { data: listRoom, isLoading} =
-    useListRoomsQuery(
-      { propertyId, page: 0, count: 100 },
-      { skip: !propertyId }
-    );
+  const { id } = useParams();
+  const propertyId = id;
+  console.log("room property id", id);
+  const { data: listRoom, isLoading } = useListRoomsQuery(
+    { propertyId, page: 0, count: 100 },
+    { skip: !propertyId },
+  );
 
   const roomsData = listRoom?.list ?? [];
 
-  console.log("roomdata",roomsData)
-  
+  console.log("roomdata", roomsData);
 
   // Search state
   const { query } = useSearch("", 500);
   const [filteredRooms, setFilteredRooms] = React.useState<Room[]>(roomsData);
 
-  const handleSearch = React.useCallback((value: string) => {
-    if (!value) {
-      setFilteredRooms(roomsData);
-    } else {
-      setFilteredRooms(
-        roomsData.filter(
-          (r:any) =>
-            (r.title ?? "").toLowerCase().includes(value.toLowerCase()) ||
-            (r.category ?? "").toLowerCase().includes(value.toLowerCase()) ||
-            (r.id ?? "").toLowerCase().includes(value.toLowerCase()),
-        ),
-      );
-    }
-  }, [roomsData]);
+  const handleSearch = React.useCallback(
+    (value: string) => {
+      if (!value) {
+        setFilteredRooms(roomsData);
+      } else {
+        setFilteredRooms(
+          roomsData.filter(
+            (r: any) =>
+              (r.title ?? "").toLowerCase().includes(value.toLowerCase()) ||
+              (r.category ?? "").toLowerCase().includes(value.toLowerCase()) ||
+              (r.id ?? "").toLowerCase().includes(value.toLowerCase()),
+          ),
+        );
+      }
+    },
+    [roomsData],
+  );
 
   // Sync rooms data with filteredRooms when roomsData might change or on initial load
   React.useEffect(() => {
     handleSearch(query);
   }, [query, handleSearch]);
-
-
 
   // Columns
   const columns = React.useMemo<ColumnDef<Room>[]>(
@@ -120,15 +119,15 @@ const propertyId =id
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className="capitalize "
+            className="capitalize px-0 sm:px-4"
           >
             Property Image
-            <ArrowUpDown className="ml-2 h-4 w-4" />
+            <ArrowUpDown className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
           </Button>
         ),
         cell: ({ row }) => {
           const attachments = row.original.attachments?.uploads;
-          console.log("room list attachment",attachments)
+          console.log("room list attachment", attachments);
           return (
             <Carousel className="w-full max-w-[120px]">
               <CarouselContent>
@@ -144,8 +143,8 @@ const propertyId =id
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="left-0 size-[25px] mx-1 bg-white/80 dark:bg-slate-800/80" />
-              <CarouselNext className="right-0 size-[25px] mx-1 bg-white/80 dark:bg-slate-800/80" />
+              <CarouselPrevious className="left-0 size-[25px] mx-1 bg-white/80" />
+              <CarouselNext className="right-0 size-[25px] mx-1 bg-white/80" />
             </Carousel>
           );
         },
@@ -157,7 +156,8 @@ const propertyId =id
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Title / Number <ArrowUpDown className="ml-2 h-4 w-4" />
+            Title / Number{" "}
+            <ArrowUpDown className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
           </Button>
         ),
         cell: ({ row }) => (
@@ -207,8 +207,8 @@ const propertyId =id
           <Badge
             className={
               row.original.isAvailable
-                ? "bg-green-100 text-green-800 hover:bg-green-100 dark:bg-green-900/30 dark:text-green-400"
-                : "bg-red-100 text-red-800 hover:bg-red-100 dark:bg-red-900/30 dark:text-red-400"
+                ? "bg-green-100 text-green-800 hover:bg-green-100"
+                : "bg-red-100 text-red-800 hover:bg-red-100"
             }
           >
             {row.getValue("isAvailable") ? "Available" : "Booked"}
@@ -263,12 +263,12 @@ const propertyId =id
     },
     {
       title: "Available",
-      value: roomsData.filter((r:any) => r.isAvailable).length,
+      value: roomsData.filter((r: any) => r.isAvailable).length,
       icon: <CircleCheck className="text-green-500" />,
     },
     {
       title: "Booked",
-      value: roomsData.filter((r:any) => !r.isAvailable).length,
+      value: roomsData.filter((r: any) => !r.isAvailable).length,
       icon: <Ban className="text-red-500" />,
     },
   ];

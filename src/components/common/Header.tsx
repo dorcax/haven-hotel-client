@@ -4,7 +4,7 @@ import { Role } from "@/api/api.type";
 
 const Header = () => {
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-solid border-[#e7edf3] dark:border-slate-800 px-6 md:px-8 py-3 font-poppins">
+    <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-solid border-[#e7edf3] px-6 md:px-8 py-3 font-poppins">
       <div className="max-w-[1200px] mx-auto flex items-center justify-between whitespace-nowrap">
         <div className="flex items-center gap-3 text-primary">
           <div className="size-8">
@@ -29,32 +29,32 @@ const Header = () => {
             </svg>
           </div>
           <Link to="/">
-            <h2 className="text-[#1A365D] dark:text-white text-xl font-extrabold leading-tight tracking-tight">
+            <h2 className="text-[#1A365D] text-xl font-extrabold leading-tight tracking-tight">
               HavenHotel
             </h2>
           </Link>
         </div>
         <div className="hidden md:flex flex-1 justify-center gap-10">
           <Link
-            className="text-[#1A365D] dark:text-slate-200 text-sm font-semibold hover:text-primary transition-colors"
+            className="text-[#1A365D] text-sm font-semibold hover:text-primary transition-colors"
             to="/discover"
           >
             Discover
           </Link>
           <Link
-            className="text-[#1A365D] dark:text-slate-200 text-sm font-semibold hover:text-primary transition-colors"
+            className="text-[#1A365D] text-sm font-semibold hover:text-primary transition-colors"
             to="/hotels"
           >
             Hotels
           </Link>
           <Link
-            className="text-[#1A365D] dark:text-slate-200 text-sm font-semibold hover:text-primary transition-colors"
+            className="text-[#1A365D] text-sm font-semibold hover:text-primary transition-colors"
             to="/apartments"
           >
             Apartments
           </Link>
           <Link
-            className="text-[#1A365D] dark:text-slate-200 text-sm font-semibold hover:text-primary transition-colors"
+            className="text-[#1A365D] text-sm font-semibold hover:text-primary transition-colors"
             to="/about"
           >
             About

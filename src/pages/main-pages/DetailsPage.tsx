@@ -1,10 +1,10 @@
+import { useState } from "react";
 import { useGetAllPropertyQuery } from "@/api/data/hotels.api";
 import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
 import {
   Briefcase,
   Car,
-  ChevronLeft,
   ChevronRight,
   Coffee,
   Dumbbell,
@@ -28,7 +28,19 @@ import {
   Wifi,
   Wind,
   Zap,
+  Minus,
+  Plus,
 } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { addDays, differenceInDays, isBefore, startOfDay } from "date-fns";
+import { type DateRange } from "react-day-picker";
 import { Link, useParams } from "react-router-dom";
 
 // Helper function to map amenity labels to icons
@@ -72,13 +84,83 @@ const getAmenityIcon = (label: string) => {
 
 const DetailsPage = () => {
   const { id } = useParams();
-  const {data:propertyList} =useGetAllPropertyQuery()
-  
-    
+  const { data: propertyList } = useGetAllPropertyQuery();
 
-  const property =propertyList?.find((item:any)=>item.id ===id)
-  console.log("properties details",property)
+  const property = propertyList?.find((item: any) => item.id === id);
+  console.log("properties details", property);
 
+
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: new Date(), // Current date (today)
+    to: addDays(new Date(), 1), // Exactly 1 day from today
+  });
+
+  const [guests, setGuests] = useState({
+    adults: 2,
+    children: 0,
+    infants: 0,
+  });
+
+  const propertyCapacity = property?.capacity || 10;
+
+  const updateGuests = (
+    type: "adults" | "children" | "infants",
+    delta: number,
+  ) => {
+    setGuests((prev) => {
+      const newVal = Math.max(0, prev[type] + delta);
+
+      // Validation rules
+      if (type === "adults" && newVal < 1) return prev;
+      if (
+        (type === "adults" || type === "children") &&
+        (type === "adults" ? newVal + prev.children : newVal + prev.adults) >
+          propertyCapacity
+      ) {
+        return prev;
+      }
+      if (type === "infants" && newVal > 5) return prev;
+
+      return { ...prev, [type]: newVal };
+    });
+  };
+
+  const guestsSummary = [
+    guests.adults > 0
+      ? `${guests.adults} Adult${guests.adults > 1 ? "s" : ""}`
+      : null,
+    guests.children > 0
+      ? `${guests.children} Child${guests.children > 1 ? "ren" : ""}`
+      : null,
+    guests.infants > 0
+      ? `${guests.infants} Infant${guests.infants > 1 ? "s" : ""}`
+      : null,
+  ]
+    .filter(Boolean)
+    .join(", ");
+
+  const getBookingNights = (
+    from: Date | undefined,
+    to: Date | undefined,
+  ): number => {
+    if (!from || !to) return 0;
+
+    const nights = differenceInDays(to, from);
+
+    // Ensure check-out is after check-in
+    if (nights < 0) return 0;
+
+    // Optional: Set minimum nights (e.g., minimum 1 night)
+    if (nights < 1) return 0;
+
+    return nights;
+  };
+
+  const numberOfNights = getBookingNights(dateRange?.from, dateRange?.to);
+
+  const serviceCharge = 15000;
+
+  const totalPrice = numberOfNights * property?.price;
 
   if (!property) {
     return (
@@ -109,9 +191,6 @@ const DetailsPage = () => {
     );
   }
 
-  // const { details } = property;
-  console.log("detailswwww",property?.attachments?.uploads?.[0]?.url)
-
   return (
     <>
       <Header />
@@ -126,7 +205,7 @@ const DetailsPage = () => {
             to={`#`}
             className="text-slate-600 hover:text-primary capitalize"
           >
-            {property.type}s
+            {property.type.toLocaleLowerCase()}s
           </Link>
           <ChevronRight size={14} className="text-slate-400" />
           <span className="text-slate-900 truncate">{property.name}</span>
@@ -135,7 +214,7 @@ const DetailsPage = () => {
         {/* Title and Stats */}
         <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 mb-8">
           <div className="space-y-2">
-            <h1 className="text-3xl md:text-4xl font-black text-slate-900 leading-tight">
+            <h1 className="text-3xl md:text-4xl font-black text-slate-900 leading-tight capitalize">
               {property.name}
             </h1>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-slate-600">
@@ -267,12 +346,12 @@ const DetailsPage = () => {
             <hr className="border-slate-100" />
 
             {/* Amenities Section */}
-            <section className="space-y-8">
+            <section className="space-y-4">
               <h2 className="text-2xl font-bold text-slate-900">
                 What this place offers
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-12">
-                {property.amenities.map((item:any, index:any) => {
+                {property.amenities.map((item: any, index: any) => {
                   const Icon = getAmenityIcon(item.label);
                   return (
                     <div
@@ -290,8 +369,7 @@ const DetailsPage = () => {
                 })}
               </div>
               <button className="px-8 py-3.5 border-2 border-slate-900 rounded-xl font-black hover:bg-slate-900 hover:text-white transition-all transform active:scale-95">
-                Show all{" "}
-                {property.features.length + property.amenities.length}{" "}
+                Show all {property.features.length + property.amenities.length}{" "}
                 features
               </button>
             </section>
@@ -304,7 +382,7 @@ const DetailsPage = () => {
                 Key Features
               </h2>
               <div className="inline-flex flex-wrap gap-2">
-                {property.features.map((feature:any, index:any) => (
+                {property.features.map((feature: any, index: any) => (
                   <span
                     key={index}
                     className="px-4 py-2 bg-slate-50 border border-slate-200 text-slate-700 rounded-full text-sm font-semibold hover:bg-primary/5 hover:border-primary/20 transition-colors"
@@ -317,83 +395,23 @@ const DetailsPage = () => {
 
             <hr className="border-slate-100" />
 
-            {/* Calendar Section (Still Static Visual but Styled) */}
-            <section className="space-y-8">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-2xl font-bold text-slate-900">
-                    Select Dates
-                  </h2>
-                  <p className="text-slate-500 mt-1">Minimum stay: 2 nights</p>
-                </div>
-                <button className="text-primary font-black text-sm uppercase tracking-wider hover:underline underline-offset-4 decoration-2">
-                  Clear dates
-                </button>
-              </div>
-
-              {/* Responsive Calendar Wrapper */}
-              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 md:p-8 overflow-x-auto">
-                <div className="flex gap-12 min-w-[700px] md:min-w-0 md:grid md:grid-cols-2">
-                  {/* Calendar 1 */}
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-6">
-                      <button className="p-2 hover:bg-white rounded-full transition-colors">
-                        <ChevronLeft size={20} />
-                      </button>
-                      <span className="font-extrabold text-slate-900">
-                        March 2026
-                      </span>
-                      <div className="w-9" />
-                    </div>
-                    <div className="grid grid-cols-7 text-center text-xs font-black text-slate-400 mb-4 uppercase tracking-tighter">
-                      {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) => (
-                        <span key={day}>{day}</span>
-                      ))}
-                    </div>
-                    <div className="grid grid-cols-7 text-center gap-y-1">
-                      {[...Array(31)].map((_, i) => (
-                        <span
-                          key={i}
-                          className={`py-2 rounded-lg text-sm font-bold transition-all cursor-pointer hover:bg-white
-                          ${i + 1 === 12 ? "bg-primary text-white shadow-md scale-110" : ""}
-                          ${i + 1 > 12 && i + 1 < 17 ? "bg-primary/10 text-primary" : ""}
-                        `}
-                        >
-                          {i + 1}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Calendar 2 */}
-                  <div className="flex-1 hidden md:block">
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="w-9" />
-                      <span className="font-extrabold text-slate-900">
-                        April 2026
-                      </span>
-                      <button className="p-2 hover:bg-white rounded-full transition-colors">
-                        <ChevronRight size={20} />
-                      </button>
-                    </div>
-                    <div className="grid grid-cols-7 text-center text-xs font-black text-slate-400 mb-4 uppercase tracking-tighter">
-                      {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) => (
-                        <span key={day}>{day}</span>
-                      ))}
-                    </div>
-                    <div className="grid grid-cols-7 text-center gap-y-1">
-                      {[...Array(30)].map((_, i) => (
-                        <span
-                          key={i}
-                          className="py-2 rounded-lg text-sm font-bold transition-all cursor-pointer hover:bg-white"
-                        >
-                          {i + 1}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <section className="space-y-4">
+              <Card className="w-full p-0">
+                <CardContent className="p-0">
+                  <Calendar
+                    mode="range"
+                    defaultMonth={dateRange?.from}
+                    selected={dateRange}
+                    onSelect={setDateRange}
+                    numberOfMonths={2}
+                    disabled={(date) => {
+                      const today = startOfDay(new Date());
+                      return isBefore(date, today);
+                    }}
+                    className="w-full"
+                  />
+                </CardContent>
+              </Card>
             </section>
           </div>
 
@@ -407,7 +425,6 @@ const DetailsPage = () => {
                       {property?.price}
                     </span>
                     <span className="text-slate-500 font-bold text-lg">
-                      {" "}
                       / night
                     </span>
                   </div>
@@ -417,17 +434,14 @@ const DetailsPage = () => {
                         className="text-yellow-500 fill-yellow-500"
                         size={16}
                       />
-                      {/* {details.rating} */}
-                      3
+                      {/* {details.rating} */}3
                     </div>
                     <span className="text-xs text-slate-400 font-bold underline cursor-pointer decoration-2 underline-offset-2">
-                      {/* {details.reviewCount} */}24
-                       reviews
+                      {/* {details.reviewCount} */}24 reviews
                     </span>
                   </div>
                 </div>
 
-                {/* Booking Form Mockup */}
                 <div className="space-y-px rounded-2xl overflow-hidden border border-slate-200 bg-slate-200 mb-8">
                   <div className="grid grid-cols-2 gap-px">
                     <div className="bg-white p-4 group cursor-pointer hover:bg-slate-50 transition-colors">
@@ -435,7 +449,7 @@ const DetailsPage = () => {
                         Check-in
                       </label>
                       <span className="text-sm font-bold text-slate-900">
-                        03/12/2026
+                        {dateRange?.from?.toLocaleDateString()}
                       </span>
                     </div>
                     <div className="bg-white p-4 group cursor-pointer hover:bg-slate-50 transition-colors">
@@ -443,21 +457,147 @@ const DetailsPage = () => {
                         Checkout
                       </label>
                       <span className="text-sm font-bold text-slate-900">
-                        03/17/2026
+                        {dateRange?.to?.toLocaleDateString()}
                       </span>
                     </div>
                   </div>
-                  <div className="bg-white p-4 group cursor-pointer hover:bg-slate-50 transition-colors flex justify-between items-center">
-                    <div>
-                      <label className="block text-[10px] font-black uppercase text-slate-500 mb-1">
-                        Guests
-                      </label>
-                      <span className="text-sm font-bold text-slate-900">
-                        2 Adults, 1 Child
-                      </span>
-                    </div>
-                    <ChevronRight size={20} className="text-slate-300" />
-                  </div>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <div className="bg-white p-4 group cursor-pointer hover:bg-slate-50 transition-colors flex justify-between items-center">
+                        <div className="flex-1">
+                          <label className="block text-[10px] font-black uppercase text-slate-500 mb-1">
+                            Guests
+                          </label>
+                          <span className="text-sm font-bold text-slate-900 truncate block">
+                            {guestsSummary}
+                          </span>
+                        </div>
+                        <ChevronRight size={20} className="text-slate-300" />
+                      </div>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      className="w-[335px] p-4 bg-white shadow-2xl rounded-2xl border-slate-100"
+                      align="end"
+                    >
+                      <div className="space-y-6">
+                        {/* Adults */}
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <div className="font-bold text-slate-900">
+                              Adults
+                            </div>
+                            <div className="text-xs text-slate-500 font-medium">
+                              Ages 13 or above
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-4">
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-8 w-8 rounded-full border-slate-200"
+                              onClick={() => updateGuests("adults", -1)}
+                              disabled={guests.adults <= 1}
+                            >
+                              <Minus size={14} />
+                            </Button>
+                            <span className="w-4 text-center font-bold text-slate-900">
+                              {guests.adults}
+                            </span>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-8 w-8 rounded-full border-slate-200"
+                              onClick={() => updateGuests("adults", 1)}
+                              disabled={
+                                guests.adults + guests.children >=
+                                propertyCapacity
+                              }
+                            >
+                              <Plus size={14} />
+                            </Button>
+                          </div>
+                        </div>
+
+                        {/* Children */}
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <div className="font-bold text-slate-900">
+                              Children
+                            </div>
+                            <div className="text-xs text-slate-500 font-medium">
+                              Ages 2 – 12
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-4">
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-8 w-8 rounded-full border-slate-200"
+                              onClick={() => updateGuests("children", -1)}
+                              disabled={guests.children <= 0}
+                            >
+                              <Minus size={14} />
+                            </Button>
+                            <span className="w-4 text-center font-bold text-slate-900">
+                              {guests.children}
+                            </span>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-8 w-8 rounded-full border-slate-200"
+                              onClick={() => updateGuests("children", 1)}
+                              disabled={
+                                guests.adults + guests.children >=
+                                propertyCapacity
+                              }
+                            >
+                              <Plus size={14} />
+                            </Button>
+                          </div>
+                        </div>
+
+                        {/* Infants */}
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <div className="font-bold text-slate-900">
+                              Infants
+                            </div>
+                            <div className="text-xs text-slate-500 font-medium">
+                              Under 2
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-4">
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-8 w-8 rounded-full border-slate-200"
+                              onClick={() => updateGuests("infants", -1)}
+                              disabled={guests.infants <= 0}
+                            >
+                              <Minus size={14} />
+                            </Button>
+                            <span className="w-4 text-center font-bold text-slate-900">
+                              {guests.infants}
+                            </span>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-8 w-8 rounded-full border-slate-200"
+                              onClick={() => updateGuests("infants", 1)}
+                              disabled={guests.infants >= 5}
+                            >
+                              <Plus size={14} />
+                            </Button>
+                          </div>
+                        </div>
+
+                        <div className="pt-2 text-[10px] text-slate-400 font-medium leading-relaxed">
+                          This place has a maximum of {propertyCapacity} guests,
+                          not including infants.
+                        </div>
+                      </div>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
 
                 <Link
@@ -471,24 +611,29 @@ const DetailsPage = () => {
                   * No payment required at this step
                 </p>
 
-                {/* Pricing Breakdown Mockup */}
                 <div className="mt-8 space-y-4 pt-6 border-t border-slate-100">
                   <div className="flex justify-between text-slate-600 font-medium tracking-tight">
                     <span className="underline decoration-slate-300 underline-offset-4">
-                      5 nights total
+                      {numberOfNights} Night(s)
                     </span>
-                    <span className="text-slate-900 font-bold">₦750,000</span>
+                    <span className="text-slate-900 font-bold">
+                      ₦{totalPrice}
+                    </span>
                   </div>
                   <div className="flex justify-between text-slate-600 font-medium tracking-tight">
                     <span className="underline decoration-slate-300 underline-offset-4">
                       Service charges
                     </span>
-                    <span className="text-slate-900 font-bold">₦15,000</span>
+                    <span className="text-slate-900 font-bold">
+                      ₦{serviceCharge}
+                    </span>
                   </div>
                   <hr className="border-slate-100" />
                   <div className="flex justify-between text-xl font-black text-slate-900 mt-2">
                     <span>Total Tax Inc.</span>
-                    <span className="text-primary">₦765,000</span>
+                    <span className="text-primary">
+                      ₦{totalPrice + serviceCharge}
+                    </span>
                   </div>
                 </div>
               </div>
