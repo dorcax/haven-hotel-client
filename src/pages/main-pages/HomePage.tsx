@@ -5,7 +5,7 @@ import HeroSection from "@/components/Pages/Home/HeroSection";
 import PopularDestinations from "@/components/Pages/Home/PopularDestinations";
 
 const HomePage = () => {
-  const { data: propertyList } = useGetAllPropertyQuery();
+  const { data: propertyList, isLoading } = useGetAllPropertyQuery();
   const properties = propertyList ?? [];
   console.log("properties", properties);
   const popularHotels = properties.filter((item: any) => item.type === "HOTEL");
@@ -24,6 +24,7 @@ const HomePage = () => {
           theme="light"
           data={popularHotels}
           link="/hotels"
+          isLoading={isLoading}
         />
         <PopularDestinations
           title="Exclusive Serviced Apartments"
@@ -32,6 +33,7 @@ const HomePage = () => {
           data={popularApartments}
           // data={properties}
           link="/apartments"
+          isLoading={isLoading}
         />
         <Footer />
       </div>
