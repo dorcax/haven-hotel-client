@@ -14,13 +14,11 @@ export const App = () => {
     // </div>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-          <UploaderProvider>
-        <PopupProvider>
-        
+        <UploaderProvider>
+          <PopupProvider>
             <AppRoute />
-        
-        </PopupProvider>
-          </UploaderProvider>
+          </PopupProvider>
+        </UploaderProvider>
         <ToastContainer />
       </PersistGate>
     </Provider>

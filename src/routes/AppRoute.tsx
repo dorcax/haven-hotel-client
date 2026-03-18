@@ -8,9 +8,9 @@ import { Settings } from "lucide-react";
 import Analytics from "@/pages/dashboard/Analytics";
 import Guests from "@/pages/dashboard/Guests";
 
-
 // Lazy load components
 const HomePage = lazy(() => import("@/pages/main-pages/HomePage"));
+const AboutPage = lazy(() => import("@/pages/main-pages/AboutPage"));
 const Login = lazy(() => import("@/pages/auth/Login"));
 const SignUp = lazy(() => import("@/pages/auth/SignUp"));
 const PasswordVerification = lazy(
@@ -24,21 +24,29 @@ const Upload = lazy(() => import("@/components/fileupload/Upload"));
 const DetailsPage = lazy(() => import("@/pages/main-pages/DetailsPage"));
 const DashboardApp = lazy(() => import("@/pages/dashboard/DashboardApp"));
 const RoomList = lazy(() => import("@/pages/dashboard/room/RoomList"));
-const AllProperties=lazy(() => import("@/pages/property/Property"));
+const AllProperties = lazy(() => import("@/pages/property/Property"));
 
 const router = createBrowserRouter([
   {
     index: true,
     element: (
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader fullPage />}>
         <HomePage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/about",
+    element: (
+      <Suspense fallback={<Loader fullPage />}>
+        <AboutPage />
       </Suspense>
     ),
   },
   {
     path: "/discover",
     element: (
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader fullPage />}>
         <Discover />
       </Suspense>
     ),
@@ -46,7 +54,7 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: (
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader fullPage />}>
         <Login />
       </Suspense>
     ),
@@ -54,7 +62,7 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: (
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader fullPage />}>
         <SignUp />
       </Suspense>
     ),
@@ -62,7 +70,7 @@ const router = createBrowserRouter([
   {
     path: "/verify-otp",
     element: (
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader fullPage />}>
         <PasswordVerification />
       </Suspense>
     ),
@@ -70,7 +78,7 @@ const router = createBrowserRouter([
   {
     path: "/forgot-password",
     element: (
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader fullPage />}>
         <ForgotPassword />
       </Suspense>
     ),
@@ -78,7 +86,7 @@ const router = createBrowserRouter([
   {
     path: "/reset-password",
     element: (
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader fullPage />}>
         <ResetPassword />
       </Suspense>
     ),
@@ -86,7 +94,7 @@ const router = createBrowserRouter([
   {
     path: "/file",
     element: (
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader fullPage />}>
         <Upload />
       </Suspense>
     ),
@@ -95,7 +103,7 @@ const router = createBrowserRouter([
   {
     path: "/apartment/:id",
     element: (
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader fullPage />}>
         <DetailsPage />
       </Suspense>
     ),
@@ -103,7 +111,7 @@ const router = createBrowserRouter([
   {
     path: "/hotel/:id",
     element: (
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader fullPage />}>
         <DetailsPage />
       </Suspense>
     ),
@@ -119,15 +127,15 @@ const router = createBrowserRouter([
           {
             index: true,
             element: (
-              <Suspense fallback={<Loader />}>
+              <Suspense fallback={<Loader fullPage />}>
                 <DashboardApp />
               </Suspense>
             ),
           },
-           {
+          {
             path: "properties",
             element: (
-              <Suspense fallback={<Loader />}>
+              <Suspense fallback={<Loader fullPage />}>
                 <AllProperties />
               </Suspense>
             ),
@@ -135,7 +143,7 @@ const router = createBrowserRouter([
           {
             path: ":id/room",
             element: (
-              <Suspense fallback={<Loader />}>
+              <Suspense fallback={<Loader fullPage />}>
                 <RoomList />
               </Suspense>
             ),
@@ -143,7 +151,7 @@ const router = createBrowserRouter([
           {
             path: "bookings",
             element: (
-              <Suspense fallback={<Loader />}>
+              <Suspense fallback={<Loader fullPage />}>
                 <Bookings />
               </Suspense>
             ),
@@ -151,7 +159,7 @@ const router = createBrowserRouter([
           {
             path: "guests",
             element: (
-              <Suspense fallback={<Loader />}>
+              <Suspense fallback={<Loader fullPage />}>
                 <Guests />
               </Suspense>
             ),
@@ -159,7 +167,7 @@ const router = createBrowserRouter([
           {
             path: "analytics",
             element: (
-              <Suspense fallback={<Loader />}>
+              <Suspense fallback={<Loader fullPage />}>
                 <Analytics />
               </Suspense>
             ),
@@ -167,7 +175,7 @@ const router = createBrowserRouter([
           {
             path: "settings",
             element: (
-              <Suspense fallback={<Loader />}>
+              <Suspense fallback={<Loader fullPage />}>
                 <Settings />
               </Suspense>
             ),
