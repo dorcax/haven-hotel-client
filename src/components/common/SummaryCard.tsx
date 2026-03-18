@@ -1,4 +1,6 @@
-import type { JSX } from "react";
+import React, { type JSX } from "react";
+
+import { cn } from "@/lib/utils";
 
 export type SummaryCardItem = {
   title: string;
@@ -15,7 +17,7 @@ const SummaryCard = ({ cards }: SummaryCardProps) => {
       {cards.map((c: any, i) => (
         <div
           key={i}
-          className="bg-white rounded-2xl transition-all p-5 flex items-center justify-between border border-gray-100"
+          className="group bg-white rounded-2xl transition-all p-5 flex items-center justify-between border border-gray-100 hover:border-primary/40"
         >
           <div>
             <h2 className="text-gray-500 text-sm font-medium uppercase tracking-wide">
@@ -25,8 +27,10 @@ const SummaryCard = ({ cards }: SummaryCardProps) => {
               {c.value}
             </p>
           </div>
-          <div className="text-white bg-primary p-0.5 rounded-full">
-            {c.icon}
+          <div className="text-white bg-primary p-0.5 rounded-full group-hover:bg-primary/90">
+            {React.cloneElement(c.icon, {
+              className: cn(c.icon.props.className, "group-hover:text-white"),
+            })}
           </div>
         </div>
       ))}
