@@ -4,13 +4,17 @@ import Header from "@/components/common/Header";
 import HeroSection from "@/components/Pages/Home/HeroSection";
 import PopularDestinations from "@/components/Pages/Home/PopularDestinations";
 
+import type { Property } from "@/types/property.types";
+
 const HomePage = () => {
   const { data: propertyList, isLoading } = useGetAllPropertyQuery();
-  const properties = propertyList ?? [];
+  const properties: Property[] = propertyList ?? [];
   console.log("properties", properties);
-  const popularHotels = properties.filter((item: any) => item.type === "HOTEL");
+  const popularHotels = properties.filter(
+    (item: Property) => item.type === "HOTEL",
+  );
   const popularApartments = properties.filter(
-    (item: any) => item.type === "APARTMENT",
+    (item: Property) => item.type === "APARTMENT",
   );
 
   return (
@@ -31,7 +35,6 @@ const HomePage = () => {
           subtitle="Find your home away from home with our curated selection of luxury short-let apartments."
           theme="dark"
           data={popularApartments}
-          // data={properties}
           link="/apartments"
           isLoading={isLoading}
         />
