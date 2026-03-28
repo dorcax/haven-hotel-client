@@ -15,7 +15,14 @@ const DiscoverHero = () => {
       <div className="bg-white p-2 rounded-xl shadow-xl shadow-slate-200/50 border border-slate-200 flex flex-col md:flex-row items-center gap-2">
         <div className="flex-none w-full md:w-auto flex items-center px-4 py-3 gap-3 border-b md:border-b-0 md:border-r border-slate-100">
           <Home className="text-slate-400" />
-          <select className="bg-transparent border-none focus:ring-0 text-slate-900  text-sm font-medium pr-8 cursor-pointer">
+          <label htmlFor="stay-type" className="sr-only">
+            Choose stay type
+          </label>
+          <select
+            id="stay-type"
+            className="bg-transparent border-none focus:ring-0 text-slate-900  text-sm font-medium pr-8 cursor-pointer"
+            aria-label="Choose stay type"
+          >
             <option value="all">All Stays</option>
             <option value="hotels">Hotels</option>
             <option value="apartments">Apartments</option>

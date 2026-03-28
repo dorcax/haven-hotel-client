@@ -1,16 +1,16 @@
-import type { popularDestinations } from "@/data/dummyData";
 import { ArrowRight } from "lucide-react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { Link } from "react-router-dom";
+import type { Property } from "@/types/property.types";
 
 import PropertyCardSkeleton from "@/components/ui/property-card-skeleton";
 
-interface popularData {
+interface PopularDestinationsProps {
   title: string;
   subtitle: string;
   theme: string;
-  data: popularDestinations[];
+  data: Property[];
   link: string;
   isLoading?: boolean;
 }
@@ -22,7 +22,7 @@ const PopularDestinations = ({
   data,
   link,
   isLoading,
-}: popularData) => {
+}: PopularDestinationsProps) => {
   return (
     <section
       className={`py-16 ${theme === "light" ? "bg-white" : "bg-[#1A365D]"}`}
@@ -58,7 +58,7 @@ const PopularDestinations = ({
                   attachments,
                 }) => {
                   const firstImage = attachments?.uploads?.[0]?.url;
-                  const getFeaturesList = (features: string | any[]) => {
+                  const getFeaturesList = (features: string | string[]) => {
                     if (!features) return "";
                     if (typeof features === "string") return features;
                     if (Array.isArray(features)) return features.join(", ");
